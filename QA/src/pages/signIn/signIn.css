@@ -1,0 +1,142 @@
+.signin-container {
+    display: flex;
+    height: 120vh;
+}
+
+.signin-left {
+    width: 45%;
+    padding: 20px;
+    position: relative;
+}
+
+.signin-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.signin-overlay {
+    position: absolute;
+    inset: 0;   
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    color: #FFFFFF;
+    font-family: playfair display;
+}
+
+.signin-overlay h3 {
+    text-transform: capitalize;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.signin-overlay h1 {
+    font-size: 45px;
+    font-weight: 600;
+    line-height: 56px;
+    margin-top: 10px;
+    max-width: 90%;
+    
+}
+
+.signin-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px;
+    width: 50%;
+}
+
+.signin-right img {
+    width: 120px; 
+    margin: 0 0 10px 0;
+  }
+
+.signin-right h2 {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: playfair display;
+}
+
+.signin-right p {
+    font-size: 18px;
+    font-weight: 400;
+    color: gray;
+    margin-bottom: 20px;
+    font-family: playfair display;
+}
+
+.signin-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.signin-form label, .signin-form input::placeholder {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+.signin-form input {
+    width: 100%;
+    padding: 20px 10px;
+    border: 1px solid #E3E5E8;
+    outline: none;
+}
+
+.signin-form input:focus {
+    border: 1px solid rgb(156, 150, 150);
+}
+
+
+.input-group .error-input {
+    border: 1px solid red !important;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #9CA3AF;
+}
+
+.forgot-password {
+    text-align: right;
+    font-size: 14px;
+}
+
+.forgot-password a {
+    color: blue;
+    text-decoration: none;
+    color: #9CA3AF;
+}
+
+.signin-button {
+    width: 100%;
+    background: #5D75F8;
+    color: white;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signin-button:hover {
+    background: rgb(93, 93, 188)
+}
