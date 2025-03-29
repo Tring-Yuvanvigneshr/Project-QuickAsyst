@@ -82,14 +82,6 @@ const SignIn = () => {
                 form="novalidatedform"
                 {...register("password", {
                   required: "Password is required!",
-                  minLength: {
-                    value: 8,
-                    message: "Password should be at least 8 characters",
-                  },
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message: "Password must contain at least one uppercase, one lowercase, one number, and one special character",
-                  },
                 })}
                 className={errors.password ? "error-input" : ""}
               />
