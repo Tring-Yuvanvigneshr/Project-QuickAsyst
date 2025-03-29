@@ -149,3 +149,64 @@
     display: flex;
     justify-content: center;
 }
+
+@media screen and (max-width: 1024px) {
+    .signin-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .signin-left {
+        width: 100%;
+        height: 50vh;
+    }
+
+    .signin-overlay {
+        padding: 35px;
+    }
+
+    .signin-overlay h3 {
+        font-size: 16px;    
+    }
+
+    .signin-overlay h1 {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .signin-right {
+        width: 100%;
+        padding: 50px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .signin-right {
+        padding: 30px;
+    }
+
+    .signin-right img {
+        width: 90px; 
+    }
+
+    .signin-right h2 {
+        font-size: 24px;
+    }
+
+    .signin-right p {
+        font-size: 16px;
+    }
+
+    .signin-form {
+        gap: 15px;
+    }
+
+    .signin-form input {
+        padding: 15px 10px;
+    }
+
+    .signin-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
