@@ -26,6 +26,10 @@
     font-family: playfair display;
 }
 
+.signin-overlay .divider {
+    padding-bottom: 10px;
+}
+
 .signin-overlay h3 {
     text-transform: capitalize;
     font-size: 24px;
@@ -139,4 +143,9 @@
 
 .signin-button:hover {
     background: rgb(93, 93, 188)
+}
+
+.loading-container{
+    display: flex;
+    justify-content: center;
 }
