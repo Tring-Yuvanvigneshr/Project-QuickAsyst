@@ -10,13 +10,14 @@ Amplify.configure(awsConfig);
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer position="top-center" autoClose={3000} />
-      <Routes>
-        <Route path='login' element={<SignIN />}></Route>
-      </Routes>
-    </BrowserRouter>
-
+      <BrowserRouter>
+        <Routes>
+          <Route path='login' element={<SignIN />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 
