@@ -1,33 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { signIn } from 'aws-amplify/auth';
+import { useNavigate } from 'react-router-dom';
 import signIn_Background from './../../assets/images/img.png';
 import logo from './../../assets/images/logo.png';
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
-import { useForm } from "react-hook-form";
-import './Signin.css'
+import divider from './../../assets/images/Divider.png';
+import CircularProgress from '@mui/material/CircularProgress';
+import { toast } from "react-toastify";
+import './Signin.css';
 
-const signIn = () => {
+
+const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     mode: "onChange"
   });
 
-  const onSubmit = (data) => {
-    console.log("Form submitted", data);
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    setLoading(true);
+
+    try {
+      const user = await signIn({
+        username: email,
+        password
+      }
+      );
+      console.log(user);
+      navigate('/dashboard');
+    } catch (err) {
+      toast.error(err.message || 'sign in failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="signin-container">
-      <div className="signin-left">   
-          <img src={signIn_Background} alt="Stadium" className="signin-image"/>
+      <div className="signin-left">
+        <img src={signIn_Background} alt="Stadium" className="signin-image" />
         <div className="signin-overlay">
-          <h3>___ QuickAsyst Admin Dashboard</h3>
-          <h1>Manage your ticketing empire from one </h1><h1>central hub</h1>
+          <h3><img src={divider} className='divider' alt="divider" /> QuickAsyst Admin Dashboard</h3>
+          <h1>Manage your ticketing empire from one central hub</h1>
         </div>
       </div>
 
@@ -42,6 +60,7 @@ const signIn = () => {
             <input
               type="email"
               placeholder="Enter Email"
+              form="novalidatedform"
               {...register("email", {
                 required: "Email is required!",
                 pattern: {
@@ -60,6 +79,7 @@ const signIn = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
+                form="novalidatedform"
                 {...register("password", {
                   required: "Password is required!",
                   minLength: {
@@ -68,8 +88,7 @@ const signIn = () => {
                   },
                   pattern: {
                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message:
-                      "Password must contain at least one uppercase, one lowercase, one number, and one special character",
+                    message: "Password must contain at least one uppercase, one lowercase, one number, and one special character",
                   },
                 })}
                 className={errors.password ? "error-input" : ""}
@@ -85,11 +104,14 @@ const signIn = () => {
             <a>Forgot Password?</a>
           </div>
 
-          <button type="submit" className="signin-button">Sign In</button>
+            {loading ? <div className="loading-container"><CircularProgress className='loading-circle' size={24} /></div> : ""}
+          <button type="submit" className="signin-button" disabled={loading}>
+            Sign In
+          </button>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default signIn
+export default SignIn;
