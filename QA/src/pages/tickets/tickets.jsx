@@ -4,7 +4,10 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import Filter from '../../components/GlobalComponents/GlobalFilter/Filter.jsx';
 
 
-const attributes = [["Manage","Event", "Validate", "Date", "Period left"], [ "List", "Event", "Date"]]
+const attributes = [["Manage", "Event", "Validate", "Date", "Period left"], ["List", "Validate", "Event", "Date"], ["Sold", "Event", "Validate", "Date"], ["Event", "Date"]]
+const validationOptionsManage = ["Valid", "Invalid", "Delist Requested"];
+const validationOptionsList = ["Valid", "Delist Requested"];
+const validationOptionsSold = ["Sold", "In Prograss", "Settled", "Failded", "Voided Payout"];
 
 const TabPanel = ({ children, value, index }) => (
     <div hidden={value !== index}>
@@ -21,37 +24,72 @@ const Tickets = () => {
     }, [tabValue])
 
     return (
-        <Box sx={{ width: '90', m: 3 }}>
+        <Box sx={{ width: '90', m: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} sx={{ flexGrow: 1 }}>
-                    <Tab label="Manage Tickets" />
-                    <Tab label="List Tickets" />
-                    <Tab label="Sold Tickets" />
+                    <Tab label="Manage Tickets" sx={{ textTransform: 'none', fontFamily: 'Glegoo', fontWeight: '700' }} />
+                    <Tab label="List Tickets" sx={{ textTransform: 'none', fontFamily: 'Glegoo', fontWeight: '700' }} />
+                    <Tab label="Sold Tickets" sx={{ textTransform: 'none', fontFamily: 'Glegoo', fontWeight: '700' }} />
+                    <Tab label="Delist And Return" sx={{ textTransform: 'none', fontFamily: 'Glegoo', fontWeight: '700' }} />
+                    <Tab label="Delist And UnSold" sx={{ textTransform: 'none', fontFamily: 'Glegoo', fontWeight: '700' }} />
                 </Tabs>
 
-                {(tabValue === 0 || tabValue === 1) && (
-                    <Button onClick={() => setFilterOpen(!filterOpen)} sx={{ color: '#007bff' }}>
-                        <FilterListIcon sx={{ fontSize: 20, color: '#6c757d' }} /> Filter
+                    <Button disableRipple onClick={() => setFilterOpen(!filterOpen)} sx={{
+                        color: '#5D75F8', textTransform: 'none', borderWidth: 1,
+                        borderStyle: 'solid',
+                        borderColor: '#E3E5E8',
+                        borderRadius: '0',
+                        fontFamily: 'Glegoo',
+                        width: '98px',
+                        height: '44px',
+                        gap: '8px',
+                        paddingTop: '15px',
+                        paddingBottom: '15px',
+                        backgroundColor: 'transparent'
+                    }}>
+                        <FilterListIcon sx={{
+                            fontSize: 20, color: '#6c757d', width: "20",
+                        }} /> Filter
                     </Button>
-                )}
             </Box>
 
-            {filterOpen && tabValue === 0 && (
-                <Box sx={{ position: 'absolute', top: 140, right: 20, zIndex: 10 }}>
-                    <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[0]} />
-                </Box>
-            )}
+            {
+                filterOpen && tabValue === 0 && (
+                    <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10, }}>
+                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[0]} onClose={() => setFilterOpen(false)} validationOptions={validationOptionsManage} />
+                    </Box>
+                )
+            }
 
-            {filterOpen && tabValue === 1 && (
-                <Box sx={{ position: 'absolute', top: 140, right: 20, zIndex: 10 }}>
-                    <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[1]}/>
-                </Box>
-            )}
+            {
+                filterOpen && tabValue === 1 && (
+                    <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10 }}>
+                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[1]} onClose={() => setFilterOpen(false)} validationOptions={validationOptionsList}/>
+                    </Box>
+                )
+            }
+            {
+                filterOpen && tabValue === 2 && (
+                    <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10 }}>
+                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[2]} onClose={() => setFilterOpen(false)} validationOptions={validationOptionsSold}/>
+                    </Box>
+                )
+            }
+            {
+                filterOpen && (tabValue === 3 || tabValue === 4) && (
+                    <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10 }}>
+                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[3]} onClose={() => setFilterOpen(false)} />
+                    </Box>
+                )
+            }
+
 
             <TabPanel value={tabValue} index={0}>Manage Tickets Content</TabPanel>
             <TabPanel value={tabValue} index={1}>List Tickets Content</TabPanel>
             <TabPanel value={tabValue} index={2}>Sold Tickets Content</TabPanel>
-        </Box>
+            <TabPanel value={tabValue} index={3}>Delist And Return</TabPanel>
+            <TabPanel value={tabValue} index={4}>Delist And UnSold</TabPanel>
+        </Box >
     );
 };
 
