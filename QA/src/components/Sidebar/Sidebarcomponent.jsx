@@ -11,7 +11,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import "./sidebar.css";
 
 const Sidebarcomponent = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const location = useLocation();
 
   const toggleSidebar = () => {

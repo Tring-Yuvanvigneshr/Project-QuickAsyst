@@ -3,20 +3,29 @@ import { Box, Button, MenuItem, Select, Radio, RadioGroup, FormControlLabel, Sli
 import CloseIcon from '@mui/icons-material/Close'
 import CheckIcon from '@mui/icons-material/Check'
 
-const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
+const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => {
     const eventOptions = ["NBA", "NFL", "MLB"];
     const dateOptions = ["Today", "Yesterday", "Last 30 Days", "This Month", "Last Month"];
 
     const [filters, setFilters] = useState({
-        event: 'NBA',
-        validation: 'Valid',
-        selectedDate: 'Last Month',
-        period: 3,
+        leagueId: filter.leagueId || "",
+        ticketStatus: filter.ticketStatus || "",
+        startdate: filter.startdate || "",
+        enddate: filter.enddate || "",
+        day: filter.enddate || 1,
     });
 
     const handleReset = () => {
-        setFilters({ event: 'NBA', validation: 'Valid', selectedDate: 'Last Month', period: 3 });
+        setFilters({ leagueId: null, ticketStatus: null, startdate: null,enddate: null, day: null });
+        onApply({ leagueId: null, ticketStatus: null, startdate: null,enddate: null, day: null });
+
     };
+
+    const submitFilter = () => {
+        onApply(filters);
+        onClose();
+    }
+    
 
     return (
         <Box sx={{
@@ -49,7 +58,10 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
             {Attributes.includes("Event") && (
                 <>
                     <Typography sx={{ mt: 1.5, mb: 0.5, fontSize: '14px', fontFamily: 'Glegoo', fontWeight: '600' }}>Event</Typography>
-                    <Select fullWidth size="small" value={filters.event} sx={{ color: '#475569' }} onChange={(e) => setFilters({ ...filters, event: e.target.value })}>
+                    <Select fullWidth size="small" value={filters.leagueId} sx={{ color: '#475569' }} onChange={(e) => setFilters({ ...filters, leagueId: e.target.value })} displayEmpty>
+                            <MenuItem value="" disabled>
+                                --select--
+                            </MenuItem>
                         {eventOptions.map((event) => (
                             <MenuItem key={event} value={event} sx={{ color: '#475569' }}>{event}</MenuItem>
                         ))}
@@ -60,7 +72,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
             {Attributes.includes("Validate") && (
                 <>
                     <Typography sx={{ mt: 1.5, mb: 0.5, fontSize: '14px', fontFamily: 'Glegoo', fontWeight: '600' }}>{Attributes.includes('Manage') ? 'Validate' : 'Status'}</Typography>
-                    <RadioGroup value={filters.validation} sx={{ color: '#475569', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }} onChange={(e) => setFilters({ ...filters, validation: e.target.value })}>
+                    <RadioGroup value={filters.ticketStatus} sx={{ color: '#475569', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }} onChange={(e) => setFilters({ ...filters, ticketStatus: e.target.value })}>
                         {validationOptions.map((val) => (
                             <FormControlLabel key={val} value={val} control={<Radio size="small" />} label={val.charAt(0).toUpperCase() + val.slice(1)}
                                 sx={{
@@ -81,7 +93,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
                         {dateOptions.map((option) => (
                             <Box
                                 key={option}
-                                onClick={() => setFilters({ ...filters, selectedDate: option })}
+                                onClick={() => setFilters({ ...filters, startdate: option })}
                                 sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -92,7 +104,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
                                 }}
                             >
                                 <span style={{ fontFamily: 'Glegoo', fontSize: '14px', color: '#475569' }}>{option}</span>
-                                {filters.selectedDate === option && <CheckIcon sx={{ color: '#5D75F8', fontSize: 20 }} />}
+                                {filters.startdate === option && <CheckIcon sx={{ color: '#5D75F8', fontSize: 20 }} />}
                             </Box>
                         ))}
                     </Box>
@@ -104,11 +116,12 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
                 <>
                     <Typography sx={{ mt: 1.5, mb: 0.5, fontSize: '14px', fontFamily: 'Glegoo', fontWeight: '600' }}>Period Left</Typography>
                     <Slider
-                        value={filters.period}
-                        min={0.5}
+                        value={filters.day}
+                        min={1}
                         max={7}
-                        step={0.5}
-                        onChange={(e, newValue) => setFilters({ ...filters, period: newValue })}
+                        step={1}
+                        onChange={(e, newValue) => setFilters({ ...filters, day: newValue })}
+                        valueLabelDisplay="auto"
                         sx={{
                             mt: -1,
                             mb: 1,
@@ -124,7 +137,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions }) => {
 
             <Box sx={{ mt: 1.5, display: 'flex', justifyContent: 'flex-end', gap: '4px' }}>
                 <Button disableRipple variant="outlined" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, color: 'black', width: '95px', height: '44px', fontFamily: 'Glegoo', fontWeight: '600', backgroundColor: '#f3f4f6', border: 'none' }} onClick={handleReset}>Reset</Button>
-                <Button disableRipple variant="contained" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }} onClick={() => onApply(filters)}>Apply</Button>
+                <Button disableRipple variant="contained" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }} onClick={submitFilter}>Apply</Button>
             </Box>
         </Box>
     );

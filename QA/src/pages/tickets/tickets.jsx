@@ -13,6 +13,7 @@ const validationOptionsManage = ["Valid", "Invalid", "Delist Requested"];
 const validationOptionsList = ["Valid", "Delist Requested"];
 const validationOptionsSold = ["Sold", "In Prograss", "Settled", "Failded", "Voided Payout"];
 
+
 const TabPanel = ({ children, value, index }) => (
     <div hidden={value !== index}>
         {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
@@ -22,6 +23,24 @@ const TabPanel = ({ children, value, index }) => (
 const Tickets = () => {
     const [tabValue, setTabValue] = useState(0);
     const [filterOpen, setFilterOpen] = useState(false);
+
+    const [filter, setFilters] = useState({
+        search_event: '%',
+        leagueId: null,
+        ticketStatus: null,
+        startdate: null,
+        enddate: null,
+        pageSize: 10,
+        pageOffset: 0,
+        order_by: [
+            { tp_updated_at: 'desc' },
+            { tp_id: 'asc' }
+        ],
+        day: null,
+        ticketId: null,
+        tpId: null,
+        array_tpid: null
+    })
 
     useEffect(() => {
         setFilterOpen(false)
@@ -60,7 +79,18 @@ const Tickets = () => {
             {
                 filterOpen && tabValue === 0 && (
                     <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10, }}>
-                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[0]} onClose={() => setFilterOpen(false)} validationOptions={validationOptionsManage} />
+                        <Filter
+                            onApply={(newFilters) => {
+                                setFilters((prevFilters) => ({
+                                    ...prevFilters,
+                                    ...newFilters
+                                }));
+                            }}
+                            Attributes={attributes[0]}
+                            onClose={() => setFilterOpen(false)}
+                            validationOptions={validationOptionsManage}
+                            filter={filter}
+                        />
                     </Box>
                 )
             }
@@ -68,7 +98,18 @@ const Tickets = () => {
             {
                 filterOpen && tabValue === 1 && (
                     <Box sx={{ position: 'absolute', top: 80, right: 12, zIndex: 10 }}>
-                        <Filter onApply={(filters) => console.log("Applied:", filters)} Attributes={attributes[1]} onClose={() => setFilterOpen(false)} validationOptions={validationOptionsList} />
+                        <Filter
+                            onApply={(newFilters) => {
+                                setFilters((prevFilters) => ({
+                                    ...prevFilters,
+                                    ...newFilters
+                                }));
+                            }}
+                            Attributes={attributes[1]}
+                            onClose={() => setFilterOpen(false)}
+                            validationOptions={validationOptionsList}
+                            filter={filter}
+                        />
                     </Box>
                 )
             }
@@ -87,8 +128,8 @@ const Tickets = () => {
                 )
             }
 
-            <TabPanel value={tabValue} index={0}><Managetickets /></TabPanel>
-            <TabPanel value={tabValue} index={1}><Listtickets /></TabPanel>
+            <TabPanel value={tabValue} index={0}><Managetickets filter={filter} /></TabPanel>
+            <TabPanel value={tabValue} index={1}><Listtickets filter={filter} /></TabPanel>
             <TabPanel value={tabValue} index={2}><Soldtickets /></TabPanel>
             <TabPanel value={tabValue} index={3}><Returntickets /></TabPanel>
             <TabPanel value={tabValue} index={4}><Unsoldtickets /></TabPanel>
