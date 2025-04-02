@@ -1,7 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { onError } from "@apollo/client/link/error";
-import { getCurrentUser } from 'aws-amplify/auth';
+import { fetchAuthSession  } from 'aws-amplify/auth';
 
 const uri = import.meta.env.VITE_BACKEND_URL;
 
@@ -12,10 +11,8 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
   try {
-    const currentUser = await getCurrentUser();
 
-    console.log(currentUser)
-    const idToken = currentUser.signInUserSession.idToken.jwtToken;
+    const { idToken } = (await fetchAuthSession()).tokens ?? {};
 
     return {
       headers: {
@@ -24,7 +21,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     };
   } catch (error) {
-    console.error("Error fetching ID token:", error);
+    console.log("Error fetching ID token:", error);
     return {
       headers,
     };
@@ -32,19 +29,8 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 
-const errorLink = onError(({ graphQLErrors }) => {
-  if (graphQLErrors) {
-    for (let err of graphQLErrors) {
-      if (err.message === "Token has expired.") {
-        Auth.signOut();
-        window.location.href = "/signIn";
-      }
-    }
-  }
-});
-
 const client = new ApolloClient({
-  link: errorLink.concat(authLink).concat(httpLink),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

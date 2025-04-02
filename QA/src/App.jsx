@@ -11,22 +11,28 @@ import Dashboard from "./pages/dashboard/dashboard.jsx";
 import Tickets from './pages/tickets/tickets.jsx';
 import Users from "./pages/users/users.jsx";
 
+import { ApolloProvider } from '@apollo/client';
+import client from './api/client.js';
+
 Amplify.configure(awsConfig);
 
 const App = () => {
   return (
     <>
       <ToastContainer position="top-center" autoClose={3000} />
-      <BrowserRouter>
-        <Routes>
-          <Route path='login' element={<SignIN />} />
-          <Route path="/" element={<MainLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="tickets" element={<Tickets />} />
-            <Route path="users" element={<Users />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ApolloProvider client={client}>
+        <ToastContainer position="top-center" autoClose={3000} />
+        <BrowserRouter>
+          <Routes>
+            <Route path='login' element={<SignIN />} />
+            <Route path="/" element={<MainLayout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="tickets" element={<Tickets />} />
+              <Route path="users" element={<Users />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ApolloProvider>
     </>
   )
 }

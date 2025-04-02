@@ -30,7 +30,6 @@ const SignIn = () => {
         password
       }
       );
-      console.log(user);
       navigate('/dashboard');
     } catch (err) {
       toast.error(err.message || 'sign in failed');
