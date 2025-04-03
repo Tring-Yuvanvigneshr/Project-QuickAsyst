@@ -11,6 +11,8 @@ import Dashboard from "./pages/dashboard/dashboard.jsx";
 import Tickets from './pages/tickets/tickets.jsx';
 import Users from "./pages/users/users.jsx";
 
+import Profile from './pages/profile/Profile.jsx';
+
 import { ApolloProvider } from '@apollo/client';
 import client from './api/client.js';
 
@@ -29,6 +31,7 @@ const App = () => {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="tickets" element={<Tickets />} />
               <Route path="users" element={<Users />} />
+              <Route path='profile' element={<Profile />}/>
             </Route>
           </Routes>
         </BrowserRouter>

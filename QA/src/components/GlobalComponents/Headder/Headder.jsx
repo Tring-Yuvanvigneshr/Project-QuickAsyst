@@ -15,6 +15,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(() => ({
   position: 'relative',
@@ -47,6 +48,7 @@ const StyledInputBase = styled(InputBase)(() => ({
 export default function Hedder() {
   const [anchorEl, setAnchorEl] = useState(null);
   const username = "Quickasyst Admin";
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +57,11 @@ export default function Hedder() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleProfile = () => {
+    navigate('profile')
+    setAnchorEl(null)
+  }
 
   return (
     <Box>
@@ -97,7 +104,8 @@ export default function Hedder() {
               }}
             >
               <MenuItem
-                onClick={handleClose}
+                disableRipple
+                onClick={handleProfile}
                 sx={{
                   color: '#475569',
                   fontFamily: 'glegoo',
@@ -115,6 +123,7 @@ export default function Hedder() {
               </MenuItem>
 
               <MenuItem
+                disableRipple
                 onClick={handleClose}
                 sx={{
                   color: '#475569',
@@ -133,6 +142,7 @@ export default function Hedder() {
               </MenuItem>
 
               <MenuItem
+                disableRipple
                 onClick={handleClose}
                 sx={{
                   color: '#475569',
