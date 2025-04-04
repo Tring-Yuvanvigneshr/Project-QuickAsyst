@@ -25,6 +25,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 
 
+import './headder.css'
+
 const Search = styled('div')(() => ({
   position: 'relative',
   width: '342px',
@@ -163,15 +165,39 @@ export default function Hedder() {
                 open={open}
                 keepMounted
                 onClose={handledialogClose}
-                aria-describedby="alert-dialog-slide-description"
+                className="password-dialog"
+                PaperProps={{
+                  sx: {
+                    width: '550px',
+                    padding: '10px 20px 10px 20px'
+                  }                }}
               >
-                <DialogTitle> </DialogTitle>
+                <DialogTitle>
+                  <h3 className='Change_password_h3'>Change Password</h3>
+                  <h5 className='Change_password_h5'>Enter your new password</h5>
+                </DialogTitle>
+
                 <DialogContent>
-                  <DialogContentText>
+                  <DialogContentText className='Dialog-content'>
+                    Old password <br />
+                    <div className='old-password-container'>
+                      <input type="text" placeholder='Enter old password' /><br />
+                    </div>
+
+                    New password <br />
+                    <div className='new-password-container'>
+                      <input type="text" placeholder='Enter new password' /><br />
+                    </div>
+
+                    Confirm password <br />
+                    <div className='new-password-container'>
+                      <input type="text" placeholder='Enter retype password' />
+                    </div>
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                
+                  <Button disableRipple variant="outlined" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, color: 'black', width: '95px', height: '44px', fontFamily: 'Glegoo', fontWeight: '600', backgroundColor: '#f3f4f6', border: 'none' }}>Reset</Button>
+                  <Button disableRipple variant="contained" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }}>Apply</Button>
                 </DialogActions>
               </Dialog>
 
