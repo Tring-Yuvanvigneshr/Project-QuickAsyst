@@ -11,11 +11,19 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+
 
 const Search = styled('div')(() => ({
   position: 'relative',
@@ -49,6 +57,16 @@ export default function Hedder() {
   const [anchorEl, setAnchorEl] = useState(null);
   const username = "Quickasyst Admin";
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handledialogClose = () => {
+    setOpen(false);
+  };
+
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -124,7 +142,7 @@ export default function Hedder() {
 
               <MenuItem
                 disableRipple
-                onClick={handleClose}
+                onClick={handleClickOpen}
                 sx={{
                   color: '#475569',
                   fontFamily: 'glegoo',
@@ -140,6 +158,22 @@ export default function Hedder() {
                 </ListItemIcon>
                 Change Password
               </MenuItem>
+
+              <Dialog
+                open={open}
+                keepMounted
+                onClose={handledialogClose}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle> </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                
+                </DialogActions>
+              </Dialog>
 
               <MenuItem
                 disableRipple
@@ -165,5 +199,6 @@ export default function Hedder() {
         </Toolbar>
       </AppBar>
     </Box>
+
   );
 }
