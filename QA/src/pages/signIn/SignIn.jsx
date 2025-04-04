@@ -30,7 +30,6 @@ const SignIn = () => {
         password
       }
       );
-      console.log(user);
       navigate('/dashboard');
     } catch (err) {
       toast.error(err.message || 'sign in failed');
@@ -96,7 +95,7 @@ const SignIn = () => {
             <a>Forgot Password?</a>
           </div>
 
-            {loading ? <div className="loading-container"><CircularProgress className='loading-circle' size={24} /></div> : ""}
+          {loading ? <div className="loading-container"><CircularProgress className='loading-circle' size={24} /></div> : ""}
           <button type="submit" className="signin-button" disabled={loading}>
             Sign In
           </button>

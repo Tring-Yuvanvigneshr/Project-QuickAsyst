@@ -1,0 +1,45 @@
+.tickets-container {
+    width: 97%;
+    margin: 16px;
+}
+
+.tabs-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tab {
+    font-family: 'Glegoo';
+    font-weight: 700;
+}
+
+.filter-button {
+    color: #5D75F8;
+    text-transform: none;
+    border: 1px solid #E3E5E8;
+    border-radius: 0;
+    font-family: 'Glegoo';
+    width: 98px;
+    height: 44px;
+    gap: 8px;
+    padding: 15px 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.filter-icon {
+    font-size: 20px;
+    color: #6c757d !important;
+}
+
+.filter-panel {
+    position: absolute;
+    top: 80px;
+    right: 12px;
+    z-index: 10;
+}
+
+.tab-panel {
+    padding: 16px;
+}
