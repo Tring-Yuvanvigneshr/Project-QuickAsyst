@@ -10,17 +10,17 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
+import './headder.css';
 
 const Search = styled('div')(() => ({
   position: 'relative',
   width: '342px',
   height: '44px',
-  backgroundColor: '#F3F4F6'
+  backgroundColor: '#F3F4F6',
 }));
 
 const SearchIconWrapper = styled('div')(() => ({
@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(() => ({
   },
 }));
 
-export default function Hedder() {
+export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const username = "Quickasyst Admin";
 
@@ -58,99 +58,51 @@ export default function Hedder() {
 
   return (
     <Box>
-      <AppBar position="static" sx={{ backgroundColor: "#FFFFFF", height: "77px", boxShadow: 'none', borderBottom: '1px solid #E3E5E8', padding: '0px 10px 0px 10px' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '7px' }}>
+      <AppBar position="static" className="header-appBar">
+        <Toolbar className="header-toolbar">
           <Search>
             <SearchIconWrapper>
-              <SearchIcon sx={{ color: '#B9BDC6' }} />
+              <SearchIcon className="header-searchIcon" />
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" />
           </Search>
 
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              onClick={handleMenu}
-              disableRipple
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-              }}
-            >
-              <AccountCircle sx={{ color: '#D9D9D9', fontSize: '50px', marginRight: 1 }} />
-              <Typography onClick={handleMenu} sx={{ color: '#333', fontSize: '14px', fontWeight: '700', fontFamily: 'glegoo', textOverflow: 'ellipsis', maxWidth: '90px', overflow: 'hidden', whiteSpace: 'nowrap', cursor: 'pointer' }}>{username}</Typography>
+          <Box className="header-userBox">
+            <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
+              <AccountCircle className="header-accountIcon" />
+              <Typography onClick={handleMenu} className="header-username">{username}</Typography>
             </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              sx={{
-                marginTop: '-7px',
-              }}
+              className="header-menu"
               PaperProps={{
-                sx: {
-                  minWidth: 230,
-                  fontSize: '16px',
-                  padding: '0px',
-                },
+                className: 'header-menuPaper',
               }}
             >
-              <MenuItem
-                onClick={handleClose}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
-              >
+              <MenuItem disableRipple onClick={handleClose} className="header-menuItem">
                 <ListItemIcon>
-                  <ManageAccountsOutlinedIcon sx={{ color: '#B9BDC6' }} />
+                  <ManageAccountsOutlinedIcon className="header-menuIcon" />
                 </ListItemIcon>
                 My Account
               </MenuItem>
 
-              <MenuItem
-                onClick={handleClose}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
-              >
+              <MenuItem disableRipple onClick={handleClose} className="header-menuItem">
                 <ListItemIcon>
-                  <LockResetOutlinedIcon sx={{ color: '#B9BDC6' }} />
+                  <LockResetOutlinedIcon className="header-menuIcon" />
                 </ListItemIcon>
                 Change Password
               </MenuItem>
 
-              <MenuItem
-                onClick={handleClose}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
-              >
+              <MenuItem disableRipple onClick={handleClose} className="header-menuItem">
                 <ListItemIcon>
-                  <LogoutIcon sx={{ color: '#B9BDC6' }} />
+                  <LogoutIcon className="header-menuIcon" />
                 </ListItemIcon>
                 Sign out
               </MenuItem>
             </Menu>
-
           </Box>
         </Toolbar>
       </AppBar>
