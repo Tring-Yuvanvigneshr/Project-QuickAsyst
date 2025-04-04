@@ -54,6 +54,7 @@ const Tickets = () => {
                 </Tabs>
 
                 <Button
+                    variant='outlined'
                     disableRipple
                     onClick={() => setFilterOpen(!filterOpen)}
                     className="filter-button"
