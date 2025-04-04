@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,34 +14,6 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import './headder.css';
-
-const Search = styled('div')(() => ({
-  position: 'relative',
-  width: '342px',
-  height: '44px',
-  backgroundColor: '#F3F4F6',
-}));
-
-const SearchIconWrapper = styled('div')(() => ({
-  padding: '12px',
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(() => ({
-  color: 'black',
-  width: '100%',
-  fontFamily: 'glegoo',
-  fontSize: '14px',
-  '& .MuiInputBase-input': {
-    padding: '12px',
-    paddingLeft: '44px',
-  },
-}));
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,12 +31,15 @@ export default function Header() {
     <Box>
       <AppBar position="static" className="header-appBar">
         <Toolbar className="header-toolbar">
-          <Search>
-            <SearchIconWrapper>
+          <div className="header-search">
+            <div className="header-searchIconWrapper">
               <SearchIcon className="header-searchIcon" />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" />
-          </Search>
+            </div>
+            <InputBase
+              placeholder="Search…"
+              className="header-searchInput"
+            />
+          </div>
 
           <Box className="header-userBox">
             <IconButton onClick={handleMenu} disableRipple className="header-iconButton">

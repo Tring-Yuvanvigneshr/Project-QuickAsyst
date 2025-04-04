@@ -67,3 +67,34 @@
     color: #B9BDC6;
   }
   
+  .header-search {
+    position: relative;
+    width: 342px;
+    height: 44px;
+    background-color: #F3F4F6;
+  }
+  
+  .header-searchIconWrapper {
+    padding: 12px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-searchIcon {
+    color: #B9BDC6;
+  }
+  
+  .header-searchInput {
+    color: black;
+    width: 100%;
+    font-family: 'glegoo' !important;
+    font-size: 14px !important;
+    padding: 8px;
+    padding-left: 44px;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
