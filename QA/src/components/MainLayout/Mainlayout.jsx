@@ -10,7 +10,7 @@ const MainLayout = () => {
         <Sidebar />
       </div>
 
-      <div className="content">
+      <div className="content" >
         <Header />
         <div className="outlet-container">
           <Outlet />

@@ -1,3 +1,22 @@
+.MuiDataGrid-root {
+  border: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  font-family: 'glegoo' !important;
+}
+
+.MuiDataGrid-columnHeader {
+  border-bottom: none !important;
+  background-color: '#f9f9fa' !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: 500;
+  color: #a0a0a0;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
 .MuiDataGrid-cell {
   border-right: none !important;
   border-bottom: none !important;
@@ -5,48 +24,18 @@
   cursor: default !important;
 }
 
-.MuiDataGrid-columnHeader {
-  cursor: default !important;
-  border-right: none !important;
-  border-bottom: none !important;
-}
-
-.MuiDataGrid-row:hover,
-.MuiDataGrid-cell:hover,
-.MuiDataGrid-columnHeader:hover {
-  background-color: transparent !important;
-}
-
-.MuiDataGrid-columnSeparator {
-  display: none !important;
-}
-
-.MuiDataGrid-root {
-  border: none !important;
-}
 
 .MuiDataGrid-cell:focus,
 .MuiDataGrid-columnHeader:focus {
   outline: none !important;
 }
 
-.MuiDataGrid-row.Mui-selected,
-.MuiDataGrid-cell.Mui-selected {
-  background-color: transparent !important;
+.MuiDataGrid-columnSeparator {
+  display: none !important;
 }
 
-.MuiDataGrid-root {
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-  font-family: 'glegoo'!important;
-}
 
-.MuiDataGrid-checkboxInput {
-  border: none !important;
-}
-
-.MuiDataGrid-checkboxInput:hover,
-.MuiDataGrid-checkboxInput:focus {
+.MuiDataGrid-checkboxInput:hover{
   background: none !important;
 }
 
@@ -56,11 +45,18 @@
   box-shadow: none !important;
 }
 
-
-
-.validate-custom-select:focus {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
+.MuiDataGrid-cell {
+  white-space: normal !important;
 }
 
+.MuiDataGrid-row:hover:nth-of-type(odd) {
+  background-color: white !important;
+}
+
+.MuiDataGrid-row:hover:nth-of-type(even) {
+  background-color: #f9f9fa !important;
+}
+
+.MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #ffffff;
+}
