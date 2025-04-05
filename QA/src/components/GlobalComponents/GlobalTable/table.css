@@ -1,0 +1,66 @@
+.MuiDataGrid-cell {
+  border-right: none !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  cursor: default !important;
+}
+
+.MuiDataGrid-columnHeader {
+  cursor: default !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+.MuiDataGrid-row:hover,
+.MuiDataGrid-cell:hover,
+.MuiDataGrid-columnHeader:hover {
+  background-color: transparent !important;
+}
+
+.MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+.MuiDataGrid-root {
+  border: none !important;
+}
+
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-columnHeader:focus {
+  outline: none !important;
+}
+
+.MuiDataGrid-row.Mui-selected,
+.MuiDataGrid-cell.Mui-selected {
+  background-color: transparent !important;
+}
+
+.MuiDataGrid-root {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  font-family: 'glegoo'!important;
+}
+
+.MuiDataGrid-checkboxInput {
+  border: none !important;
+}
+
+.MuiDataGrid-checkboxInput:hover,
+.MuiDataGrid-checkboxInput:focus {
+  background: none !important;
+}
+
+.validate-custom-select {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+
+.validate-custom-select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
