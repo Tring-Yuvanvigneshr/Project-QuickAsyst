@@ -30,7 +30,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
         <Box className="filter-box">
             <div className="filter-header">
                 <Typography variant="h6" className="filter-title">Filter</Typography>
-                <IconButton onClick={onClose} className="close-icon">
+                <IconButton disableRipple onClick={onClose} className="close-icon">
                     <CloseIcon />
                 </IconButton>
             </div>

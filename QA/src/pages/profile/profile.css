@@ -1,0 +1,87 @@
+.Profile_container{
+    padding: 1% 3% 1% 3%;
+    background-color: #f9f9fa;
+    height: 86vh;
+    overflow: auto;
+}
+
+.Profile_headder {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Profile-edit {
+    padding: 15px;
+    width: 110px;
+    background-color: #5d75f8;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.Profile-body {
+    margin-top: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.Profile-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 40px;
+    background-color: #fff;
+    color: #9ca3af;
+    gap: 32px;
+    width: 702px;
+}
+
+.Profile-row {
+    display: flex;  
+    gap: 16px;
+    width: 470px;
+}
+
+.Profile-item{
+    flex: 1;
+}
+
+.Profile-item-right {
+    color: #475569;
+    font-family: Glegoo;
+}
+
+.profile-top-img{
+    background: url('../../assets/images/person-doodle.svg');
+    background-color: #0f172a;
+    width: 700px;
+    height: 141px;
+    position: relative;
+}
+
+.profile-img{
+    position: absolute;
+    top: -85px;
+    left: 37%;
+    width: 162px;
+}
+
+.profile-pic{
+    width: 162px;
+    height: 162px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+::-webkit-scrollbar{
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #cbd1da;
+}

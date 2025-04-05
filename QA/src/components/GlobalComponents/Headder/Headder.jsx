@@ -13,11 +13,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import './headder.css';
+import { useNavigate } from 'react-router-dom'
+import './headder.css'
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const username = "Quickasyst Admin";
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +28,11 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleProfile = () => {
+    navigate('profile')
+    setAnchorEl(null)
+  }
 
   return (
     <Box>
@@ -56,7 +63,7 @@ export default function Header() {
                 className: 'header-menuPaper',
               }}
             >
-              <MenuItem disableRipple onClick={handleClose} className="header-menuItem">
+              <MenuItem disableRipple onClick={handleProfile} className="header-menuItem">
                 <ListItemIcon>
                   <ManageAccountsOutlinedIcon className="header-menuIcon" />
                 </ListItemIcon>
