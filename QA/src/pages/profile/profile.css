@@ -115,3 +115,10 @@
     gap: 10px;
     margin-top: 20px;
 }
+
+.image_remove_icon {
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
+    background: #fff !important;
+}

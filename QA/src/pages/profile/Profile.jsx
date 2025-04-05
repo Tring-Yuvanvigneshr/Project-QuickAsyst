@@ -43,9 +43,9 @@ const Profile = () => {
                                 <IconButton
                                     disableRipple
                                     onClick={handleResetImage}
-                                    sx={{ position: 'absolute', top: '5px', right: '5px', background: '#fff' }}
+                                    className='image_remove_icon'
                                 >
-                                    <Cancel sx={{ color: '#ff0000' }} />
+                                    <Cancel className='cancel-icon' sx={{ color: '#ff0000' }} />
                                 </IconButton>
                             )}
                         </label>
