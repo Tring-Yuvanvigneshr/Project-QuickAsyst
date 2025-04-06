@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import {
-  Box,
-  MenuItem,
-  Select,
-  IconButton,
-} from '@mui/material';
+import { Box, MenuItem, Select, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import './table.css';
-import '../../../utils/Manage_columns/manageColumns.css'
-
+import '../../../utils/Manage_columns/manageColumns.css';
 
 const SharedTable = ({ data, totalCount = 50, columns }) => {
-  const [page, setPage] = useState(0); 
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -30,7 +27,7 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
   };
 
   return (
-    <Box className='dataGrid-container' sx={{ width: '100%' }}>
+    <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
       <DataGrid
         rows={data}
         columns={columns}
@@ -43,18 +40,22 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
         disableColumnSelector
         disableColumnResize
         disableColumnSorting
-        columnHeaderHeight={40}
-        rowHeight={70}
         hideFooterPagination
+        columnHeaderHeight={isMobile ? 35 : 40}
+        rowHeight={isMobile ? 50 : 70}
         sx={{
           backgroundColor: '#f9f9fa',
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: '#f9f9fa',
+            fontSize: isMobile ? '12px' : '14px',
+          },
+          '& .MuiDataGrid-cell': {
+            fontSize: isMobile ? '12px' : '14px',
           },
         }}
       />
 
-<Box className="pagination-block">
+      <Box className="pagination-block" sx={{ flexDirection: isMobile ? 'column' : 'row' }}>
         <Box display="flex" alignItems="center" gap={1}>
           <span className="show-text">Show</span>
           <Select
@@ -64,7 +65,7 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
             IconComponent={IoIosArrowDown}
             className="page-size-select"
           >
-            {[5, 10, 25].map((size) => (
+            {[5, 10, 20].map((size) => (
               <MenuItem key={size} value={size}>
                 {size}
               </MenuItem>
@@ -76,6 +77,7 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
           <IconButton onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
             <ChevronLeft />
           </IconButton>
+
           {Array.from({ length: totalPages }, (_, i) => (
             <Box
               key={i}
@@ -85,6 +87,7 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
               {i + 1}
             </Box>
           ))}
+
           <IconButton onClick={() => handlePageChange(page + 1)} disabled={page + 1 >= totalPages}>
             <ChevronRight />
           </IconButton>

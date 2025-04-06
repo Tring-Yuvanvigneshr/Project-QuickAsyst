@@ -123,7 +123,7 @@ export const managecolumns = (onPublish) => [
   {
     field: 'email',
     headerName: 'Email',
-    width: 250,
+    width: 400,
     cellClassName: 'left-align',
   },
   {
