@@ -1,107 +1,181 @@
 .event-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 6px;
-    line-height: 1.4;
-  }
-  
-  .event-name {
-    font-weight: 500;
-    font-size: 14px;
-  }
-  
-  .event-league {
-    font-size: 12px;
-    color: #888;
-  }
-  
-  .date-block {
-    line-height: 1.5;
-    margin-top: 10px;
-  }
-  
-  .venue-block {
-    line-height: 1.5;
-  }
-  
-  .ticket-placement-block {
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 30px 0px 0px;
-  }
-  
-  .status-block {
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: white;
-    text-align: center;
-  }
-  
-  .status-block.verified {
-    background-color: #d4f5d4;
-    color: #118822;
-  }
-  
-  .status-block.invalid {
-    background-color: #ffe0cc;
-    color: #ff6600;
-  }
-  
-  .action-block {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 6px;
+  line-height: 1.4;
+}
 
-  .action-block > button {
-    border: 1px solid blue;
-    border-radius: 0;
-    padding: 5px 20px 5px 20px;
-    text-transform: none;
-  }
+.event-name {
+  font-weight: 500;
+  font-size: 14px;
+}
 
-  .action-block > button:hover {
-    background-color: transparent;
-  }
-  
-  .pagination-block {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .show-text {
-    font-size: 16px;
-    margin-right: 4px;
-  }
-  
-  .page-size-select {
-    width: 70px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  .pagination-number {
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #000;
-    margin: 0 4px;
-  }
-  
-  .pagination-number.active-page {
-    background-color: #5b73f2;
-    color: #fff;
-  }
-  
+.event-league {
+  font-size: 12px;
+  color: #888;
+}
+
+.date-block {
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.venue-block {
+  line-height: 1.5;
+}
+
+.ticket-placement-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 30px 0px 0px;
+}
+
+.status-block {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+}
+
+.status-block.verified {
+  background-color: #d4f5d4;
+  color: #118822;
+}
+
+.status-block.invalid {
+  background-color: #ffe0cc;
+  color: #ff6600;
+}
+
+.action-block {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.action-block>button {
+  border: 1px solid blue;
+  border-radius: 0;
+  padding: 5px 20px 5px 20px;
+  text-transform: none;
+}
+
+.action-block>button:hover {
+  background-color: transparent;
+}
+
+.pagination-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.show-text {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+.page-size-select {
+  width: 70px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.pagination-number {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  margin: 0 4px;
+}
+
+.pagination-number.active-page {
+  background-color: #5b73f2;
+  color: #fff;
+}
+
+
+
+
+.publish-dialog {
+  border-radius: 0px !important;
+  font-family: glegoo !important;
+}
+
+.publish-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px !important;
+  width: 416px;
+  height: 342px;
+}
+
+.publish-dialog-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.publish-dialog-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-family: Playfair Display !important;
+  color: #151A34;
+}
+
+.publish-dialog-subtitle {
+  color: #A1A5B7;
+  font-family: Glegoo !important;
+
+}
+
+.publish-dialog-actions {
+  margin-top: 20px;
+  justify-content: center !important;
+  padding-bottom: 24px !important;
+}
+
+.publish-cancel-button {
+  text-transform: none !important;
+  border: 1px solid #E3E5E8 !important;
+  color: #111827 !important;
+  background-color: #F9FAFB;
+  width: 138px;
+  margin-right: 8px;
+  border-radius: 0px !important;
+  font-family: glegoo !important;
+}
+
+.publish-cancel-button:hover {
+  background-color: transparent !important;
+}
+
+.publish-confirm-button {
+  background-color: #5D75F8;
+  text-transform: none !important;
+  width: 138px;
+  color: #fff;
+  border-radius: 0px !important;
+  font-family: glegoo !important;
+}
+
+.publish-confirm-button:hover {
+  background-color: #3f51b5;
+}
