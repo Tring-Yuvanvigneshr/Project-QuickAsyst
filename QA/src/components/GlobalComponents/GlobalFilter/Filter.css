@@ -113,3 +113,38 @@
 .Filter-select-event {
     color: #475569 !important;
 }
+
+@media (max-width: 768px) {
+    .filter-box {
+        max-width: 300px;
+        padding: 16px;
+        max-height: 400px;
+    }
+
+    .filter-title {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .close-icon {
+        font-size: 20px;
+        margin-top: 4px;
+    }
+
+    .filter-section-title {
+        font-size: 10px;
+        margin-top: 10px;
+    }
+
+    .button-reset,
+    .button-filter-submit {
+        width: 100%; 
+        height: 40px; 
+        font-size: 14px; 
+    }
+
+    .date-option {
+        font-size: 12px;
+        padding: 6px 8px; 
+    }
+}
