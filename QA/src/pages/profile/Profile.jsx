@@ -15,6 +15,11 @@ const Profile = () => {
     const [email, setEmail] = useState('quickasyst@mailinator.com');
     const [profileImage, setProfileImage] = useState(defaultImage);
 
+    const [errors, setErrors] = useState({
+        fullName: false,
+        phoneNumber: false,
+    });
+
     const { loading, error, data } = useQuery(GETUSERPROFILE);
 
     useEffect(() => {
@@ -37,12 +42,24 @@ const Profile = () => {
 
     const handleCancelEdit = () => {
         setIsEditing(false);
-    }
+        setErrors({ fullName: false, phoneNumber: false });
+    };
 
     const handleSubmitEdit = () => {
-        toast.success('Profile updated successfully');
-        setIsEditing(false);
+            toast.success('Profile updated successfully');
+            setIsEditing(false);
     };
+
+    const handleChange = (field, value) => {
+        if (field === 'fullName') {
+            setFullName(value);
+            setErrors(prev => ({ ...prev, fullName: value.trim() === '' }));
+        } else if (field === 'phoneNumber') {
+            setPhoneNumber(value);
+            setErrors(prev => ({ ...prev, phoneNumber: value.trim() === '' }));
+        }
+    };
+    
 
     return (
         <div className='Profile_container'>
@@ -102,19 +119,21 @@ const Profile = () => {
                                         <TextField
                                             fullWidth
                                             value={fullName}
-                                            onChange={(e) => setFullName(e.target.value)}
+                                            onChange={(e) => handleChange('fullName', e.target.value)}
                                         />
+                                        {errors.fullName && <p className="error-message"><br/>Full Name is required</p>}
                                     </div>
                                 </div>
 
                                 <div className='Profile-edit-row'>
                                     <div className='Profile-item'>Phone Number</div>
-                                    <div className=''>
+                                    <div>
                                         <TextField
                                             fullWidth
                                             value={phoneNumber}
-                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                         />
+                                        {errors.phoneNumber && <p className="error-message"><br/>Phone Number is required</p>}
                                     </div>
                                 </div>
 
@@ -124,7 +143,6 @@ const Profile = () => {
                                         <TextField
                                             fullWidth
                                             value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
                                             disabled
                                         />
                                     </div>
@@ -134,7 +152,7 @@ const Profile = () => {
                                     <Button
                                         disableRipple
                                         onClick={handleCancelEdit}
-                                        sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, color: 'black', width: '95px', height: '44px', fontFamily: 'Glegoo', fontWeight: '600', backgroundColor: '#f3f4f6' }}
+                                        className="profile-cancel-button"
                                     >
                                         Cancel
                                     </Button>
@@ -142,7 +160,8 @@ const Profile = () => {
                                         disableRipple
                                         variant="contained"
                                         onClick={handleSubmitEdit}
-                                        sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }}
+                                        className="profile-submit-button"
+                                        disabled={errors.fullName || errors.phoneNumber}
                                     >
                                         Submit
                                     </Button>

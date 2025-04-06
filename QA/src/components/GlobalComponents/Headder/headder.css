@@ -147,27 +147,39 @@
   margin-top: 10px;
 }
 
+.input-field:focus {
+    border: 1px solid rgb(156, 150, 150);
+    outline: none;
+}
+
+.input-field.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: -5px;
+}
+
 .password-reset-btn {
-  font-size: 16px;
-  text-transform: none;
+  font-size: 16px !important;
+  text-transform: none !important;
   border-radius: 0px !important;
   color: black;
   width: 95px;
   height: 44px;
-  font-family: 'Glegoo', serif;
-  font-weight: 600;
-  background-color: #f3f4f6;
-  border: none;
+  font-family: 'Glegoo' !important;
+  font-weight: 600 !important;
+  background-color: #f3f4f6 !important;
 }
 
 .password-apply-btn {
-  font-size: 16px;
-  text-transform: none;
+  font-size: 16px !important;
+  text-transform: none !important;
   border-radius: 0px !important;
   width: 95px;
   height: 44px;
-  font-family: 'Glegoo', serif;
+  font-family: 'Glegoo' !important;
   border: none;
-  background-color: #1976d2;
-  color: white;
 }

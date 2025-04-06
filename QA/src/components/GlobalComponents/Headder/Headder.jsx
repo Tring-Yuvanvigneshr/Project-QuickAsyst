@@ -17,7 +17,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { signOut } from 'aws-amplify/auth';
+import { signOut, updatePassword } from 'aws-amplify/auth';
 
 import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
 import { useQuery } from '@apollo/client';
@@ -35,7 +35,16 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const username = "Quickasyst Admin";
+
+  const [errors, setErrors] = useState({
+    oldPassword: false,
+    confirmPassword: false,
+    passwordStrength: false,
+  });
 
   const { loading, error, data } = useQuery(GETUSERPROFILE);
 
@@ -44,7 +53,7 @@ export default function Header() {
       toast.error('Failed to load user profile');
     }
   }, [error]);
-  
+
   const fullName = data ? `${data.getUserProfile.u_first_name} ${data.getUserProfile.u_last_name}` : username;
 
   const handleClickOpen = () => {
@@ -53,6 +62,10 @@ export default function Header() {
 
   const handledialogClose = () => {
     setOpen(false);
+    setOldPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+    setErrors({oldPassword: false,newPassword: false, confirmPassword: false})
   };
 
 
@@ -69,6 +82,34 @@ export default function Header() {
     setAnchorEl(null)
   }
 
+  const handleResetPassword = () => {
+    setConfirmPassword('')
+    setNewPassword('')
+    setOldPassword('')
+    setErrors({ oldPassword: false, passwordStrength: false, confirmPassword: false });
+  }
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast.error('New password and confirm password is different');
+      return;
+    }
+
+    try {
+      await updatePassword({ oldPassword, newPassword });
+      toast.success('Password changed successfully');
+      handledialogClose();
+    } catch (error) {
+      console.error('Password change error:', error);
+      toast.error(error.message || 'Failed to change password');
+    }
+  };
+
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -77,6 +118,30 @@ export default function Header() {
       toast.error('Failed to sign out');
     }
   };
+
+  const handleChange = (field, value) => {
+    if (field === 'oldPassword') {
+      setOldPassword(value);
+      setErrors((prev) => ({ ...prev, oldPassword: value.trim() === '' }));
+    }
+  
+    if (field === 'confirmPassword') {
+      setConfirmPassword(value);
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: value.trim() === '',
+      }));
+    }
+  
+    if (field === 'newPassword') {
+      setNewPassword(value);
+      setErrors((prev) => ({
+        ...prev,
+        passwordStrength: !validatePassword(value),
+      }));
+    }
+  };
+  
 
   return (
     <Box>
@@ -93,13 +158,13 @@ export default function Header() {
           </div>
 
           <Box className="header-userBox">
-            { loading ? (
+            {loading ? (
               <CircularProgress />
             ) : (
               <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
-              <AccountCircle className="header-accountIcon" />
-              <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
-            </IconButton>
+                <AccountCircle className="header-accountIcon" />
+                <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
+              </IconButton>
             )}
             <Menu
               id="menu-appbar"
@@ -121,15 +186,7 @@ export default function Header() {
               <MenuItem
                 disableRipple
                 onClick={handleClickOpen}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
+                className="header-menuItem"
               >
                 <ListItemIcon>
                   <LockResetOutlinedIcon className="header-menuIcon" />
@@ -158,25 +215,55 @@ export default function Header() {
                   <DialogContentText className='Dialog-content'>
                     Old password <br />
                     <div className='old-password-container'>
-                      <input type="text" placeholder='Enter old password' /><br />
+                      <input
+                        type="password"
+                        placeholder="Enter old password"
+                        value={oldPassword}
+                        onChange={(e) => handleChange('oldPassword', e.target.value)}
+                        className={`input-field ${errors.oldPassword ? 'error' : ''}`}
+                      />
+                      {errors.oldPassword && (
+                        <p className="error-message">Old password is required</p>
+                      )}
                     </div>
 
                     New password <br />
                     <div className='new-password-container'>
-                      <input type="text" placeholder='Enter new password' /><br />
+                      <input
+                        type="password"
+                        name="newPassword"
+                        placeholder="Confirm new password"
+                        value={newPassword}
+                        onChange={(e) => handleChange('newPassword', e.target.value)}
+                        className={`input-field ${errors.newPassword ? 'error' : ''}`}
+                      />
+                      {errors.passwordStrength && (
+                        <p className="error-message">
+                          Your password is weak
+                        </p>
+                      )}
                     </div>
 
                     Confirm password <br />
                     <div className='new-password-container'>
-                      <input type="text" placeholder='Enter retype password' />
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm new password"
+                        value={confirmPassword}
+                        onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                        className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
+                      />
+                      {errors.confirmPassword && <p className="error-message">Confirm password is required</p>}
                     </div>
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button disableRipple variant="outlined" size="small" className="password-reset-btn">
+                  <Button disableRipple variant="outlined" size="small" className="password-reset-btn" onClick={handleResetPassword}>
                     Reset
                   </Button>
-                  <Button disableRipple variant="contained" size="small" className="password-apply-btn">
+                  <Button disableRipple variant="contained" size="small" className="password-apply-btn" onClick={handleChangePassword}
+                    disabled={errors.oldPassword || errors.passwordStrength || errors.confirmPassword}>
                     Apply
                   </Button>
                 </DialogActions>

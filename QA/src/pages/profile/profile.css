@@ -122,3 +122,25 @@
     right: 5px;
     background: #fff !important;
 }
+
+.profile-cancel-button {
+    font-size: 16px !important;
+    text-transform: none !important;
+    border-radius: 0px !important;
+    color: black;
+    width: 95px;
+    height: 44px;
+    font-family: 'Glegoo' !important;
+    font-weight: 600 !important;
+    background-color: #f3f4f6 !important;
+}
+
+.profile-submit-button {
+    font-size: 16px !important;
+    text-transform: none !important;
+    border-radius: 0px !important;
+    width: 95px;
+    height: 44px;
+    font-family: 'Glegoo' !important;
+    border: none;
+}
