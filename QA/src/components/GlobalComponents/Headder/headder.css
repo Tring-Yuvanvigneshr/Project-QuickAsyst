@@ -139,3 +139,35 @@
   color: #9ca3af;
   font-family: glegoo;
 }
+
+.password-change-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.password-reset-btn {
+  font-size: 16px;
+  text-transform: none;
+  border-radius: 0px !important;
+  color: black;
+  width: 95px;
+  height: 44px;
+  font-family: 'Glegoo', serif;
+  font-weight: 600;
+  background-color: #f3f4f6;
+  border: none;
+}
+
+.password-apply-btn {
+  font-size: 16px;
+  text-transform: none;
+  border-radius: 0px !important;
+  width: 95px;
+  height: 44px;
+  font-family: 'Glegoo', serif;
+  border: none;
+  background-color: #1976d2;
+  color: white;
+}

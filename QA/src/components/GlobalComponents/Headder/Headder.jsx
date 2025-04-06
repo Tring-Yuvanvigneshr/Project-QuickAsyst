@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { signOut } from 'aws-amplify/auth';
+
+import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
+import { useQuery } from '@apollo/client';
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
+
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
@@ -26,9 +33,19 @@ import './headder.css'
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const username = "Quickasyst Admin";
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const username = "Quickasyst Admin";
+
+  const { loading, error, data } = useQuery(GETUSERPROFILE);
+
+  useEffect(() => {
+    if (error) {
+      toast.error('Failed to load user profile');
+    }
+  }, [error]);
+  
+  const fullName = data ? `${data.getUserProfile.u_first_name} ${data.getUserProfile.u_last_name}` : username;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,6 +69,15 @@ export default function Header() {
     setAnchorEl(null)
   }
 
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      toast.error('Failed to sign out');
+    }
+  };
+
   return (
     <Box>
       <AppBar position="static" className="header-appBar">
@@ -67,10 +93,14 @@ export default function Header() {
           </div>
 
           <Box className="header-userBox">
-            <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
+            { loading ? (
+              <CircularProgress />
+            ) : (
+              <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
               <AccountCircle className="header-accountIcon" />
-              <Typography onClick={handleMenu} className="header-username">{username}</Typography>
+              <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
             </IconButton>
+            )}
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -116,7 +146,8 @@ export default function Header() {
                   sx: {
                     width: '550px',
                     padding: '10px 20px 10px 20px'
-                  }                }}
+                  }
+                }}
               >
                 <DialogTitle>
                   <h3 className='Change_password_h3'>Change Password</h3>
@@ -142,14 +173,18 @@ export default function Header() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button disableRipple variant="outlined" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, color: 'black', width: '95px', height: '44px', fontFamily: 'Glegoo', fontWeight: '600', backgroundColor: '#f3f4f6', border: 'none' }}>Reset</Button>
-                  <Button disableRipple variant="contained" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }}>Apply</Button>
+                  <Button disableRipple variant="outlined" size="small" className="password-reset-btn">
+                    Reset
+                  </Button>
+                  <Button disableRipple variant="contained" size="small" className="password-apply-btn">
+                    Apply
+                  </Button>
                 </DialogActions>
               </Dialog>
 
               <MenuItem
                 disableRipple
-                onClick={handleClose}
+                onClick={handleSignOut}
                 sx={{
                   color: '#475569',
                   fontFamily: 'glegoo',
