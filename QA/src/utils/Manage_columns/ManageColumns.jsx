@@ -103,7 +103,17 @@ export const managecolumns = (onPublish) => [
     headerName: 'Status',
     width: 150,
     renderCell: (params) => (
-      <span className={`status-block ${params.value === 'Verified' ? 'verified' : 'invalid'}`}>
+      <span className={`status-block ${params.value === 'Verified' ? 'verified' : params.value === 'ToBeVerified' ? 'tobeverified' : 'rejected'}`}>
+        {params.value}
+      </span>
+    ),
+  },
+  {
+    field: 'donationStatus',
+    headerName: 'DonationStatus',
+    width: 150,
+    renderCell: (params) => (
+      <span className={`status-block ${params.value === 'Donated' ? 'Donated' : 'NotDonated'}`}>
         {params.value}
       </span>
     ),
@@ -111,13 +121,13 @@ export const managecolumns = (onPublish) => [
   {
     field: 'returnEmail',
     headerName: 'Return Email',
-    width: 400,
+    width: 200,
     cellClassName: 'left-align',
   },
   {
     field: 'userName',
     headerName: 'User Name',
-    width: 180,
+    width: 250,
     cellClassName: 'left-align',
   },
   {
@@ -145,12 +155,11 @@ export const managecolumns = (onPublish) => [
       
       <div className="action-block">
         <Button
-          onClick={() => onPublish(params.row.Publish_id)}
+          onClick={() => onPublish(params.row)}
           disabled={params.row.status !== 'Verified'}
         >
           Publish
         </Button>
-        <EditIcon />
       </div>
     ),
   },

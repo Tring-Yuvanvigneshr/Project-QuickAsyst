@@ -22,6 +22,8 @@
   border-bottom: none !important;
   border-top: none !important;
   cursor: default !important;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 700;
 }
 
 

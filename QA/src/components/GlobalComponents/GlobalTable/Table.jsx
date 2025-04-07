@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, MenuItem, Select, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, MenuItem, Select, useMediaQuery, useTheme } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import './table.css';
 import '../../../utils/Manage_columns/manageColumns.css';
 
-const SharedTable = ({ data, totalCount = 50, columns }) => {
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+
+const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
+  
+  const pageSizes = [5, 10, 20];  
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
-  const handlePageChange = (newPage) => {
-    if (newPage >= 0 && newPage < totalPages) {
-      setPage(newPage);
-    }
+  const handlePageSizeChange = (newSize) => {
+    onPageSizeChange(newSize);
+    onOffSetChange(0);
   };
 
-  const handlePageSizeChange = (newSize) => {
-    setPageSize(newSize);
-    setPage(0);
-  };
+  const handlePageChange = (newPage) => {
+    onOffSetChange(newPage);
+  }
 
   return (
     <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
@@ -32,8 +32,6 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
         rows={data}
         columns={columns}
         pageSize={pageSize}
-        pagination
-        paginationMode="server"
         checkboxSelection
         disableRowSelectionOnClick
         disableColumnMenu
@@ -65,7 +63,7 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
             IconComponent={IoIosArrowDown}
             className="page-size-select"
           >
-            {[5, 10, 20].map((size) => (
+            {pageSizes.map((size) => (
               <MenuItem key={size} value={size}>
                 {size}
               </MenuItem>
@@ -73,24 +71,10 @@ const SharedTable = ({ data, totalCount = 50, columns }) => {
           </Select>
         </Box>
 
-        <Box display="flex" alignItems="center" gap={1}>
-          <IconButton onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
-            <ChevronLeft />
-          </IconButton>
-
-          {Array.from({ length: totalPages }, (_, i) => (
-            <Box
-              key={i}
-              onClick={() => handlePageChange(i)}
-              className={`pagination-number ${i === page ? 'active-page' : ''}`}
-            >
-              {i + 1}
-            </Box>
-          ))}
-
-          <IconButton onClick={() => handlePageChange(page + 1)} disabled={page + 1 >= totalPages}>
-            <ChevronRight />
-          </IconButton>
+        <Box>
+          <Stack spacing={2}>
+            <Pagination onChange={(e,value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded"/>
+          </Stack>
         </Box>
       </Box>
     </Box>

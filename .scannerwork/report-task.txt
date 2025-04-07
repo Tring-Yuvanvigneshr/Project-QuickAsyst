@@ -1,0 +1,6 @@
+projectKey=Quickasyst-frontend
+serverUrl=http://quality.tringbytes.com
+serverVersion=9.9.8.100196
+dashboardUrl=http://quality.tringbytes.com/dashboard?id=Quickasyst-frontend
+ceTaskId=AZYQFFsDCe_vaTPJO5rm
+ceTaskUrl=http://quality.tringbytes.com/api/ce/task?id=AZYQFFsDCe_vaTPJO5rm
