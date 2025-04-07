@@ -144,10 +144,14 @@
 
 .publish-content-title {
   color: #9ca3af;
+  font-size: 14px !important;
+  font-family: glegoo;
 }
 
 .publish-content-value {
   color: #475569;
+  font-size: 14px !important;
+  font-family: glegoo;
 }
 
 .publish-list-price {
@@ -158,9 +162,42 @@
   display: flex;
   align-items: center !important;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .publish-input-container-input{
   background-color: white !important;
   width: 200px;
+  height: 40px;
+  outline: none;
+  border: none;
+  padding: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.reset-btn {
+  font-size: 16px !important;
+  text-transform: none !important;
+  border-radius: 0px !important;
+  color: black;
+  width: 95px;
+  height: 44px;
+  font-family: 'Glegoo' !important;
+  font-weight: 600 !important;
+  background-color: #f3f4f6 !important;
+}
+
+.apply-btn {
+  font-size: 16px !important;
+  text-transform: none !important;
+  border-radius: 0px !important;
+  width: 95px;
+  height: 44px;
+  font-family: 'Glegoo' !important;
+  border: none;
 }

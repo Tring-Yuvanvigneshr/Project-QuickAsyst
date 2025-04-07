@@ -65,7 +65,7 @@ export const managecolumns = (onPublish) => [
     field: 'Ticket placements',
     headerName: 'Ticket placements',
     flex: 1,
-    minWidth: 180,
+    minWidth: 150,
     renderCell: (params) => (
       <div className="ticket-placement-block">
         <div>{params.row.section}</div>
@@ -107,7 +107,7 @@ export const managecolumns = (onPublish) => [
     field: 'status',
     headerName: 'Status',
     flex: 1,
-    minWidth: 160,
+    minWidth: 120,
     renderCell: (params) => (
       <span className={`status-block ${params.value === 'Verified' ? 'verified' : params.value === 'ToBeVerified' ? 'tobeverified' : 'rejected'}`}>
         {params.value}

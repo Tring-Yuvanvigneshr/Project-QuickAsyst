@@ -1,0 +1,46 @@
+.paymont-status-block.Inprogress {
+    background-color: #fff5ec;
+    color: #fb923c;
+    padding: 4px 10px;
+}
+
+.paymont-status-block.rejected {
+    color: #ef4444;
+    background-color: #ff004d1a;
+    padding: 4px 10px;
+}
+
+.paymont-status-block.Settled {
+    background-color: #22c55e1a;
+    color: #22c55e;
+    padding: 4px 10px;
+}
+
+
+.Payout-Ticket-Datails-container {
+    position: relative;
+}
+
+.Payout-Ticket-Datails {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.Payout-Ticket-Datails-input {
+    width: 159px;
+    height: 35px;
+    padding: 10px;
+    outline: none;
+}
+
+.Payout-Ticket-Datails-input:focus {
+    border: black;
+    outline: none;
+}
+
+.Payout-Ticket-Datails-Button {
+    text-transform: none !important;
+    color: #B9BDC6 !important;
+    border-radius: 0px !important;
+}

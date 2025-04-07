@@ -9,8 +9,8 @@ import '../../../utils/Manage_columns/manageColumns.css';
 
 
 const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
-  
-  const pageSizes = [5, 10, 20];  
+
+  const pageSizes = [5, 10, 20];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -73,7 +73,7 @@ const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, pa
 
         <Box className='pagination'>
           <Stack className='' spacing={2}>
-            <Pagination onChange={(e,value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded"/>
+            <Pagination onChange={(e, value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
           </Stack>
         </Box>
       </Box>

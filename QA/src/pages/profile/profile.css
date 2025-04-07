@@ -144,3 +144,82 @@
     font-family: 'Glegoo' !important;
     border: none;
 }
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .Profile_content,
+    .Profile_content-edit {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .Profile-row {
+        width: 100%;
+    }
+
+    .Profile-item {
+        margin-bottom: 10px;
+    }
+
+    .Profile-item-right {
+        text-align: center;
+    }
+
+    .profile-img {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -70px;
+        width: 140px;
+    }
+
+    .Profile-edit-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-cancel-button,
+    .profile-submit-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .Profile-body {
+        
+        margin-top: 30%;
+        font-size: 14px;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .Profile_headder h2 {
+        font-size: 20px;
+    }
+
+    .Profile-edit {
+        padding: 10px;
+        font-size: 10px;
+        width: 80px;
+    }
+
+    .Profile-content {
+        padding: 20px;
+    }
+
+
+    .profile-img {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -60px;
+        width: 120px;
+    }
+}
