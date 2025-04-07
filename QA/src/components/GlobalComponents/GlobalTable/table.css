@@ -37,7 +37,7 @@
 }
 
 
-.MuiDataGrid-checkboxInput:hover{
+.MuiDataGrid-checkboxInput:hover {
   background: none !important;
 }
 
@@ -64,9 +64,12 @@
 }
 
 
+@media (max-width: 768px) {
+  .pagination {
+    overflow: hidden;
+  }
 
-
-
-
-
-
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

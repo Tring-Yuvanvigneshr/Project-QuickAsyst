@@ -71,8 +71,8 @@ const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, pa
           </Select>
         </Box>
 
-        <Box>
-          <Stack spacing={2}>
+        <Box className='pagination'>
+          <Stack className='' spacing={2}>
             <Pagination onChange={(e,value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded"/>
           </Stack>
         </Box>

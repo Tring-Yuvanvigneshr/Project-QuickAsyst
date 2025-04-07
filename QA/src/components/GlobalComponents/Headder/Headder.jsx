@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,48 +17,44 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { signOut, updatePassword } from 'aws-amplify/auth';
+
+import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
+import { useQuery } from '@apollo/client';
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
+
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
-
-
+import { useNavigate } from 'react-router-dom'
 import './headder.css'
 
-const Search = styled('div')(() => ({
-  position: 'relative',
-  width: '342px',
-  height: '44px',
-  backgroundColor: '#F3F4F6'
-}));
-
-const SearchIconWrapper = styled('div')(() => ({
-  padding: '12px',
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(() => ({
-  color: 'black',
-  width: '100%',
-  fontFamily: 'glegoo',
-  fontSize: '14px',
-  '& .MuiInputBase-input': {
-    padding: '12px',
-    paddingLeft: '44px',
-  },
-}));
-
-export default function Hedder() {
+export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const username = "Quickasyst Admin";
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const username = "Quickasyst Admin";
+
+  const [errors, setErrors] = useState({
+    oldPassword: false,
+    confirmPassword: false,
+    passwordStrength: false,
+  });
+
+  const { loading, error, data } = useQuery(GETUSERPROFILE);
+
+  useEffect(() => {
+    if (error) {
+      toast.error('Failed to load user profile');
+    }
+  }, [error]);
+
+  const fullName = data ? `${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}` : username;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,6 +62,10 @@ export default function Hedder() {
 
   const handledialogClose = () => {
     setOpen(false);
+    setOldPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+    setErrors({ oldPassword: false, newPassword: false, confirmPassword: false })
   };
 
 
@@ -83,61 +82,105 @@ export default function Hedder() {
     setAnchorEl(null)
   }
 
+  const handleResetPassword = () => {
+    setConfirmPassword('')
+    setNewPassword('')
+    setOldPassword('')
+    setErrors({ oldPassword: false, passwordStrength: false, confirmPassword: false });
+  }
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handleChangePassword = async () => {
+    console.log(newPassword);
+
+    if (newPassword !== confirmPassword) {
+      toast.error('New password and confirm password is different');
+      return;
+    }
+
+    try {
+      await updatePassword({ oldPassword, newPassword });
+      toast.success('Password changed successfully');
+      handledialogClose();
+    } catch (error) {
+      console.error('Password change error:', error);
+      toast.error(error.message || 'Failed to change password');
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      toast.error('Failed to sign out');
+    }
+  };
+
+  const handleChange = (field, value) => {
+    if (field === 'oldPassword') {
+      setOldPassword(value);
+      setErrors((prev) => ({ ...prev, oldPassword: value.trim() === '' }));
+    }
+
+    if (field === 'confirmPassword') {
+      setConfirmPassword(value);
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: value.trim() === '',
+      }));
+    }
+
+    if (field === 'newPassword') {
+      setNewPassword(value);
+      setErrors((prev) => ({
+        ...prev,
+        passwordStrength: !validatePassword(value),
+      }));
+    }
+  };
+
+
   return (
     <Box>
-      <AppBar position="static" sx={{ backgroundColor: "#FFFFFF", height: "77px", boxShadow: 'none', borderBottom: '1px solid #E3E5E8', padding: '0px 10px 0px 10px' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '7px' }}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon sx={{ color: '#B9BDC6' }} />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" />
-          </Search>
+      <AppBar position="static" className="header-appBar">
+        <Toolbar className="header-toolbar">
+          <div className="header-search">
+            <div className="header-searchIconWrapper">
+              <SearchIcon className="header-searchIcon" />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              className="header-searchInput"
+            />
+          </div>
 
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              onClick={handleMenu}
-              disableRipple
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-              }}
-            >
-              <AccountCircle sx={{ color: '#D9D9D9', fontSize: '50px', marginRight: 1 }} />
-              <Typography onClick={handleMenu} sx={{ color: '#333', fontSize: '14px', fontWeight: '700', fontFamily: 'glegoo', textOverflow: 'ellipsis', maxWidth: '90px', overflow: 'hidden', whiteSpace: 'nowrap', cursor: 'pointer' }}>{username}</Typography>
-            </IconButton>
+          <Box className="header-userBox">
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
+                <AccountCircle className="header-accountIcon" />
+                <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
+              </IconButton>
+            )}
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              sx={{
-                marginTop: '-7px',
-              }}
+              className="header-menu"
               PaperProps={{
-                sx: {
-                  minWidth: 230,
-                  fontSize: '16px',
-                  padding: '0px',
-                },
+                className: 'header-menuPaper',
               }}
             >
-              <MenuItem
-                disableRipple
-                onClick={handleProfile}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
-              >
+              <MenuItem disableRipple onClick={handleProfile} className="header-menuItem">
                 <ListItemIcon>
-                  <ManageAccountsOutlinedIcon sx={{ color: '#B9BDC6' }} />
+                  <ManageAccountsOutlinedIcon className="header-menuIcon" />
                 </ListItemIcon>
                 My Account
               </MenuItem>
@@ -145,65 +188,18 @@ export default function Hedder() {
               <MenuItem
                 disableRipple
                 onClick={handleClickOpen}
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
+                className="header-menuItem"
               >
                 <ListItemIcon>
-                  <LockResetOutlinedIcon sx={{ color: '#B9BDC6' }} />
+                  <LockResetOutlinedIcon className="header-menuIcon" />
                 </ListItemIcon>
                 Change Password
               </MenuItem>
 
-              <Dialog
-                open={open}
-                keepMounted
-                onClose={handledialogClose}
-                className="password-dialog"
-                PaperProps={{
-                  sx: {
-                    width: '550px',
-                    padding: '10px 20px 10px 20px'
-                  }                }}
-              >
-                <DialogTitle>
-                  <h3 className='Change_password_h3'>Change Password</h3>
-                  <h5 className='Change_password_h5'>Enter your new password</h5>
-                </DialogTitle>
-
-                <DialogContent>
-                  <DialogContentText className='Dialog-content'>
-                    Old password <br />
-                    <div className='old-password-container'>
-                      <input type="text" placeholder='Enter old password' /><br />
-                    </div>
-
-                    New password <br />
-                    <div className='new-password-container'>
-                      <input type="text" placeholder='Enter new password' /><br />
-                    </div>
-
-                    Confirm password <br />
-                    <div className='new-password-container'>
-                      <input type="text" placeholder='Enter retype password' />
-                    </div>
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button disableRipple variant="outlined" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, color: 'black', width: '95px', height: '44px', fontFamily: 'Glegoo', fontWeight: '600', backgroundColor: '#f3f4f6', border: 'none' }}>Reset</Button>
-                  <Button disableRipple variant="contained" size="small" sx={{ fontSize: '16px', textTransform: 'none', borderRadius: 0, width: '95px', height: '44px', fontFamily: 'Glegoo', border: 'none' }}>Apply</Button>
-                </DialogActions>
-              </Dialog>
-
               <MenuItem
                 disableRipple
-                onClick={handleClose}
+                onClick={handleSignOut}
+                className="header-menuItem"
                 sx={{
                   color: '#475569',
                   fontFamily: 'glegoo',
@@ -214,13 +210,89 @@ export default function Hedder() {
                   },
                 }}
               >
+
+                <Dialog
+                  open={open}
+                  keepMounted
+                  onClose={handledialogClose}
+                  className="password-dialog"
+                  PaperProps={{
+                    sx: {
+                      width: '550px',
+                      padding: '10px 20px 10px 20px'
+                    }
+                  }}
+                >
+                  <DialogTitle>
+                    <h3 className='Change_password_h3'>Change Password</h3>
+                    <h5 className='Change_password_h5'>Enter your new password</h5>
+                  </DialogTitle>
+
+                  <DialogContent>
+                    <DialogContentText className='Dialog-content'>
+                      Old password <br />
+                      <div className='old-password-container'>
+                        <input
+                          type="password"
+                          placeholder="Enter old password"
+                          value={oldPassword}
+                          onChange={(e) => handleChange('oldPassword', e.target.value)}
+                          className={`input-field ${errors.oldPassword ? 'error' : ''}`}
+                        />
+                        {errors.oldPassword && (
+                          <p className="error-message">Old password is required</p>
+                        )}
+                      </div>
+
+                      New password <br />
+                      <div className='new-password-container'>
+                        <input
+                          type="password"
+                          name="newPassword"
+                          placeholder="Confirm new password"
+                          value={newPassword}
+                          onChange={(e) => handleChange('newPassword', e.target.value)}
+                          className={`input-field ${errors.newPassword ? 'error' : ''}`}
+                        />
+                        {errors.passwordStrength && (
+                          <p className="error-message">
+                            Your password is weak
+                          </p>
+                        )}
+                      </div>
+
+                      Confirm password <br />
+                      <div className='new-password-container'>
+                        <input
+                          type="password"
+                          name="confirmPassword"
+                          placeholder="Confirm new password"
+                          value={confirmPassword}
+                          onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                          className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
+                        />
+                        {errors.confirmPassword && <p className="error-message">Confirm password is required</p>}
+                      </div>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button disableRipple variant="outlined" size="small" className="password-reset-btn" onClick={handleResetPassword}>
+                      Reset
+                    </Button>
+                    <Button disableRipple variant="contained" size="small" className="password-apply-btn" onClick={handleChangePassword}
+                      disabled={errors.oldPassword || errors.passwordStrength || errors.confirmPassword}>
+                      Apply
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+
                 <ListItemIcon>
-                  <LogoutIcon sx={{ color: '#B9BDC6' }} />
+                  <LogoutIcon className="header-menuIcon" />
                 </ListItemIcon>
                 Sign out
               </MenuItem>
             </Menu>
-
           </Box>
         </Toolbar>
       </AppBar>

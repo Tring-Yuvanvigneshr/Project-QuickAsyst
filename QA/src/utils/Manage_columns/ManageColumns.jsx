@@ -5,7 +5,6 @@ import {
   Select,
 } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
-import EditIcon from '@mui/icons-material/Edit';
 
 export const managecolumns = (onPublish) => [
   {
@@ -164,11 +163,3 @@ export const managecolumns = (onPublish) => [
     ),
   },
 ];
-
-
-// const columnGroupingModel = [
-//   {
-//     groupId: 'Ticket Placements',
-//     children: [{ field: 'section' }, { field: 'row' }, { field: 'seat' }],
-//   },
-// ];
