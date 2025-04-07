@@ -54,7 +54,7 @@ export default function Header() {
     }
   }, [error]);
 
-  const fullName = data ? `${data.getUserProfile.u_first_name} ${data.getUserProfile.u_last_name}` : username;
+  const fullName = data ? `${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}` : username;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -95,6 +95,8 @@ export default function Header() {
   };
 
   const handleChangePassword = async () => {
+    console.log(newPassword);
+    
     if (newPassword !== confirmPassword) {
       toast.error('New password and confirm password is different');
       return;

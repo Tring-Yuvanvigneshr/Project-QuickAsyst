@@ -14,13 +14,18 @@ const Profile = () => {
     const [phoneNumber, setPhoneNumber] = useState('(123) 456-6575');
     const [email, setEmail] = useState('quickasyst@mailinator.com');
     const [profileImage, setProfileImage] = useState(defaultImage);
+    const [nameChange, setNameChange] = useState('')
+    const [phoneChange, setPhoneChange] = useState('')
+    const [] = useState()
 
     const [errors, setErrors] = useState({
         fullName: false,
         phoneNumber: false,
     });
 
-    const { loading, error, data } = useQuery(GETUSERPROFILE);
+    const { loading, error, data } = useQuery(GETUSERPROFILE, {
+        fetchPolicy: 'network-only'
+    });
 
     useEffect(() => {
         if (error) {
@@ -30,9 +35,12 @@ const Profile = () => {
 
     useEffect(() => {
         if (data) {
-            setFullName(`${data.getUserProfile.u_first_name} ${data.getUserProfile.u_last_name}`);
-            setPhoneNumber(data.getUserProfile.u_phone_number);
-            setEmail(data.getUserProfile.u_email_id);
+            setFullName(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`);
+            setPhoneNumber(data.get_user_profile[0].u_phone_number);
+            setEmail(data.get_user_profile[0].u_email_id);
+
+            setNameChange(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`)
+            setPhoneChange(data.get_user_profile[0].u_phone_number)
         }
     }, [data]);
 
@@ -41,6 +49,8 @@ const Profile = () => {
     };
 
     const handleCancelEdit = () => {
+        setNameChange(fullName);
+        setPhoneChange(phoneNumber);
         setIsEditing(false);
         setErrors({ fullName: false, phoneNumber: false });
     };
@@ -52,10 +62,10 @@ const Profile = () => {
 
     const handleChange = (field, value) => {
         if (field === 'fullName') {
-            setFullName(value);
+            setNameChange(value);
             setErrors(prev => ({ ...prev, fullName: value.trim() === '' }));
         } else if (field === 'phoneNumber') {
-            setPhoneNumber(value);
+            setPhoneChange(value);
             setErrors(prev => ({ ...prev, phoneNumber: value.trim() === '' }));
         }
     };
@@ -118,10 +128,10 @@ const Profile = () => {
                                     <div>
                                         <TextField
                                             fullWidth
-                                            value={fullName}
+                                            value={nameChange}
                                             onChange={(e) => handleChange('fullName', e.target.value)}
                                         />
-                                        {errors.fullName && <p className="error-message"><br/>Full Name is required</p>}
+                                    {errors.fullName && <p className="error-message"><br/>Full Name is required</p>}
                                     </div>
                                 </div>
 
@@ -130,9 +140,9 @@ const Profile = () => {
                                     <div>
                                         <TextField
                                             fullWidth
-                                            value={phoneNumber}
+                                            value={phoneChange}
                                             onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                                        />
+                                            />
                                         {errors.phoneNumber && <p className="error-message"><br/>Phone Number is required</p>}
                                     </div>
                                 </div>
