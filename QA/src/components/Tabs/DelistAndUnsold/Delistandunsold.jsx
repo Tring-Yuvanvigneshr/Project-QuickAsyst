@@ -1,40 +1,75 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { FILTERUNSOLDTICKETS } from './../../../Graphql/UnsoldTickets/unsoldQuery.js';
+import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
+import { DelistandunsoldColumns } from './../../../utils/DelistandSoldcolumns/DelistandSoldcolumns.jsx';
+import {
+  CircularProgress,
+  Box
+} from '@mui/material';
 
-const Delistandunsold = () => {
+const Delistandunsold = ({ filter }) => {
+
+    const [tableData, setTableData] = useState([]);
+    const [tableSize, setTableSize] = useState([]);
+    const [pageChange, setPageChange] = useState(10);
+    const [offSet, setOffSet] = useState(0);
 
     const { loading, error, data, refetch } = useQuery(FILTERUNSOLDTICKETS, {
         variables: {
-            array_tpid: null,
-            enddate: null,
-            leagueId: null,
-            order_by: [
-                { tp_updated_at: 'desc' },
-                { tp_id: 'asc' }
-            ],
-            pageOffset: 0,
-            pageSize: 10,
-            search_event: '%',
-            startdate: null,
-            ticketId: null,
+            ...filter,
             ticketPlacementId: null,
-            ticketStatus: null
+            pageSize: pageChange,
+            pageOffset: pageChange * offSet
         },
+        fetchPolicy: 'network-only'
     });
 
     useEffect(() => {
-        refetch()
-    }, [refetch])
+        if (data && data.filterUnsoldTickets) {
+            const formattedData = data.filterUnsoldTickets.map((item, index) => ({
+                id: index + 1,
+                event: item.e_name,
+                date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                venue: item.e_address,
+                venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                section: item.tp_section.toUpperCase(),
+                row: item.tp_row.toUpperCase(),
+                seat: item.tp_seat_no,
+                status: item.tp_status,
+                userName: item.u_full_name,
+                email: item.u_email_id,
+                period: "1 Days",
+                league_name: item.l_name,
+                closeStatus: item.e_status === 'closed' ? 'Closed' : ''
+            }));
+            setTableData(formattedData);
+            setTableSize(data.filterUnsoldTickets_aggreagate.aggregate.count)
+        }
+    }, [data])
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <CircularProgress />
+            </Box>
+        );
+    }
 
 
     return (
-        <div>
-            <h2>Delist and Unsold</h2>
-        </div>
+        <>
+            <SharedTable
+                checkboxisdisabled={false}
+                data={tableData}
+                columns={DelistandunsoldColumns()}
+                totalCount={tableSize}
+                pageSize={pageChange}
+                onPageSizeChange={setPageChange}
+                page={offSet}
+                onOffSetChange={setOffSet}
+            />
+        </>
     )
 }
 

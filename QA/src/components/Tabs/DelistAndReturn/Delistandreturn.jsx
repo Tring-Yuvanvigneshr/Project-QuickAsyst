@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { FILTERRETURNTICKETS } from './../../../Graphql/Return/returnQuery.js';
 
 
-const Delistandreturn = () => {
+const Delistandreturn = ({ filter }) => {
 
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);

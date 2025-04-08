@@ -1,11 +1,12 @@
 .filter-box {
+    margin-top: 10px;
     padding: 26px;
     width: 379px;
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     overflow: auto;
-    max-height: 500px;
+    max-height: 480px;
 }
 
 .filter-box::-webkit-scrollbar {

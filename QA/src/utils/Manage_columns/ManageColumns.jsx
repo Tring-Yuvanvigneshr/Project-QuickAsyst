@@ -56,23 +56,35 @@ export const managecolumns = (onPublish) => [
     flex: 1,
     minWidth: 150,
     renderCell: (params) => {
-      const date = new Date(params.value);
-      const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-      return date.toLocaleString('us', options);
-    }
+      const formattedDate = dayjs(params.value);
+      return (
+        <div className="date-block">
+          <div>{formattedDate.format('ddd, DD MMM YYYY')}</div>
+          <div>{formattedDate.format('hh:mm A')} CDT</div>
+        </div>
+      );
+    },
   },
   {
-    field: 'Ticket placements',
-    headerName: 'Ticket placements',
+    field: 'section',
+    headerName: 'Section',
     flex: 1,
-    minWidth: 180,
-    renderCell: (params) => (
-      <div className="ticket-placement-block">
-        <div>{params.row.section}</div>
-        <div>{params.row.row}</div>
-        <div>{params.row.seat}</div>
-      </div>
-    )
+    minWidth: 120,
+    cellClassName: 'left-align',
+  },
+  {
+    field: 'row',
+    headerName: 'Row',
+    flex: 1,
+    minWidth: 120,
+    cellClassName: 'left-align',
+  },
+  {
+    field: 'seat',
+    headerName: 'Seat',
+    flex: 1,
+    minWidth: 120,
+    cellClassName: 'left-align',
   },
   {
     field: 'validate',
@@ -164,7 +176,7 @@ export const managecolumns = (onPublish) => [
     flex: 1,
     minWidth: 120,
     renderCell: (params) => (
-      
+
       <div className="action-block">
         <Button
           onClick={() => onPublish(params.row)}

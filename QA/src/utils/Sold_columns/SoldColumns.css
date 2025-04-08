@@ -4,7 +4,7 @@
     padding: 4px 10px;
 }
 
-.paymont-status-block.rejected {
+.paymont-status-block.Failed {
     color: #ef4444;
     background-color: #ff004d1a;
     padding: 4px 10px;
@@ -44,3 +44,30 @@
     color: #B9BDC6 !important;
     border-radius: 0px !important;
 }
+
+
+
+
+.soldPrice-container {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  
+  .soldPrice-item {
+    min-width: 60px;
+    text-align: right;
+    padding-right: 16px;
+  }
+  
+  .soldPrice-divider {
+    border-left: 1px solid #e5e7eb;
+    height: 24px;
+    margin-right: 12px;
+  }
+  
+  .soldPrice-icon {
+    height: 20px;
+    width: 20px;
+  }
+  

@@ -57,3 +57,39 @@ export const FILTERSOLDTICKETS = gql`
   }
 }
 `
+
+
+export const INVOICEDETAILS = gql`
+  query InvoiceDetails ($ticketPlacementId: uuid!) {
+  ticket_placement_by_pk(tp_id: $ticketPlacementId) {
+    tp_id
+    tp_logitix_amount
+    tp_sold_amount
+    tp_quick_cut_amount
+    payment_transaction {
+      transactionId: pt_invoice_number
+      status: pt_transaction_status
+      paymentUpdated: pt_transaction_date
+      payementId: pt_id
+      stripe_transfers {
+        st_invoice
+      }
+    }
+    seatNo: tp_seat_no
+    section: tp_section
+    row: tp_row
+    ticket {
+      event {
+        eventName: e_name
+        eventDate: e_date
+        eventAddress: e_address
+        eventId: e_id
+        eventBrandName: e_brand_name
+        eventStatus: e_status
+      }
+    }
+  }
+}
+`
+
+

@@ -16,7 +16,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         renderCell: (params) => (
             <div className="event-block">
                 <span className="event-name">{params.value}</span>
-                <span className="event-league">{params.row.league_name}</span>
+                <span className="event-league">{params.row.league_name} - <label className='error-message'>{params.row.closeStatus}</label></span>
             </div>
         )
     },
@@ -39,7 +39,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         field: 'venue',
         headerName: 'Venue',
         flex: 1,
-        minWidth: 240,
+        minWidth: 200,
         renderCell: (params) => {
             const vp = params.value.split(', ');
             return (
@@ -50,6 +50,17 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
                 </div>
             );
         },
+    },
+    {
+        field: 'venueTime',
+        headerName: 'Venue Time',
+        flex: 1,
+        minWidth: 150,
+        renderCell: (params) => {
+            const date = new Date(params.value);
+            const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return date.toLocaleString('us', options);
+        }
     },
     {
         field: 'Ticket placements',
@@ -68,10 +79,10 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         field: 'status',
         headerName: 'Status',
         flex: 1,
-        minWidth: 120,
+        minWidth: 220,
         renderCell: (params) => (
-            <span className={`paymont-status-block ${params.value === 'Inprogress' ? 'Inprogress' : params.value === 'Success' ? 'Settled' : 'rejected'}`}>
-                {params.value}
+            <span className={`paymont-status-block ${params.value === 'Inprogress' ? 'Inprogress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : 'Settled'}`}>
+                {params.value === 'Inprogress' ? 'Settlement In Progress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : 'Sold'}
             </span>
         ),
     },
@@ -79,32 +90,66 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         field: 'sold price',
         headerName: 'Sold Price',
         flex: 1,
-        minWidth: 220,
+        minWidth: 250,
         renderCell: (params) => (
-            <div className="sold-price-container" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div className="sold-price" style={{ fontWeight: 500, color: '#374151', minWidth: '80px' }}>
-                    ${params.row.sold_price}
+            <div
+                className="sold-price-container"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '14px',
+                    color: '#374151',
+                    fontWeight: 500,
+                }}
+            >
+                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                    ${params.row.sold_price?.toLocaleString()}
                 </div>
-                <div style={{ borderLeft: '1px solid #E5E7EB', height: '24px' }} />
-                {params.row.status === 'Success' && <IconButton
-                    disabled={params.row.status !== 'Success'}
-                    onClick={() => {
-                        setSelectedTicket(params.row);
-                        openPopup('invoice');
-                    }}
-                >
-                    <img src={invoice} alt="Invoice" style={{ height: '20px', width: '20px' }} />
-                </IconButton>}
-                {params.row.status !== 'Success' && <IconButton
-                    disabled={params.row.status == 'Success'}
-                    onClick={() => {
-                        setSelectedTicket(params.row);
-                        openPopup('payout');
-                    }}
-                >
-                    <img src={payout} alt="Payout" style={{ height: '20px', width: '20px' }} />
-                </IconButton>}
+                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                    ${params.row.logitix_amount?.toLocaleString()}
+                </div>
+                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                    ${params.row.Quickasyst_Cut?.toLocaleString()}
+                </div>
+
+                <div style={{ borderLeft: '1px solid #E5E7EB', height: '24px', marginRight: '12px' }} />
+
+                {params.row.status === 'Success' && (
+                    <IconButton
+                        onClick={() => {
+                            setSelectedTicket(params.row);
+                            openPopup('invoice');
+                        }}
+                    >
+                        <img src={invoice} alt="Invoice" style={{ height: '20px', width: '20px' }} />
+                    </IconButton>
+                )}
+
+                {(params.row.status === 'Failed' || params.row.status == null) && (
+                    <IconButton
+                        onClick={() => {
+                            setSelectedTicket(params.row);
+                            openPopup('payout');
+                        }}
+                    >
+                        <img src={payout} alt="Payout" style={{ height: '20px', width: '20px' }} />
+                    </IconButton>
+                )}
             </div>
-        ),
-    }
+        )
+    },
+    {
+        field: 'userName',
+        headerName: 'User Name',
+        flex: 1,
+        minWidth: 250,
+        cellClassName: 'left-align',
+    },
+    {
+        field: 'email',
+        headerName: 'Email',
+        flex: 1,
+        minWidth: 400,
+        cellClassName: 'left-align',
+    },
 ];

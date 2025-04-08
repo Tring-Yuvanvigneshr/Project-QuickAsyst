@@ -77,9 +77,9 @@ const Tickets = () => {
 
             <TabPanel value={tabValue} index={0}><Managetickets filter={filter} /></TabPanel>
             <TabPanel value={tabValue} index={1}><Listtickets filter={filter} /></TabPanel>
-            <TabPanel value={tabValue} index={2}><Soldtickets /></TabPanel>
-            <TabPanel value={tabValue} index={3}><Returntickets /></TabPanel>
-            <TabPanel value={tabValue} index={4}><Unsoldtickets /></TabPanel>
+            <TabPanel value={tabValue} index={2}><Soldtickets filter={filter}/></TabPanel>
+            <TabPanel value={tabValue} index={3}><Returntickets filter={filter}/></TabPanel>
+            <TabPanel value={tabValue} index={4}><Unsoldtickets filter={filter}/></TabPanel>
         </Box>
     );
 };

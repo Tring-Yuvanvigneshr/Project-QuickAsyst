@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, MenuItem, Select, useMediaQuery, useTheme } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -8,7 +8,7 @@ import './table.css';
 import '../../../utils/Manage_columns/manageColumns.css';
 
 
-const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
+const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
 
   const pageSizes = [5, 10, 20];
 
@@ -32,7 +32,7 @@ const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, pa
         rows={data}
         columns={columns}
         pageSize={pageSize}
-        checkboxSelection
+        checkboxSelection={checkboxisdisabled}
         disableRowSelectionOnClick
         disableColumnMenu
         disableColumnSelector
@@ -40,7 +40,7 @@ const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, pa
         disableColumnSorting
         hideFooterPagination
         columnHeaderHeight={isMobile ? 35 : 40}
-        rowHeight={isMobile ? 50 : 70}
+        rowHeight={isMobile ? 50 : 80}
         sx={{
           backgroundColor: '#f9f9fa',
           '& .MuiDataGrid-columnHeader': {
@@ -72,7 +72,7 @@ const SharedTable = ({ data, totalCount, columns, pageSize, onPageSizeChange, pa
         </Box>
 
         <Box className='pagination'>
-          <Stack className='' spacing={2}>
+          <Stack spacing={2}>
             <Pagination onChange={(e, value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
           </Stack>
         </Box>

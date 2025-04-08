@@ -4,7 +4,7 @@ import './dashboard.css'
 const dashboard = () => {
   return (
     <>
-    <div style={{textAlign: "center"}} className='dashboard-container'>Comming soon</div>
+    <div style={{textAlign: "center"}} className='dashboard-container'>Coming soon</div>
     </>
   )
 }

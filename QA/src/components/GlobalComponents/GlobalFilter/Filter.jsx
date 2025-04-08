@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Button, MenuItem, Select, Radio, RadioGroup, FormControlLabel, Slider, Typography, IconButton } from '@mui/material';
+import { Box, Button, MenuItem, Select, Radio, RadioGroup, FormControlLabel, Slider, Typography, IconButton, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import { useLazyQuery } from '@apollo/client';
+import { LEAGUESDROPDOWNFILTER } from './../../../Graphql/User/userQuery';
 import './Filter.css';
 
 const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => {
-    const eventOptions = ["NBA", "NFL", "MLB"];
-    const dateOptions = ["Today", "Yesterday", "Last 30 Days", "This Month", "Last Month"];
-
     const [filters, setFilters] = useState({
         leagueId: filter.leagueId || "",
         ticketStatus: filter.ticketStatus || "",
         startdate: filter.startdate || "",
         enddate: filter.enddate || "",
         day: filter.enddate || 1,
+    });
+
+    const [getEvents, { data, loading }] = useLazyQuery(LEAGUESDROPDOWNFILTER, {
+        fetchPolicy: 'network-only'
     });
 
     const handleReset = () => {
@@ -24,6 +27,16 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
     const submitFilter = () => {
         onApply(filters);
         onClose();
+    };
+
+    const handleSelectOpen = () => {
+        getEvents();
+    };
+
+    const handleLeagueChange = (event) => {
+        const selectedLeagueName = event.target.value;
+        const selectedLeague = data?.leagues?.find(league => league.l_name === selectedLeagueName);
+        setFilters({ ...filters, leagueId: selectedLeague ? selectedLeague.l_id : "" });
     };
 
     return (
@@ -42,15 +55,44 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         className="Filter-select-event"
                         fullWidth
                         size="small"
-                        value={filters.leagueId}
-                        onChange={(e) => setFilters({ ...filters, leagueId: e.target.value })}
-
+                        value={filters.leagueId || ""}
+                        onChange={handleLeagueChange}
+                        onOpen={handleSelectOpen}
                         displayEmpty
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 200,
+                                    overflowY: 'auto',
+                                },
+                            },
+                        }}
+                        renderValue={(selected) => {
+                            if (!selected) {
+                                return <div>--select--</div>;
+                            }
+                            const selectedLeague = data?.leagues?.find(league => league.l_id === selected);
+                            return selectedLeague ? selectedLeague.l_name : selected;
+                        }}
                     >
-                        <MenuItem value="" disabled>--select--</MenuItem>
-                        {eventOptions.map((event) => (
-                            <MenuItem className='filter-menuitems' key={event} value={event}>{event}</MenuItem>
-                        ))}
+                        {loading ? (
+                            <MenuItem disabled>
+                                <Box display="flex" alignItems="center" gap={1}>
+                                    <CircularProgress size={20} color="inherit" />
+                                    Loading...
+                                </Box>
+                            </MenuItem>
+                        ) : (
+                            data?.leagues?.map((event) => (
+                                <MenuItem className='filter-menuitems' key={event.l_id} value={event.l_name}>
+                                    {event.l_name}
+                                </MenuItem>
+                            ))
+                        )}
+
+                        {!loading && data?.leagues?.length === 0 && (
+                            <MenuItem disabled>No Events Available</MenuItem>
+                        )}
                     </Select>
                 </>
             )}
@@ -61,7 +103,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                     <RadioGroup
                         value={filters.ticketStatus}
                         onChange={(e) => setFilters({ ...filters, ticketStatus: e.target.value })}
-                        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr',color: '#475569' }}
+                        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', color: '#475569' }}
                     >
                         {validationOptions.map((val) => (
                             <FormControlLabel
@@ -79,7 +121,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                 <>
                     <Typography className="filter-section-title">Date</Typography>
                     <Box style={{ display: 'grid', gap: '0.7rem' }}>
-                        {dateOptions.map((option) => (
+                        {["Today", "Yesterday", "Last 30 Days", "This Month", "Last Month"].map((option) => (
                             <Box
                                 key={option}
                                 onClick={() => setFilters({ ...filters, startdate: option })}
