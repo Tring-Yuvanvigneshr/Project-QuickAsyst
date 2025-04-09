@@ -57,7 +57,7 @@ const Header = () => {
   }, [error]);
 
   const fullName = data ? `${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}` : username;
-  const avatarUrl = data ? data.get_user_profile[0].u_profile_picture_url : '';
+  const avatarUrl = data ? data.get_user_profile[0].u_avatar_url : '';
 
   const toggleOldPasswordVisibility = () => setOldPasswordVisible(!oldPasswordVisible);
   const toggleNewPasswordVisibility = () => setNewPasswordVisible(!newPasswordVisible);
@@ -164,15 +164,9 @@ const Header = () => {
               <CircularProgress />
             ) : (
               <div className="header-iconButton">
-                <Avatar
+                <img
                   alt={fullName}
-                  src={avatarUrl}
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    border: '1px solid #B9BDC6',
-                    borderRadius: '50%',
-                  }}
+                  src={`https://dev-admin.quickasyst.com/${avatarUrl}`}
                   onClick={handleMenu}
                   className="header-avatar"
                 />
@@ -232,11 +226,11 @@ const Header = () => {
         }}
       >
         <DialogTitle>
-          <h3 className="Change_password_h3">Change Password</h3>
-          <h5 className="Change_password_h5">Enter your new password</h5>
+          <div className="Change_password_h3">Change Password</div>
+          <div className="Change_password_h5">Enter your new password</div>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText className="Dialog-content">
+          <DialogContent className="dialog-content">
             Old password <br />
             <div className="old-password-container">
               <input
@@ -251,7 +245,7 @@ const Header = () => {
               </span>
             </div>
             {errors.oldPassword && (
-              <p className="error-message">Old password is required</p>
+              <div className="error-message">Old password is required</div>
             )}
 
             New password <br />
@@ -269,7 +263,7 @@ const Header = () => {
               </span>
             </div>
             {errors.passwordStrength && (
-              <p className="error-message">Your password is weak</p>
+              <div className="error-message">Your password is weak</div>
             )}
 
             Confirm password <br />
@@ -287,9 +281,9 @@ const Header = () => {
               </span>
             </div>
             {errors.confirmPassword && (
-              <p className="error-message">Confirm password is required</p>
+              <div className="error-message">Confirm password is required</div>
             )}
-          </DialogContentText>
+          </DialogContent>
         </DialogContent>
 
 

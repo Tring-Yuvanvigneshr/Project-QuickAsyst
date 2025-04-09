@@ -6,9 +6,9 @@
 }
 
 
-.Dialog-content {
+.dialog-content {
   color: #9ca3af !important;
-  padding: 0 10px;
+  padding: 0 0!important;
 }
 
 .header-toolbar {
@@ -135,11 +135,14 @@
   color: #0F1753;
   font-weight: 700;
   font-family: 'Glegoo', serif;
+  font-size: 18px; 
 }
 
 .Change_password_h5 {
   color: #9ca3af;
   font-family: 'Glegoo', serif;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
 
 .password-change-actions {
@@ -208,10 +211,6 @@
     font-size: 40px !important; 
   }
 
-
-
-
-
   .password-dialog {
     
     padding: 10px;
@@ -224,15 +223,6 @@
     height: 45px; 
     padding: 8px;
     margin-bottom: 8px;
-  }
-
-  .Change_password_h3 {
-    font-size: 18px;  
-  }
-
-  .Change_password_h5 {
-    font-size: 14px;
-    margin-bottom: 12px;
   }
 
   .error-message {
@@ -251,6 +241,15 @@
     width: 100%;
     height: 40px;
     font-size: 14px;
+  }
+
+  .header-avatar {
+    padding: 2px; 
+    width: 20px;
+    height: 20px;
+  }
+  .header-username {
+    display: none;
   }
 }
 
@@ -290,4 +289,13 @@
   outline: none;
   border-color: #9CA3AF;
   border: 1px solid rgb(156, 150, 150);
+}
+
+.header-avatar {
+  padding: 2px; 
+  width: 50px;
+  height: 50px;
+  border: 1px solid #B9BDC6;
+  border-radius: 50%;
+  cursor: pointer
 }

@@ -9,7 +9,7 @@ import '../../../utils/Manage_columns/manageColumns.css';
 import sortArrow from '../../../assets/icons/Vector.png';
 
 
-const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
+const SharedTable = ({ checkboxisdisabled, data, columns, totalCount , pageSize, onPageSizeChange, page, onOffSetChange }) => {
 
   const PagenoFive = 5;
   const PagenoTen = 10;
@@ -85,7 +85,7 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
 
         <Box className='pagination'>
           <Stack spacing={2}>
-            <Pagination onChange={value => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
+            <Pagination onChange={(e, value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
           </Stack>
         </Box>
       </Box>

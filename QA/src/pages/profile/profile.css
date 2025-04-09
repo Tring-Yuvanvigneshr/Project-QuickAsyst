@@ -11,7 +11,7 @@
 }
 
 .profile-edit {
-    padding: 15px;
+    padding: 12px;
     width: 110px;
     background-color: #5d75f8;
     border: none;
@@ -19,6 +19,7 @@
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
+    font-family: glegoo, sans-serif;
 }
 
 .profile-body {
@@ -36,7 +37,6 @@
     align-items: center;
     padding: 40px;
     background-color: #fff;
-    color: #9ca3af;
     gap: 32px;
     width: 702px;
 }
@@ -49,9 +49,10 @@
 
 .profile-item{
     flex: 1;
+    color: #9ca3af;
 }
 
-.profile-item-right {
+.profile-item.profile-item-right {
     color: #475569;
     font-family: Glegoo, serif;
 }
@@ -74,8 +75,9 @@
 .profile-pic{
     width: 162px;
     height: 162px;
-    border-radius: 50%;
     background-size: cover;
+    border: 4px solid white;
+    border-radius: 50%;
 }
 
 ::-webkit-scrollbar{

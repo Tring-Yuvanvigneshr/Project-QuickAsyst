@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
 
-export const managecolumns = (onPublish) => [
+export const managecolumns = (onPublish, handleValidationChange, handleReturnChange) => [
   {
     field: 'event',
     headerName: 'Events',
@@ -92,15 +92,22 @@ export const managecolumns = (onPublish) => [
     flex: 1,
     minWidth: 130,
     renderCell: (params) => {
-      const validityStatus = params.row.validityStatus;
-
+      const handleSelectChange = (e) => {
+        const selectedValue = e.target.value;
+        if (selectedValue === 'Return') {
+          handleReturnChange(params.row.Publish_id);
+        } else {
+          handleValidationChange(params.row.Publish_id, selectedValue === 'Valid');
+        }
+      }
       return (
         <Select
-          defaultValue={validityStatus === true ? 'Valid' : '-Select-'}
+          defaultValue={params.row.status === 'Delist' ? 'Invalid' : params.row.status === 'Verified' ? 'Valid' : '-Select-'}
           variant="standard"
           IconComponent={IoIosArrowDown}
           disableUnderline
           className="validate-select-block"
+          onChange={handleSelectChange}
         >
           <MenuItem disableRipple value="-Select-" disabled>
             -Select-
@@ -108,9 +115,14 @@ export const managecolumns = (onPublish) => [
           <MenuItem disableRipple value="Valid">
             Valid
           </MenuItem>
-          <MenuItem disableRipple value="Invalid">
+          <MenuItem disableRipple value="Invalid" selected={params.row.status === 'Delist'}>
             Invalid
           </MenuItem>
+          {params.row.status === 'Delist' &&
+            <MenuItem disableRipple value="Return">
+              Return
+            </MenuItem>
+          }
         </Select>
       );
     },

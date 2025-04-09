@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css';
 import defaultImage from './../../assets/images/Defaultprofile.png';
-import { TextField, Button, IconButton, CircularProgress } from '@mui/material';
+import { TextField, Button, IconButton, CircularProgress, Avatar } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 
 import { GETUSERPROFILE } from './../../Graphql/User/userQuery';
@@ -13,7 +13,7 @@ const Profile = () => {
     const [fullName, setFullName] = useState('Quickasyst Admin');
     const [phoneNumber, setPhoneNumber] = useState('(123) 456-6575');
     const [email, setEmail] = useState('quickasyst@mailinator.com');
-    const [profileImage, setProfileImage] = useState(defaultImage);
+    const [profileImage, setProfileImage] = useState();
     const [nameChange, setNameChange] = useState('');
     const [phoneChange, setPhoneChange] = useState('');
 
@@ -37,6 +37,7 @@ const Profile = () => {
             setFullName(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`);
             setPhoneNumber(data.get_user_profile[0].u_phone_number);
             setEmail(data.get_user_profile[0].u_email_id);
+            setProfileImage(data.get_user_profile[0].u_avatar_url || defaultImage);
 
             setNameChange(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`);
             setPhoneChange(data.get_user_profile[0].u_phone_number);
@@ -44,7 +45,7 @@ const Profile = () => {
     }, [data]);
 
     const handleResetImage = () => {
-        setProfileImage(defaultImage);
+        setProfileImage(data.get_user_profile[0].u_avatar_url);
     };
 
     const handleCancelEdit = () => {
@@ -55,8 +56,8 @@ const Profile = () => {
     };
 
     const handleSubmitEdit = () => {
-            toast.success('Profile updated successfully');
-            setIsEditing(false);
+        toast.success('Profile updated successfully');
+        setIsEditing(false);
     };
 
     const handleChange = (field, value) => {
@@ -68,7 +69,7 @@ const Profile = () => {
             setErrors(prev => ({ ...prev, phoneNumber: value.trim() === '' }));
         }
     };
-    
+
 
     return (
         <div className='profile_container'>
@@ -85,7 +86,7 @@ const Profile = () => {
                 <div className='profile-top-img'>
                     <div className='profile-img-container'>
                         <label className='profile-img'>
-                            <img className='profile-pic' src={profileImage} alt="profile" />
+                            <img className='profile-pic' src={`https://dev-admin.quickasyst.com/${profileImage}`} alt="profile" />
                             {isEditing && (
                                 <IconButton
                                     disableRipple
@@ -117,7 +118,7 @@ const Profile = () => {
 
                                 <div className='profile-row'>
                                     <div className='profile-item'>Email</div>
-                                    <div className='profile-item Profile-item-right'>{email}</div>
+                                    <div className='Profile-item-right'>{email}</div>
                                 </div>
                             </div>
                         ) : (
@@ -130,7 +131,7 @@ const Profile = () => {
                                             value={nameChange}
                                             onChange={(e) => handleChange('fullName', e.target.value)}
                                         />
-                                    {errors.fullName && <p className="error-message"><br/>Full Name is required</p>}
+                                        {errors.fullName && <p className="error-message"><br />Full Name is required</p>}
                                     </div>
                                 </div>
 
@@ -141,8 +142,8 @@ const Profile = () => {
                                             fullWidth
                                             value={phoneChange}
                                             onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                                            />
-                                        {errors.phoneNumber && <p className="error-message"><br/>Phone Number is required</p>}
+                                        />
+                                        {errors.phoneNumber && <p className="error-message"><br />Phone Number is required</p>}
                                     </div>
                                 </div>
 

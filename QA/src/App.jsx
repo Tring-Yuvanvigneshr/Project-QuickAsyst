@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Amplify } from 'aws-amplify';
 import { awsConfig } from './aws/aws-exports.js';
-
+import ProtectedRoute from './protectedRoute/ProtectedRoute.jsx';
 import MainLayout from "./components/MainLayout/Mainlayout.jsx";
 import Dashboard from "./pages/dashboard/dashboard.jsx";
 import Tickets from './pages/tickets/tickets.jsx';
@@ -32,6 +32,11 @@ const App = () => {
               <Route path="tickets" element={<Tickets />} />
               <Route path="users" element={<Users />} />
               <Route path='profile' element={<Profile />}/>
+{/* 
+              <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="tickets" element={<ProtectedRoute><Tickets /></ProtectedRoute>} />
+              <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+              <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} /> */}
             </Route>
           </Routes>
         </BrowserRouter>

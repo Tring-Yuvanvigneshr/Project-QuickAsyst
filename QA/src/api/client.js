@@ -1,6 +1,8 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { fetchAuthSession  } from 'aws-amplify/auth';
+import { onError } from "@apollo/client/link/error";
+import { fetchAuthSession } from 'aws-amplify/auth';
+import { toast } from "react-toastify";
 
 const uri = import.meta.env.VITE_BACKEND_URL;
 
@@ -21,16 +23,45 @@ const authLink = setContext(async (_, { headers }) => {
       },
     };
   } catch (error) {
-    console.log("Error fetching ID token:", error);
     return {
       headers,
     };
   }
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  let shouldLogout = false;
+    
+  if (graphQLErrors) {
+    for (let err of graphQLErrors) {
+      if (err.extensions?.code === 'UNAUTHENTICATED') {
+        shouldLogout = true;
+        break;
+      }
+    }
+  }
+
+  // if (networkError && networkError.message === 'Failed to fetch') {
+  //   shouldLogout = true;
+  // }
+
+  if (networkError && 'statusCode' in networkError && networkError.statusCode === 401) {
+    shouldLogout = true;
+  }
+
+  if (shouldLogout) {
+    localStorage.clear();
+    toast.error('Session expired. Please log in again')
+
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 4000);
+  }
+});
+
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: errorLink.concat(authLink).concat(httpLink),
   cache: new InMemoryCache(),
 });
 
