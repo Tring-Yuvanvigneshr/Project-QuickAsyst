@@ -109,7 +109,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         headerName: 'Sold Price',
         flex: 1,
         minWidth: 250,
-        renderCell: (params) => (
+        renderCell: params => (
             <div
                 className="sold-price-container"
             >

@@ -23,7 +23,7 @@
     justify-content: flex-end;
     padding: 30px;
     color: #FFFFFF;
-    font-family: playfair display;
+    font-family: playfair display, serif;
 }
 
 .signin-overlay .divider {
@@ -62,7 +62,7 @@
 .signin-right h2 {
     font-size: 28px;
     font-weight: 700;
-    font-family: playfair display;
+    font-family: playfair display, serif;
 }
 
 .signin-right p {
@@ -70,7 +70,7 @@
     font-weight: 400;
     color: gray;
     margin-bottom: 20px;
-    font-family: playfair display;
+    font-family: playfair display, serif;
 }
 
 .signin-form {
@@ -126,7 +126,6 @@
 }
 
 .forgot-password a {
-    color: blue;
     text-decoration: none;
     color: #9CA3AF;
 }

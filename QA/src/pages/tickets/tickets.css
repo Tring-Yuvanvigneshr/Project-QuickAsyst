@@ -10,7 +10,7 @@
 }
 
 .tab {
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-weight: 700 !important;
     text-transform: none !important;
 }
@@ -20,7 +20,7 @@
     text-transform: none !important;
     border: 1px solid #E3E5E8 !important;
     border-radius: 0 !important;
-    font-family: 'Glegoo'!important;
+    font-family: 'Glegoo', serif !important;
     width: 98px !important;
     height: 44px;
     gap: 8px;

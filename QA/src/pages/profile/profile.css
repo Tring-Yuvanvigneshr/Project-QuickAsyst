@@ -53,7 +53,7 @@
 
 .profile-item-right {
     color: #475569;
-    font-family: Glegoo;
+    font-family: Glegoo, serif;
 }
 
 .profile-top-img{
@@ -128,7 +128,7 @@
     color: black;
     width: 95px;
     height: 44px;
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-weight: 600 !important;
     background-color: #f3f4f6 !important;
 }
@@ -139,7 +139,7 @@
     border-radius: 0px !important;
     width: 95px;
     height: 44px;
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     border: none;
 }
 

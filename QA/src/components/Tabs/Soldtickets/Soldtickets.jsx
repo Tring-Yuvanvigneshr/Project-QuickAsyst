@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { FILTERSOLDTICKETS } from '../../../Graphql/SoldTickets/soldQuery';
-import { INVOICEDETAILS } from '../../../Graphql/SoldTickets/soldQuery';
+import { FILTERSOLDTICKETS, INVOICEDETAILS } from '../../../Graphql/SoldTickets/soldQuery';
 import { TRANSFERAMOUNTTOUSERSBYTICKET } from '../../../Graphql/SoldTickets/soldMutation.js';
 import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
 import { soldColumns } from './../../../utils/Sold_columns/SoldColumns.jsx';
@@ -18,15 +17,18 @@ import {
     Divider,
     Button,
     Typography,
-    IconButton,
+    IconButton
 } from '@mui/material';
 
 
 const Soldtickets = ({ filter }) => {
 
+
+    const pageChangeNumber = 10;
+
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
-    const [pageChange, setPageChange] = useState(10);
+    const [pageChange, setPageChange] = useState(pageChangeNumber);
     const [offSet, setOffSet] = useState(1);
 
     const [selectedTicket, setSelectedTicket] = useState(null);
@@ -38,24 +40,24 @@ const Soldtickets = ({ filter }) => {
             ...filter,
             pageSize: pageChange,
             pageOffset: pageChange * (offSet - 1),
-            ticketPlacementId: null,
+            ticketPlacementId: null
         },
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only'
     });
 
-    const { loading: Invoiceloading, data: InvoiceData } = useQuery(INVOICEDETAILS, {
+    const { data: InvoiceData } = useQuery(INVOICEDETAILS, {
         variables: {
-            ticketPlacementId: selectedTicket?.Publish_id,
+            ticketPlacementId: selectedTicket?.Publish_id
         },
         skip: !selectedTicket || !selectedTicket.Publish_id,
-        fetchPolicy: 'network-only',
-    })
+        fetchPolicy: 'network-only'
+    });
 
     const [transferAmount, { loading: transferLoading }] = useMutation(TRANSFERAMOUNTTOUSERSBYTICKET, {
-        onCompleted: (data) => {
+        onCompleted: () => {
             handleCloseDialog();
         },
-        onError: (error) => {
+        onError: error => {
             toast.error(error.message || 'Payout failed:');
         }
     });
@@ -64,7 +66,7 @@ const Soldtickets = ({ filter }) => {
         if (selectedTicket && selectedTicket.Publish_id) {
             transferAmount({
                 variables: {
-                    ticketPlacementId: selectedTicket.Publish_id,
+                    ticketPlacementId: selectedTicket.Publish_id
                 }
             });
         } else {
@@ -78,9 +80,9 @@ const Soldtickets = ({ filter }) => {
             const formattedData = data.FilterSoldTickets.map((item, index) => ({
                 id: index + 1,
                 event: item.e_name,
-                date: new Date(item.e_date).toLocaleString("en-US"),
+                date: new Date(item.e_date).toLocaleString('en-US'),
                 venue: item.e_address,
-                venueTime: new Date(item.e_date).toLocaleString("en-US"),
+                venueTime: new Date(item.e_date).toLocaleString('en-US'),
                 section: item.tp_section.toUpperCase(),
                 row: item.tp_row.toUpperCase(),
                 seat: item.tp_seat_no,
@@ -93,7 +95,7 @@ const Soldtickets = ({ filter }) => {
                 sold_price: item.tp_list_price,
                 Quickasyst_Cut: item.tp_quick_cut_amount,
                 logitix_amount: item.tp_logitix_amount,
-                closeStatus: item.e_status === 'closed' ? item.e_status : '',
+                closeStatus: item.e_status === 'closed' ? item.e_status : ''
             }));
 
             setTableData(formattedData);
@@ -101,7 +103,7 @@ const Soldtickets = ({ filter }) => {
         }
     }, [data]);
 
-    const handleOpenDialog = (type) => {
+    const handleOpenDialog = type => {
         type === 'invoice' ? setOpenInvoiceDialog(true) : setOpenPayoutDialog(true);
     };
 
@@ -144,7 +146,7 @@ const Soldtickets = ({ filter }) => {
                         sx={{
                             position: 'absolute',
                             right: 8,
-                            top: 8,
+                            top: 8
                         }}
                     >
                         <CloseIcon />

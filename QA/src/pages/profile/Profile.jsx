@@ -16,7 +16,6 @@ const Profile = () => {
     const [profileImage, setProfileImage] = useState(defaultImage);
     const [nameChange, setNameChange] = useState('');
     const [phoneChange, setPhoneChange] = useState('');
-    const [] = useState();
 
     const [errors, setErrors] = useState({
         fullName: false,

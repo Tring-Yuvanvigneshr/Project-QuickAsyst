@@ -9,7 +9,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogTitle,
+  DialogTitle
 } from '@mui/material';
 import { managecolumns } from './../../../utils/Manage_columns/ManageColumns.jsx';
 import { toast } from 'react-toastify';
@@ -18,6 +18,8 @@ import IconButton from '@mui/material/IconButton';
 
 const Managetickets = ({ filter }) => {
 
+  const pageChangeNumber = 10;
+
   const [publishTicket] = useMutation(PUBLISHTICKETS);
   const [tableData, setTableData] = useState([]);
   const [tableSize, setTableSize] = useState([]);
@@ -25,7 +27,7 @@ const Managetickets = ({ filter }) => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [price, setPrice] = useState('');
   const [errorPrice, setErrorPrice] = useState(false);
-  const [pageChange, setPageChange] = useState(10);
+  const [pageChange, setPageChange] = useState(pageChangeNumber);
   const [offSet, setOffSet] = useState(1);
 
 
@@ -33,7 +35,7 @@ const Managetickets = ({ filter }) => {
     variables: {
       ...filter,
       pageSize: pageChange,
-      pageOffset: pageChange * (offSet - 1),
+      pageOffset: pageChange * (offSet - 1)
     },
     fetchPolicy: 'network-only'
   });
@@ -52,12 +54,12 @@ const Managetickets = ({ filter }) => {
           publishTicketsInput: {
             listPrice: price,
             ticketPlacementIds: [
-              selectedTicket.Publish_id,
-            ],
-          },
+              selectedTicket.Publish_id
+            ]
+          }
         },
       });
-      toast.success("Ticket published successfully!");
+      toast.success('Ticket published successfully!');
       setOpenDialog(false);
       refetch();
     } catch (err) {
@@ -77,7 +79,7 @@ const Managetickets = ({ filter }) => {
     setErrorPrice(false);
   };
 
-  const handlePriceChange = (value) => {
+  const handlePriceChange = value => {
     setPrice(value);
     if (price === '') {
       setErrorPrice(true);
@@ -95,26 +97,21 @@ const Managetickets = ({ filter }) => {
         const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         const hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        let period = '';
-        if (daysLeft > 0) {
-          period = `${daysLeft} Days`;
-        } else if (hoursLeft >= 0) {
-          period = `${hoursLeft} Hours`;
-        }
+        let period = daysLeft > 0 ? `${daysLeft} Days` : `${hoursLeft} Hours`;
 
         return {
           id: index + 1,
           event: item.e_name,
-          date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+          date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
           venue: item.e_address,
-          venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+          venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
           section: item.tp_section.toUpperCase(),
           row: item.tp_row.toUpperCase(),
           seat: item.tp_seat_no,
-          validate: item.tp_validity_status ? "Valid" : "Invalid",
+          validate: item.tp_validity_status ? 'Valid' : 'Invalid',
           status: item.tp_status,
-          donationStatus: item.tp_is_support_vanderbilt_nil_fund ? "Donated" : '-',
-          returnEmail: item.tp_delist_requested_email || "-",
+          donationStatus: item.tp_is_support_vanderbilt_nil_fund ? 'Donated' : '-',
+          returnEmail: item.tp_delist_requested_email || '-',
           userName: item.full_name,
           email: item.u_email_id,
           period: period,
