@@ -78,9 +78,9 @@ const Soldtickets = ({ filter }) => {
             const formattedData = data.FilterSoldTickets.map((item, index) => ({
                 id: index + 1,
                 event: item.e_name,
-                date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                date: new Date(item.e_date).toLocaleString("en-US"),
                 venue: item.e_address,
-                venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                venueTime: new Date(item.e_date).toLocaleString("en-US"),
                 section: item.tp_section.toUpperCase(),
                 row: item.tp_row.toUpperCase(),
                 seat: item.tp_seat_no,
@@ -139,7 +139,7 @@ const Soldtickets = ({ filter }) => {
                     Payout
                     <IconButton
                         disableRipple
-                        color="inherit"
+                        color='#0f172a'
                         onClick={handleCloseDialog}
                         sx={{
                             position: 'absolute',
@@ -179,18 +179,10 @@ const Soldtickets = ({ filter }) => {
                     </Box>
 
                     <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600}>Order Summary</Typography>
-                    <Box
-                        sx={{
-                            backgroundColor: '#F3F4F6',
-                            borderRadius: '0px',
-                            padding: 2,
-                            mb: 2,
-                        }}
-                    >
-
+                    <Box className='invoice-order-summary'>
                         <Box display="flex" justifyContent="space-between" mb={1}>
                             <Typography fontFamily='glegoo' className='publish-content-title'>Received Amount From Logitix</Typography>
-                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount}</Typography>
+                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount.toFixed(2)}</Typography>
                         </Box>
 
                         <Box display="flex" justifyContent="space-between" mb={1}>
@@ -207,12 +199,12 @@ const Soldtickets = ({ filter }) => {
 
                         <Box display="flex" justifyContent="space-between" mt={1}>
                             <Typography fontFamily='glegoo' color='#475569' fontWeight={700}>Amt. to be settled for users</Typography>
-                            <Typography fontFamily='glegoo' color='#0FAAA2' fontWeight={600}>$1,180.00</Typography>
+                            <Typography fontFamily='glegoo' color='#0faaa2' fontWeight={600} fontSize={'20px'}>${(InvoiceData?.ticket_placement_by_pk.tp_logitix_amount - InvoiceData?.ticket_placement_by_pk.tp_quick_cut_amount).toFixed(2)}</Typography>
                         </Box>
                     </Box>
                 </DialogContent>
 
-                <DialogActions sx={{ px: 3, pb: 2 }}>
+                <DialogActions className='payout-mark-btn'>
                     <Button onClick={handleMarkAsSettled} disabled={transferLoading} className='Payout-Ticket-Datails-Button' variant="contained" color="primary">Mark As Settled</Button>
                 </DialogActions>
             </Dialog >
@@ -236,7 +228,6 @@ const Soldtickets = ({ filter }) => {
                     </IconButton>
                 </DialogTitle>
 
-                {console.log(InvoiceData)}
                 <DialogContent>
                     <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600} >Ticket Details</Typography>
                     <Box className='Payout-Ticket-Datails-container'>
@@ -246,7 +237,7 @@ const Soldtickets = ({ filter }) => {
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Date:</div>
-                            <div className='publish-content-value'>{InvoiceData?.ticket_placement_by_pk.ticket.event.eventDate}</div>
+                            <div className='publish-content-value'>{moment(InvoiceData?.ticket_placement_by_pk.ticket.event.eventDate).format('ddd, DD MMM YYYY / hh:mm A [CDT]')}</div>
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Venue:</div>
@@ -254,7 +245,7 @@ const Soldtickets = ({ filter }) => {
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Ticket Placement:</div>
-                            <div className='publish-content-value'> Sec {selectedTicket?.section} / Row {selectedTicket?.row} / Seat {selectedTicket?.seat}</div>
+                            <div className='publish-content-value'> Sec : {selectedTicket?.section} / Row : {selectedTicket?.row} / Seat : {selectedTicket?.seat}</div>
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Ticket QTY:</div>
@@ -263,14 +254,7 @@ const Soldtickets = ({ filter }) => {
                     </Box>
 
                     <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600} >Order Summary</Typography>
-                    <Box
-                        sx={{
-                            backgroundColor: '#F3F4F6',
-                            borderRadius: '6px',
-                            padding: 2,
-                            mb: 2,
-                        }}
-                    >
+                    <Box className='invoice-order-summary'>
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Transaction ID</Typography>
                             <Typography className='publish-content-value' fontSize={'14px'}>{InvoiceData?.ticket_placement_by_pk.payment_transaction[0].transactionId}</Typography>
@@ -283,7 +267,7 @@ const Soldtickets = ({ filter }) => {
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Ticket Sold Amount</Typography>
-                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount}</Typography>
+                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount.toFixed(2)}</Typography>
                         </Box>
 
                         <Box display="flex" justifyContent="space-between">
@@ -296,17 +280,17 @@ const Soldtickets = ({ filter }) => {
                             <Typography className='publish-content-value'>-$0</Typography>
                         </Box>
 
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{ my: 1 }} />  
 
                         <Box display="flex" justifyContent="space-between" mt={1}>
                             <Typography fontFamily='glegoo' color='#475569' fontWeight={700}>Amt. to be settled for users</Typography>
-                            <Typography fontFamily='glegoo' color='#0FAAA2' fontWeight={600}>$1,180.00</Typography>
+                            <Typography fontFamily='glegoo' color='#0faaa2' fontWeight={600} fontSize={'20px'}>${(InvoiceData?.ticket_placement_by_pk.tp_logitix_amount - InvoiceData?.ticket_placement_by_pk.tp_quick_cut_amount).toFixed(2)}</Typography>
                         </Box>
                     </Box>
                 </DialogContent>
 
-                <DialogActions sx={{ px: 3, pb: 2, mt: -4 }}>
-                    <Button className='button-filter-submit' variant="contained" color="primary">Download</Button>
+                <DialogActions className='invoice-dialog-actions'>
+                    <Button className='invoice-download-btn' variant="contained" color="primary">Download</Button>
                 </DialogActions>
             </Dialog>
         </>

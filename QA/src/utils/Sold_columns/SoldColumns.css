@@ -38,38 +38,81 @@
     outline: none;
 }
 
-.Payout-Ticket-Datails-Button {
-    text-transform: none !important;
-    color: #B9BDC6 !important;
-    border-radius: 0px !important;
-}
-
 
 .Payout-container {
     width: 550px;
 }
 
+.payout-mark-btn {
+    margin-right: 16px;
+    margin-top: -30px;
+}
 
-.soldPrice-container {
+.Payout-Ticket-Datails-Button {
+    text-transform: none !important;
+    color: #fff !important;
+    border-radius: 0px !important;
+    background-color: #5d75f8 !important;
+    padding: 10px 29px !important;
+    font-family: Glegoo !important;
+    margin-bottom: 10px !important;
+}
+
+.invoice-order-summary {
+    background-color: #F3F4F6;
+    border-radius: 0px !important;
+    padding: 14px;
+    margin-bottom: 8px;
+}
+
+.invoice-dialog-actions {
+    padding-right: 24px !important;
+    margin-top: -30px !important;
+}
+
+.invoice-download-btn {
+    background-color: #5d75f8 !important;
+    color: #fff;
+    border-radius: 0px !important;
+    padding: 10px 29px !important;
+    font-family: Glegoo !important;
+    font-size: 16px !important;
+    text-transform: none !important;
+}
+
+.sold-price-container {
     display: flex;
     align-items: center;
     font-weight: 500;
-  }
-  
-  .soldPrice-item {
+    font-size: 14px;
+    color: #374151,
+}
+
+.sold-price-list {
     min-width: 60px;
     text-align: right;
     padding-right: 16px;
-  }
-  
-  .soldPrice-divider {
+}
+
+.sold-price-divider {
+    border-left: 1px solid #E5E7EB;
+    height: 24px;
+    margin-right: 12px;
+}
+
+.soldPrice-item {
+    min-width: 60px;
+    text-align: right;
+    padding-right: 16px;
+}
+
+.soldPrice-divider {
     border-left: 1px solid #e5e7eb;
     height: 24px;
     margin-right: 12px;
-  }
-  
-  .soldPrice-icon {
+}
+
+.soldPrice-icon {
     height: 20px;
     width: 20px;
-  }
-  
+}

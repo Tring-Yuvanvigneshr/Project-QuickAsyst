@@ -3,7 +3,7 @@ import {
     Button,
     IconButton
 } from '@mui/material';
-import './SoldColumns.css';
+import './soldColumns.css';
 import invoice from '../../assets/icons/Invoice.svg';
 import payout from '../../assets/icons/Payout.svg';
 
@@ -16,7 +16,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         renderCell: (params) => (
             <div className="event-block">
                 <span className="event-name">{params.value}</span>
-                <span className="event-league">{params.row.league_name} {params.row.closeStatus === 'closed' ? <label style={{color: '#000'}}>-</label> : ''} <label className='error-message'>{params.row.closeStatus}</label></span>
+                <span className="event-league">{params.row.league_name} {params.row.closeStatus === 'closed' ? <label style={{ color: '#000' }}>-</label> : ''} <label className='error-message'>{params.row.closeStatus}</label></span>
             </div>
         )
     },
@@ -112,35 +112,28 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         renderCell: (params) => (
             <div
                 className="sold-price-container"
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: '14px',
-                    color: '#374151',
-                    fontWeight: 500,
-                }}
             >
-                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                <div className='sold-price-list' >
                     ${params.row.sold_price?.toLocaleString()}
                 </div>
-                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                <div className='sold-price-list'>
                     ${params.row.logitix_amount?.toLocaleString()}
                 </div>
-                <div style={{ minWidth: '60px', textAlign: 'right', paddingRight: '16px' }}>
+                <div className='sold-price-list'>
                     ${params.row.Quickasyst_Cut?.toLocaleString()}
                 </div>
 
-                <div style={{ borderLeft: '1px solid #E5E7EB', height: '24px', marginRight: '12px' }} />
+                <div className='sold-price-divider'/>
 
                 {params.row.status === 'Success' && (
                     <IconButton
-                    disableRipple
+                        disableRipple
                         onClick={() => {
                             setSelectedTicket(params.row);
                             openPopup('invoice');
                         }}
                     >
-                        <img src={invoice} alt="Invoice" style={{ height: '20px', width: '20px' }} />
+                        <img src={invoice} alt="Invoice" />
                     </IconButton>
                 )}
 
@@ -152,7 +145,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
                             openPopup('payout');
                         }}
                     >
-                        <img src={payout} alt="Payout" style={{ height: '20px', width: '20px' }} />
+                        <img src={payout} alt="Payout" />
                     </IconButton>
                 )}
             </div>

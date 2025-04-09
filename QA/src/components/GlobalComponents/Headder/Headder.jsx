@@ -209,15 +209,6 @@ export default function Header() {
                 disableRipple
                 onClick={handleSignOut}
                 className="header-menuItem"
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
               >
                 <ListItemIcon>
                   <LogoutIcon className="header-menuIcon" />

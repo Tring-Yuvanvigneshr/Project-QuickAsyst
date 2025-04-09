@@ -58,18 +58,8 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
         disableColumnSorting
         scrollbarSize={5}
         hideFooter
-        columnHeaderHeight={isMobile ? 35 : 40}
-        rowHeight={isMobile ? 50 : 80}
-        sx={{
-          backgroundColor: '#f9f9fa',
-          '& .MuiDataGrid-columnHeader': {
-            backgroundColor: '#f9f9fa',
-            fontSize: isMobile ? '12px' : '14px',
-          },
-          '& .MuiDataGrid-cell': {
-            fontSize: isMobile ? '12px' : '14px',
-          },
-        }}
+        columnHeaderHeight={40}
+        rowHeight={80}
       />
 
       <Box className="pagination-block" sx={{ flexDirection: isMobile ? 'column' : 'row' }}>

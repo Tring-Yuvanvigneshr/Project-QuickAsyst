@@ -86,28 +86,43 @@ const Managetickets = ({ filter }) => {
 
   useEffect(() => {
     if (data && data.filtermanagetickets) {
-      const formattedData = data.filtermanagetickets.map((item, index) => ({
-        id: index + 1,
-        event: item.e_name,
-        date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
-        venue: item.e_address,
-        venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
-        section: item.tp_section.toUpperCase(),
-        row: item.tp_row.toUpperCase(),
-        seat: item.tp_seat_no,
-        validate: item.tp_validity_status ? "Valid" : "Invalid",
-        status: item.tp_status,
-        donationStatus: item.tp_is_support_vanderbilt_nil_fund ? "Donated" : '-',
-        returnEmail: item.tp_delist_requested_email || "-",
-        userName: item.full_name,
-        email: item.u_email_id,
-        period: "1 Days",
-        league_name: item.l_name,
-        validityStatus: item.tp_validity_status,
-        Publish_id: item.tp_id,
-      }));
+      const formattedData = data.filtermanagetickets.map((item, index) => {
+        const eventDate = new Date(item.e_date);
+        const currentDate = new Date();
 
-      console.log(formattedData);
+        const timeDifference = eventDate - currentDate;
+
+        const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        let period = '';
+        if (daysLeft > 0) {
+          period = `${daysLeft} Days`;
+        } else if (hoursLeft >= 0) {
+          period = `${hoursLeft} Hours`;
+        }
+
+        return {
+          id: index + 1,
+          event: item.e_name,
+          date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+          venue: item.e_address,
+          venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+          section: item.tp_section.toUpperCase(),
+          row: item.tp_row.toUpperCase(),
+          seat: item.tp_seat_no,
+          validate: item.tp_validity_status ? "Valid" : "Invalid",
+          status: item.tp_status,
+          donationStatus: item.tp_is_support_vanderbilt_nil_fund ? "Donated" : '-',
+          returnEmail: item.tp_delist_requested_email || "-",
+          userName: item.full_name,
+          email: item.u_email_id,
+          period: period,
+          league_name: item.l_name,
+          validityStatus: item.tp_validity_status,
+          Publish_id: item.tp_id,
+        };
+      });
 
       setTableData(formattedData);
       setTableSize(data.filtermanagetickets_aggregate.aggregate.count);
@@ -138,6 +153,7 @@ const Managetickets = ({ filter }) => {
 
       <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} fullWidth>
         <DialogTitle
+          className='publish-dialog-title'
           sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px' }}
           color='#0f172a'
           fontFamily={'Playfair Display'}
