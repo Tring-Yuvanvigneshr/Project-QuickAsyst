@@ -56,7 +56,8 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
         disableColumnSelector
         disableColumnResize
         disableColumnSorting
-        hideFooterPagination
+        scrollbarSize={5}
+        hideFooter
         columnHeaderHeight={isMobile ? 35 : 40}
         rowHeight={isMobile ? 50 : 80}
         sx={{

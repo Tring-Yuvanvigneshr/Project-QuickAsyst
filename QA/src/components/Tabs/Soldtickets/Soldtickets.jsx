@@ -7,6 +7,7 @@ import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
 import { soldColumns } from './../../../utils/Sold_columns/SoldColumns.jsx';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
+import moment from 'moment';
 import {
     CircularProgress,
     Box,
@@ -74,28 +75,28 @@ const Soldtickets = ({ filter }) => {
 
     useEffect(() => {
         if (data && data.FilterSoldTickets) {
-        const formattedData = data.FilterSoldTickets.map((item, index) => ({
-            id: index + 1,
-            event: item.e_name,
-            date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
-            venue: item.e_address,
-            venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
-            section: item.tp_section.toUpperCase(),
-            row: item.tp_row.toUpperCase(),
-            seat: item.tp_seat_no,
-            status: item.tp_payment_status,
-            userName: `${item.u_first_name} ${item.u_last_name}`,
-            email: item.u_email_id,
-            league_name: item.l_name,
-            validityStatus: item.tp_validity_status,
-            Publish_id: item.tp_id,
-            sold_price: item.tp_list_price,
-            Quickasyst_Cut: item.tp_quick_cut_amount,
-            logitix_amount: item.tp_logitix_amount,
-            closeStatus: item.e_status,
-        }));
+            const formattedData = data.FilterSoldTickets.map((item, index) => ({
+                id: index + 1,
+                event: item.e_name,
+                date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                venue: item.e_address,
+                venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                section: item.tp_section.toUpperCase(),
+                row: item.tp_row.toUpperCase(),
+                seat: item.tp_seat_no,
+                status: item.tp_payment_status,
+                userName: `${item.u_first_name} ${item.u_last_name}`,
+                email: item.u_email_id,
+                league_name: item.l_name,
+                validityStatus: item.tp_validity_status,
+                Publish_id: item.tp_id,
+                sold_price: item.tp_list_price,
+                Quickasyst_Cut: item.tp_quick_cut_amount,
+                logitix_amount: item.tp_logitix_amount,
+                closeStatus: item.e_status === 'closed' ? item.e_status : '',
+            }));
 
-        setTableData(formattedData);
+            setTableData(formattedData);
             setTableSize(data.FilterSoldTickets_aggregate.aggregate.count);
         }
     }, [data]);
@@ -132,7 +133,7 @@ const Soldtickets = ({ filter }) => {
             />
 
             {/* Payout Dialog */}
-            <Dialog open={openPayoutDialog} onClose={handleCloseDialog} fullWidth>
+            <Dialog  open={openPayoutDialog} onClose={handleCloseDialog} fullWidth>
 
                 <DialogTitle variant="h6" fontFamily="Playfair Display" fontWeight="bold">
                     Payout
@@ -151,15 +152,17 @@ const Soldtickets = ({ filter }) => {
                 </DialogTitle>
 
                 <DialogContent>
-                    <Typography fontFamily='glegoo' fontWeight={600} mb={1}>Ticket Details</Typography>
-                    <Box mb={2} className='Payout-Ticket-Datails-container'>
+                    <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600} >Ticket Details</Typography>
+                    <Box className='Payout-Ticket-Datails-container'>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Event:</div>
                             <div className='publish-content-value'>{InvoiceData?.ticket_placement_by_pk.ticket.event.eventName}</div>
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Date:</div>
-                            <div className='publish-content-value'>{InvoiceData?.ticket_placement_by_pk.ticket.event.eventDate}</div>
+                            <div className='publish-content-value'>
+                                {moment(InvoiceData?.ticket_placement_by_pk.ticket.event.eventDate).format('ddd, DD MMM YYYY / hh:mm A [CDT]')}
+                            </div>
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Venue:</div>
@@ -167,7 +170,7 @@ const Soldtickets = ({ filter }) => {
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Ticket Placement:</div>
-                            <div className='publish-content-value'> Sec {selectedTicket?.section} / Row {selectedTicket?.row} / Seat {selectedTicket?.seat}</div>
+                            <div className='publish-content-value'> Sec : {selectedTicket?.section} / Row : {selectedTicket?.row} / Seat : {selectedTicket?.seat}</div>
                         </div>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Ticket QTY:</div>
@@ -175,11 +178,11 @@ const Soldtickets = ({ filter }) => {
                         </div>
                     </Box>
 
-                    <Typography fontFamily='glegoo' fontWeight={600} mb={1}>Order Summary</Typography>
+                    <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600}>Order Summary</Typography>
                     <Box
                         sx={{
                             backgroundColor: '#F3F4F6',
-                            borderRadius: '6px',
+                            borderRadius: '0px',
                             padding: 2,
                             mb: 2,
                         }}
@@ -215,14 +218,11 @@ const Soldtickets = ({ filter }) => {
             </Dialog >
 
 
-
-
             {/* Invoice Dialog */}
             <Dialog open={openInvoiceDialog} onClose={handleCloseDialog} fullWidth>
                 <DialogTitle variant="h6" fontFamily="Playfair Display" fontWeight="bold">
                     Invoice
                     <IconButton
-
                         disableRipple
                         color="inherit"
                         onClick={handleCloseDialog}
@@ -238,8 +238,8 @@ const Soldtickets = ({ filter }) => {
 
                 {console.log(InvoiceData)}
                 <DialogContent>
-                    <Typography fontFamily='glegoo' fontWeight={600} mb={1}>Ticket Details</Typography>
-                    <Box mb={2} className='Payout-Ticket-Datails-container'>
+                    <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600} >Ticket Details</Typography>
+                    <Box className='Payout-Ticket-Datails-container'>
                         <div className='Payout-Ticket-Datails'>
                             <div className='publish-content-title'>Event:</div>
                             <div className='publish-content-value'>{InvoiceData?.ticket_placement_by_pk.ticket.event.eventName}</div>
@@ -262,7 +262,7 @@ const Soldtickets = ({ filter }) => {
                         </div>
                     </Box>
 
-                    <Typography fontFamily='glegoo' fontWeight={600} mb={1}>Order Summary</Typography>
+                    <Typography color='#475569' fontFamily='Playfair Display' fontWeight={600} >Order Summary</Typography>
                     <Box
                         sx={{
                             backgroundColor: '#F3F4F6',
@@ -271,27 +271,27 @@ const Soldtickets = ({ filter }) => {
                             mb: 2,
                         }}
                     >
-                        <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Transaction ID</Typography>
                             <Typography className='publish-content-value' fontSize={'14px'}>{InvoiceData?.ticket_placement_by_pk.payment_transaction[0].transactionId}</Typography>
                         </Box>
 
-                        <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Date & Time</Typography>
-                            <Typography className='publish-content-value' fontWeight={500}>{InvoiceData?.ticket_placement_by_pk.payment_transaction[0].paymentUpdated}</Typography>
+                            <Typography className='publish-content-value' fontWeight={500}>{moment(InvoiceData?.ticket_placement_by_pk.payment_transaction[0].paymentUpdated).format('ddd, DD MMM YYYY / hh:mm A [CDT]')}</Typography>
                         </Box>
 
-                        <Box display="flex" justifyContent="space-between" mb={1}>
+                        <Box display="flex" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Ticket Sold Amount</Typography>
                             <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount}</Typography>
                         </Box>
 
-                        <Box display="flex" justifyContent="space-between" mb={1}>
+                        <Box display="flex" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Quickasyst Cut</Typography>
                             <Typography className='publish-content-value'>-${InvoiceData?.ticket_placement_by_pk.tp_quick_cut_amount}</Typography>
                         </Box>
 
-                        <Box display="flex" justifyContent="space-between" mb={1}>
+                        <Box display="flex" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Tax and Charges</Typography>
                             <Typography className='publish-content-value'>-$0</Typography>
                         </Box>
@@ -305,7 +305,7 @@ const Soldtickets = ({ filter }) => {
                     </Box>
                 </DialogContent>
 
-                <DialogActions sx={{ px: 3, pb: 2 }}>
+                <DialogActions sx={{ px: 3, pb: 2, mt: -4 }}>
                     <Button className='button-filter-submit' variant="contained" color="primary">Download</Button>
                 </DialogActions>
             </Dialog>
