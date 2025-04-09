@@ -26,6 +26,12 @@
   align-items: center;
 }
 
+.header-iconButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .header-iconButton:hover {
   background-color: transparent;
 }
@@ -259,4 +265,40 @@
     height: 40px;
     font-size: 14px;
   }
+}
+
+
+.new-password-container,
+.old-password-container,
+.confirm-password-container {
+  position: relative; 
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 35px 10px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-field.error {
+  border-color: red;
+}
+
+.new-password-container span,
+.old-password-container span,
+.confirm-password-container span {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #aaa;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #9CA3AF;
 }

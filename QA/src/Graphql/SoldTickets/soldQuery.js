@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag'
+import { gql } from 'graphql-tag';
 
 export const FILTERSOLDTICKETS = gql`
     query FilterSoldTickets ($enddate: date, $leagueId: uuid, $startdate: date, $ticketId: uuid, $ticketPlacementId: uuid, $pageSize: Int, $pageOffset: Int, $order_by: [getmanageticket_order_by!], $search_event: String = "%", $array_tpid: jsonb, $paymentStatus: String, $payoutType: String = null) {

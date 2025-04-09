@@ -51,20 +51,18 @@ const Delistandreturn = ({ filter }) => {
                 Publish_id: item.tp_id
             }));
             setTableData(formattedData);
-            setTableSize(data.filtermanagetickets_aggregate.aggregate.count)
+            setTableSize(data.filtermanagetickets_aggregate.aggregate.count);
         }
     }, [data]);
 
 
 
     useEffect(() => {
-        refetch()
-    }, [refetch])
+        refetch();
+    }, [refetch]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-
-    console.log(data.filterreturntickets)
 
     return (
         <div>

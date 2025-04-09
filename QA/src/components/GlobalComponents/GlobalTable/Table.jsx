@@ -6,6 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './table.css';
 import '../../../utils/Manage_columns/manageColumns.css';
+import sortArrow from '../../../assets/icons/Vector.png'
 
 
 const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
@@ -19,18 +20,35 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
 
   const handlePageSizeChange = (newSize) => {
     onPageSizeChange(newSize);
-    onOffSetChange(0);
+    onOffSetChange(1);
   };
 
   const handlePageChange = (newPage) => {
     onOffSetChange(newPage);
   }
 
+  const CustomSortIcon = () => {
+    const iconClass = 'sort-icon';
+  
+    return <img src={sortArrow} alt="Sort" className={iconClass} />;
+  };
+  
+  const columnsWithCustomSorting = columns.map((col) => ({
+    ...col,
+    renderHeader: (params) => (
+      <Box className="column-header">
+        {params.colDef.headerName}
+        <CustomSortIcon />
+      </Box>
+    ),
+  }));
+
+
   return (
     <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
       <DataGrid
         rows={data}
-        columns={columns}
+        columns={columnsWithCustomSorting}
         pageSize={pageSize}
         checkboxSelection={checkboxisdisabled}
         disableRowSelectionOnClick

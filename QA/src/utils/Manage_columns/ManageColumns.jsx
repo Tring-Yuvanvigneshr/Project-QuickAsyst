@@ -179,6 +179,7 @@ export const managecolumns = (onPublish) => [
 
       <div className="action-block">
         <Button
+          className={`${params.row.status !== 'Verified' ? 'disabled-btn' : 'enabled-btn'}`}
           onClick={() => onPublish(params.row)}
           disabled={params.row.status !== 'Verified'}
         >

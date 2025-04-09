@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { useLazyQuery } from '@apollo/client';
 import { LEAGUESDROPDOWNFILTER } from './../../../Graphql/User/userQuery';
+import { IoIosArrowDown } from 'react-icons/io';
 import './Filter.css';
 
 const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => {
@@ -16,7 +17,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
     });
 
     const [getEvents, { data, loading }] = useLazyQuery(LEAGUESDROPDOWNFILTER, {
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
     });
 
     const handleReset = () => {
@@ -59,6 +60,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         onChange={handleLeagueChange}
                         onOpen={handleSelectOpen}
                         displayEmpty
+                        IconComponent={IoIosArrowDown}
                         MenuProps={{
                             PaperProps: {
                                 style: {
@@ -69,7 +71,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         }}
                         renderValue={(selected) => {
                             if (!selected) {
-                                return <div>--select--</div>;
+                                return <div style={{ color: '#B9BDC6'}}>-select-</div>;
                             }
                             const selectedLeague = data?.leagues?.find(league => league.l_id === selected);
                             return selectedLeague ? selectedLeague.l_name : selected;

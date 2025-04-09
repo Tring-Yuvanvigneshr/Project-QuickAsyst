@@ -10,14 +10,14 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  TextField,
-  InputAdornment,
 } from '@mui/material';
 import { managecolumns } from './../../../utils/Manage_columns/ManageColumns.jsx';
 import { toast } from 'react-toastify';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 const Managetickets = ({ filter }) => {
-  
+
   const [publishTicket] = useMutation(PUBLISHTICKETS);
   const [tableData, setTableData] = useState([]);
   const [tableSize, setTableSize] = useState([]);
@@ -26,14 +26,14 @@ const Managetickets = ({ filter }) => {
   const [price, setPrice] = useState('');
   const [errorPrice, setErrorPrice] = useState(false);
   const [pageChange, setPageChange] = useState(10);
-  const [offSet, setOffSet] = useState(0);
-  
-  
+  const [offSet, setOffSet] = useState(1);
+
+
   const { loading, error, data, refetch } = useQuery(FILTERMANAGETICKETS, {
     variables: {
       ...filter,
       pageSize: pageChange,
-      pageOffset: pageChange*offSet
+      pageOffset: pageChange * (offSet - 1),
     },
     fetchPolicy: 'network-only'
   });
@@ -49,10 +49,12 @@ const Managetickets = ({ filter }) => {
     try {
       await publishTicket({
         variables: {
-          publishTicketsInput: {listPrice: price,
-          ticketPlacementIds: [
-            selectedTicket.Publish_id
-          ],}
+          publishTicketsInput: {
+            listPrice: price,
+            ticketPlacementIds: [
+              selectedTicket.Publish_id,
+            ],
+          },
         },
       });
       toast.success("Ticket published successfully!");
@@ -76,9 +78,9 @@ const Managetickets = ({ filter }) => {
   };
 
   const handlePriceChange = (value) => {
-    setPrice(value)
-    if(price === ''){
-      setErrorPrice(true)
+    setPrice(value);
+    if (price === '') {
+      setErrorPrice(true);
     }
   }
 
@@ -102,13 +104,13 @@ const Managetickets = ({ filter }) => {
         period: "1 Days",
         league_name: item.l_name,
         validityStatus: item.tp_validity_status,
-        Publish_id: item.tp_id
+        Publish_id: item.tp_id,
       }));
 
       console.log(formattedData);
-        
+
       setTableData(formattedData);
-      setTableSize(data.filtermanagetickets_aggregate.aggregate.count)
+      setTableSize(data.filtermanagetickets_aggregate.aggregate.count);
     }
   }, [data]);
 
@@ -134,9 +136,17 @@ const Managetickets = ({ filter }) => {
         onOffSetChange={setOffSet}
       />
 
-      <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle color='#0f172a' fontFamily={'Playfair Display'} fontWeight={'bold'}>
+      <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} fullWidth>
+        <DialogTitle
+          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px' }}
+          color='#0f172a'
+          fontFamily={'Playfair Display'}
+          fontWeight={800}
+        >
           Publish Ticket
+          <IconButton disableRipple color="inherit" onClick={handleClose} aria-label="close">
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
 
         <DialogContent>
@@ -167,7 +177,7 @@ const Managetickets = ({ filter }) => {
                 <div className='publish-dialog-row'>
                   <div className='publish-content-title'>Ticket Placement</div>
                   <div className='publish-content-value'>
-                    Sec: {selectedTicket.section} / Row: {selectedTicket.row} / Seat: {selectedTicket.seat}
+                    Sec : {selectedTicket.section} / Row : {selectedTicket.row} / Seat : {selectedTicket.seat}
                   </div>
                 </div>
               </Box>

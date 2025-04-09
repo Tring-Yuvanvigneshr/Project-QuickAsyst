@@ -7,11 +7,9 @@ const Listtickets = ({ filter }) => {
         variables: filter,
     });
 
-    console.log(filter);
-
     useEffect(() => {
-        refetch()
-    }, [refetch])
+        refetch();
+    }, [refetch]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;

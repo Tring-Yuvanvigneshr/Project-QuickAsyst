@@ -4,11 +4,11 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { Avatar, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -22,6 +22,7 @@ import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
 import { useQuery } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
@@ -37,6 +38,9 @@ export default function Header() {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const username = 'Quickasyst Admin';
 
   const [errors, setErrors] = useState({
@@ -54,6 +58,11 @@ export default function Header() {
   }, [error]);
 
   const fullName = data ? `${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}` : username;
+  const avatarUrl = data ? data.get_user_profile[0].u_profile_picture_url : '';
+
+  const toggleOldPasswordVisibility = () => setOldPasswordVisible(!oldPasswordVisible);
+  const toggleNewPasswordVisibility = () => setNewPasswordVisible(!newPasswordVisible);
+  const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -156,10 +165,21 @@ export default function Header() {
             {loading ? (
               <CircularProgress />
             ) : (
-              <IconButton onClick={handleMenu} disableRipple className="header-iconButton">
-                <AccountCircle className="header-accountIcon" />
+              <div className="header-iconButton">
+                <Avatar
+                  alt={fullName}
+                  src={avatarUrl}
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    border: '1px solid #B9BDC6',
+                    borderRadius: '50%',
+                  }}
+                  onClick={handleMenu}
+                  className="header-avatar"
+                />
                 <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
-              </IconButton>
+              </div>
             )}
             <Menu
               id="menu-appbar"
@@ -226,54 +246,63 @@ export default function Header() {
           <h3 className="Change_password_h3">Change Password</h3>
           <h5 className="Change_password_h5">Enter your new password</h5>
         </DialogTitle>
-
         <DialogContent>
           <DialogContentText className="Dialog-content">
             Old password <br />
             <div className="old-password-container">
               <input
-                type="password"
+                type={oldPasswordVisible ? 'text' : 'password'}
                 placeholder="Enter old password"
                 value={oldPassword}
                 onChange={(e) => handleChange('oldPassword', e.target.value)}
                 className={`input-field ${errors.oldPassword ? 'error' : ''}`}
               />
-              {errors.oldPassword && (
-                <p className="error-message">Old password is required</p>
-              )}
+              <span onClick={toggleOldPasswordVisibility}>
+                {oldPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
+            {errors.oldPassword && (
+              <p className="error-message">Old password is required</p>
+            )}
 
             New password <br />
             <div className="new-password-container">
               <input
-                type="password"
+                type={newPasswordVisible ? 'text' : 'password'}
                 name="newPassword"
-                placeholder="Confirm new password"
+                placeholder="Enter new password"
                 value={newPassword}
                 onChange={(e) => handleChange('newPassword', e.target.value)}
                 className={`input-field ${errors.newPassword ? 'error' : ''}`}
               />
-              {errors.passwordStrength && (
-                <p className="error-message">Your password is weak</p>
-              )}
+              <span onClick={toggleNewPasswordVisibility}>
+                {newPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
+            {errors.passwordStrength && (
+              <p className="error-message">Your password is weak</p>
+            )}
 
             Confirm password <br />
-            <div className="new-password-container">
+            <div className="confirm-password-container">
               <input
-                type="password"
+                type={confirmPasswordVisible ? 'text' : 'password'}
                 name="confirmPassword"
                 placeholder="Confirm new password"
                 value={confirmPassword}
                 onChange={(e) => handleChange('confirmPassword', e.target.value)}
                 className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
               />
-              {errors.confirmPassword && (
-                <p className="error-message">Confirm password is required</p>
-              )}
+              <span onClick={toggleConfirmPasswordVisibility}>
+                {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
+            {errors.confirmPassword && (
+              <p className="error-message">Confirm password is required</p>
+            )}
           </DialogContentText>
         </DialogContent>
+
 
         <DialogActions>
           <Button

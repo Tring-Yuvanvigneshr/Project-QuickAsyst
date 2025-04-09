@@ -3,9 +3,9 @@ import {
     Button,
     IconButton
 } from '@mui/material';
-import './SoldColumns.css'
-import invoice from '../../assets/icons/Invoice.svg'
-import payout from '../../assets/icons/Payout.svg'
+import './SoldColumns.css';
+import invoice from '../../assets/icons/Invoice.svg';
+import payout from '../../assets/icons/Payout.svg';
 
 export const soldColumns = (openPopup, setSelectedTicket) => [
     {
@@ -87,6 +87,20 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         ),
     },
     {
+        field: 'userName',
+        headerName: 'User Name',
+        flex: 1,
+        minWidth: 250,
+        cellClassName: 'left-align',
+    },
+    {
+        field: 'email',
+        headerName: 'Email',
+        flex: 1,
+        minWidth: 400,
+        cellClassName: 'left-align',
+    },
+    {
         field: 'sold price',
         headerName: 'Sold Price',
         flex: 1,
@@ -116,6 +130,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
 
                 {params.row.status === 'Success' && (
                     <IconButton
+                    disableRipple
                         onClick={() => {
                             setSelectedTicket(params.row);
                             openPopup('invoice');
@@ -127,6 +142,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
 
                 {(params.row.status === 'Failed' || params.row.status == null) && (
                     <IconButton
+                        disableRipple
                         onClick={() => {
                             setSelectedTicket(params.row);
                             openPopup('payout');
@@ -137,19 +153,5 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
                 )}
             </div>
         )
-    },
-    {
-        field: 'userName',
-        headerName: 'User Name',
-        flex: 1,
-        minWidth: 250,
-        cellClassName: 'left-align',
-    },
-    {
-        field: 'email',
-        headerName: 'Email',
-        flex: 1,
-        minWidth: 400,
-        cellClassName: 'left-align',
     },
 ];

@@ -22,8 +22,8 @@
   border-bottom: none !important;
   border-top: none !important;
   cursor: default !important;
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 700;
+  color: #475569;
+  font-weight: 700 !important;
 }
 
 
@@ -61,6 +61,46 @@
 
 .MuiDataGrid-row:nth-of-type(odd) {
   background-color: #ffffff;
+}
+
+.pagination-block{
+  margin-top: 0;
+}
+
+
+.MuiPaginationItem-root {
+  color: #5D75F8 !important; 
+  border-color: #5D75F8 !important;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+  background-color: #5D75F8 !important;
+  color: #fff !important;
+}
+
+.MuiPaginationItem-root:hover {
+  background-color: #d6e2ff !important;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  color: #9CA3AF;
+}
+
+.column-header:hover {
+  color: #1D4ED8;
+}
+
+.sort-icon {
+  width: 8px;
+  height: 12.8px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.sort-icon.desc {
+  transform: rotate(180deg);
 }
 
 
