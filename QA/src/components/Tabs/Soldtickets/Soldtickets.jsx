@@ -56,7 +56,7 @@ const Soldtickets = ({ filter }) => {
             handleCloseDialog();
         },
         onError: (error) => {
-            toast.error('Payout failed:');
+            toast.error(error.message || 'Payout failed:');
         }
     });
 
@@ -207,7 +207,7 @@ const Soldtickets = ({ filter }) => {
                 <DialogActions className='payout-mark-btn'>
                     <Button onClick={handleMarkAsSettled} disabled={transferLoading} className='Payout-Ticket-Datails-Button' variant="contained" color="primary">Mark As Settled</Button>
                 </DialogActions>
-            </Dialog >
+            </Dialog>
 
 
             {/* Invoice Dialog */}
@@ -257,17 +257,17 @@ const Soldtickets = ({ filter }) => {
                     <Box className='invoice-order-summary'>
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Transaction ID</Typography>
-                            <Typography className='publish-content-value' fontSize={'14px'}>{InvoiceData?.ticket_placement_by_pk.payment_transaction[0].transactionId}</Typography>
+                            <Typography className='publish-content-value' fontSize={'14px'}>{InvoiceData?.ticket_placement_by_pk.payment_transaction[0]?.transactionId}</Typography>
                         </Box>
 
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Date & Time</Typography>
-                            <Typography className='publish-content-value' fontWeight={500}>{moment(InvoiceData?.ticket_placement_by_pk.payment_transaction[0].paymentUpdated).format('ddd, DD MMM YYYY / hh:mm A [CDT]')}</Typography>
+                            <Typography className='publish-content-value' fontWeight={500}>{moment(InvoiceData?.ticket_placement_by_pk.payment_transaction[0]?.paymentUpdated).format('ddd, DD MMM YYYY / hh:mm A [CDT]')}</Typography>
                         </Box>
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography fontFamily='glegoo' className='publish-content-title'>Ticket Sold Amount</Typography>
-                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount.toFixed(2)}</Typography>
+                            <Typography className='publish-content-value' fontWeight={500}>${InvoiceData?.ticket_placement_by_pk.tp_logitix_amount?.toFixed(2)}</Typography>
                         </Box>
 
                         <Box display="flex" justifyContent="space-between">
