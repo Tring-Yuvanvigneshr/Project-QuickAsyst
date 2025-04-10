@@ -9,7 +9,7 @@ import Returntickets from '../../components/Tabs/DelistAndReturn/Delistandreturn
 import Unsoldtickets from '../../components/Tabs/DelistAndUnsold/Delistandunsold.jsx';
 import './tickets.css';
 
-const attributes = [["Manage", "Event", "Validate", "Date", "Period left"], ["List", "Validate", "Event", "Date"], ["Sold", "Event", "Validate", "Date"], ["Event", "Date"]];
+const attributes = [["Manage", "Event", "Validate", "Date", "Period left"], ["List", "Validate", "Event", "Date"], ["Sold", "Event", "Validate", "Date"], ["Event", "Date"],["Event", "Date"]];
 const validationOptionsManage = ["Valid", "Invalid", "Delist Requested"];
 const validationOptionsList = ["Valid", "Delist Requested"];
 const validationOptionsSold = ["Sold", "In Prograss", "Settled", "Failded", "Voided Payout"];
@@ -35,7 +35,7 @@ const Tickets = () => {
         day: null,
         ticketId: null,
         tpId: null,
-        array_tpid: null
+        array_tpid: null,
     });
 
     useEffect(() => {
@@ -77,9 +77,9 @@ const Tickets = () => {
 
             <TabPanel value={tabValue} index={0}><Managetickets filter={filter} /></TabPanel>
             <TabPanel value={tabValue} index={1}><Listtickets filter={filter} /></TabPanel>
-            <TabPanel value={tabValue} index={2}><Soldtickets /></TabPanel>
-            <TabPanel value={tabValue} index={3}><Returntickets /></TabPanel>
-            <TabPanel value={tabValue} index={4}><Unsoldtickets /></TabPanel>
+            <TabPanel value={tabValue} index={2}><Soldtickets filter={filter}/></TabPanel>
+            <TabPanel value={tabValue} index={3}><Returntickets filter={filter}/></TabPanel>
+            <TabPanel value={tabValue} index={4}><Unsoldtickets filter={filter}/></TabPanel>
         </Box>
     );
 };

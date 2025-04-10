@@ -1,0 +1,121 @@
+.MuiDataGrid-root {
+  border: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  font-family: 'glegoo' !important;
+}
+
+.MuiDataGrid-columnHeader {
+  border-bottom: none !important;
+  background-color: '#f9f9fa' !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: 800 !important;
+  color: #a0a0a0;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.MuiDataGrid-cell {
+  border-right: none !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  cursor: default !important;
+  color: #475569;
+  font-weight: 700 !important;
+}
+
+
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-columnHeader:focus {
+  outline: none !important;
+}
+
+.MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+
+.MuiDataGrid-checkboxInput:hover {
+  background: none !important;
+}
+
+.validate-custom-select {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.MuiDataGrid-cell {
+  white-space: normal !important;
+}
+
+.MuiDataGrid-row:hover:nth-of-type(odd) {
+  background-color: white !important;
+}
+
+.MuiDataGrid-row:hover:nth-of-type(even) {
+  background-color: #f9f9fa !important;
+}
+
+.MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.pagination-block{
+  background-color: #ffffff;
+}
+
+
+.MuiPaginationItem-root {
+  color: rgba(0, 0, 0, 0.87) !important; 
+  border-radius: 0px !important;
+  border: 1px solid #e3e5e8 !important;
+  background-color: #fff !important;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+  background-color: rgb(93, 117, 248) !important;
+  color: white !important;
+}
+
+.MuiPaginationItem-ellipsis {
+  border: none !important;
+}
+
+.MuiPaginationItem-root:hover {
+  background-color: #d6e2ff !important;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  color: #9CA3AF;
+}
+
+.column-header:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.sort-icon {
+  width: 8px;
+  height: 12.8px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.sort-icon.desc {
+  transform: rotate(180deg);
+}
+
+
+@media (max-width: 768px) {
+  .pagination {
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

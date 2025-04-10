@@ -14,9 +14,9 @@ const Profile = () => {
     const [phoneNumber, setPhoneNumber] = useState('(123) 456-6575');
     const [email, setEmail] = useState('quickasyst@mailinator.com');
     const [profileImage, setProfileImage] = useState(defaultImage);
-    const [nameChange, setNameChange] = useState('')
-    const [phoneChange, setPhoneChange] = useState('')
-    const [] = useState()
+    const [nameChange, setNameChange] = useState('');
+    const [phoneChange, setPhoneChange] = useState('');
+    const [] = useState();
 
     const [errors, setErrors] = useState({
         fullName: false,
@@ -24,7 +24,7 @@ const Profile = () => {
     });
 
     const { loading, error, data } = useQuery(GETUSERPROFILE, {
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
     });
 
     useEffect(() => {
@@ -39,8 +39,8 @@ const Profile = () => {
             setPhoneNumber(data.get_user_profile[0].u_phone_number);
             setEmail(data.get_user_profile[0].u_email_id);
 
-            setNameChange(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`)
-            setPhoneChange(data.get_user_profile[0].u_phone_number)
+            setNameChange(`${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}`);
+            setPhoneChange(data.get_user_profile[0].u_phone_number);
         }
     }, [data]);
 

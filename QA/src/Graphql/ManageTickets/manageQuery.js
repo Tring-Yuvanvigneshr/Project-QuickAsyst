@@ -32,6 +32,7 @@ export const FILTERMANAGETICKETS = gql `
     e_time_zone
     e_date_time_zone
     tp_delist_requested_email
+    tp_is_support_vanderbilt_nil_fund
   }
   filtermanagetickets_aggregate(args: {enddate:$enddate,leagueid:$leagueId,startdate:$startdate,ticket_status:$ticketStatus,day:$day,ticketid:$ticketId,tpid:$tpId,array_tpid:$array_tpid}, where: {tp_is_published:{_eq:false},tp_status:{_in:["ToBeVerified","Verified","Delist","DelistInProgress"]},_or:[{e_name:{_ilike:$search_event}},{full_name:{_ilike:$search_event}},{u_email_id:{_ilike:$search_event}}]}) {
     aggregate {

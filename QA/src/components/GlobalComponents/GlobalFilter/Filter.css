@@ -1,11 +1,12 @@
 .filter-box {
+    margin-top: 10px;
     padding: 26px;
     width: 379px;
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     overflow: auto;
-    max-height: 500px;
+    max-height: 480px;
 }
 
 .filter-box::-webkit-scrollbar {
@@ -69,28 +70,29 @@
 
 .button-reset {
     font-size: 16px;
-    text-transform: none;
+    text-transform: none !important;
     border-radius: 0 !important;
-    color: black;
+    color: #151A34 !important;
+    font-weight: 700 !important;
     width: 95px;
     height: 44px;
     background-color: #f3f4f6;
     border: none;
-    font-family: 'Glegoo';
+    font-family: 'Glegoo' !important;
     font-weight: 600;
-    background-color: #f3f4f6 !important;
+    background-color: #F3F4F6 !important;
 }
 
 .button-filter-submit{
     font-size: 16px;
-    text-transform: none;
+    text-transform: none !important;
     border-radius: 0 !important;
     width: 95px;
     height: 44px;
     border: none;
-    font-family: 'Glegoo';
+    font-family: 'Glegoo' !important;
     font-weight: 600;
-    background-color: #5d75f8 !important;
+    background-color: #5D75F8 !important;
 }
 
 .button-apply {

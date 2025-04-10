@@ -1,0 +1,236 @@
+.event-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.event-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.event-league {
+  font-family: glegoo !important;
+  font-size: 12px;
+  color: #b9bdc6;
+  text-transform: capitalize;
+}
+
+.date-block {
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.venue-block {
+  line-height: 1.5;
+}
+
+.ticket-placement-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 30px 0px 0px;
+}
+
+.status-block {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+}
+
+.status-block.verified {
+  background-color: #22c55e1a;
+  color: #22c55e;
+}
+
+.status-block.tobeverified {
+  background-color: #fff5ec;
+  color: #fb923c;
+}
+
+.status-block.rejected {
+  color: #ef4444;
+  background-color: #ff004d1a;
+}
+
+.status-block.Donated, 
+.status-block.NotDonated {
+  color: #fb923c;
+  background-color: #fff5ec;
+} 
+
+.action-block {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.enabled-btn {
+  color: white;
+  border: 1px solid #5d75f8 !important;
+  border-radius: 0px !important;
+  padding: 5px 20px 5px 20px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  font-weight: 700;
+}
+
+.disabled-btn {
+  color: #5d75f8;
+  border: 1px solid #e3e5e8 !important;
+  border-radius: 0px !important;
+  padding: 5px 20px 5px 20px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  font-weight: 700;
+}
+
+.action-block>button:hover {
+  background-color: transparent;
+}
+
+.pagination-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.show-text {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+.page-size-select {
+  width: 70px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.pagination-number {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  margin: 0 4px;
+}
+
+.pagination-number.active-page {
+  background-color: #5b73f2;
+  color: #fff;
+}
+
+
+
+
+.publish-dialog {
+  border-radius: 0px !important;
+  font-family: glegoo !important;
+}
+
+.publish-dialog-content {
+  padding: 20px !important;
+  width: 376px;
+  height: 342px;
+}
+
+.publish-event {
+  font-weight: 600;
+  color: #475569;
+  font-family: Playfair Display;
+}
+
+.publish-dialog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.publish-content-title {
+  color: #9ca3af;
+  font-size: 14px !important;
+  font-family: glegoo;
+}
+
+.publish-content-value {
+  color: #475569;
+  font-size: 14px !important;
+  font-family: glegoo;
+  font-weight: bolder;
+}
+
+.publish-list-price {
+  background-color: #f3f4f6;
+  font-size: 14px;
+  height: 70px;
+  padding: 0px 10px 0px 10px;
+  display: flex;
+  align-items: center !important;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #9ca3af;
+  font-family: Glegoo !important;
+}
+
+.publish-input-container-input{
+  background-color: white !important;
+  width: 140px;
+  height: 40px;
+  outline: none;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  text-align: left;
+}
+
+.publish-input-container-input::placeholder {
+  text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.reset-btn {
+  font-size: 16px !important;
+  text-transform: none !important;
+  border-radius: 0px !important;
+  color: #0f172a !important;
+  width: 130px;
+  height: 44px;
+  font-family: 'Glegoo' !important;
+  font-weight: 600 !important;
+  background-color: #f3f4f6 !important;
+  border: 1px solid #e3e5e8 !important;
+  padding: 15px 30px;
+}
+
+.reset-btn {
+  cursor: text !important;
+}
+
+.apply-btn {
+  font-size: 16px !important;
+  text-transform: none !important;
+  border-radius: 0px !important;
+  width: 130px;
+  height: 44px;
+  font-family: 'Glegoo' !important;
+  background-color: #5d75f8 !important;
+  padding: 15px 30px;
+  border: none;
+}

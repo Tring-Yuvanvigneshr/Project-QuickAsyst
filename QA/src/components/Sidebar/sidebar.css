@@ -71,6 +71,7 @@
 .custom-sidebar.collapsed {
     width: 80px;
 }
+
 .custom-sidebar.collapsed .Sidebar-item {
     justify-content: flex-start;
     margin-top: 5px;
@@ -82,4 +83,38 @@
     transform: scale(0.8);
     background-color: #47556940;
     margin-left: -10px;
+}
+
+
+@media (max-width: 768px) {
+    .custom-sidebar.collapsed {
+        width: 0px;
+    }
+    
+    .custom-sidebar.collapsed .custom-sidebar-content {
+        display: none;
+    }
+
+    .menu-text {
+        display: none;
+    }
+
+    .custom-sidebar {
+        width: 60px;
+    }
+
+    .collapse-btn{
+        z-index: 100;
+        overflow-x: auto;
+    }
+
+    .sidebar-logo {
+        width: 60px;
+    }
+
+    .sidebar-logo img {
+        width: 40px;
+        cursor: pointer;
+        transition: transform 0.3s ease, width 0.3s ease;
+    }
 }

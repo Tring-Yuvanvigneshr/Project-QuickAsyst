@@ -1,7 +1,7 @@
-import { gql } from 'graphql-tag'
+import { gql } from 'graphql-tag';
 
 export const FILTERUNSOLDTICKETS = gql`
-    query FilterUnsoldTickets ($enddate: date, $leagueId: uuid, $startdate: date, $ticketId: uuid, $ticketPlacementId: uuid, $pageSize: Int, $pageOffset: Int, $order_by: [getmanageticket_order_by!], $search_event: String = "%", $array_tpid: jsonb, $ticketStatus: String) {
+ query FilterUnsoldTickets ($enddate: date, $leagueId: uuid, $startdate: date, $ticketId: uuid, $ticketPlacementId: uuid, $pageSize: Int, $pageOffset: Int, $order_by: [getmanageticket_order_by!], $search_event: String = "%", $array_tpid: jsonb, $ticketStatus: String) {
   filterUnsoldTickets: filterreturntickets(args: {enddate:$enddate,leagueid:$leagueId,startdate:$startdate,ticketid:$ticketId,tpid:$ticketPlacementId,array_tpid:$array_tpid}, where: {tp_status:{_in:["Unsold"]},_or:[{e_name:{_ilike:$search_event}},{full_name:{_ilike:$search_event}},{u_email_id:{_ilike:$search_event}}]}, limit: $pageSize, offset: $pageOffset, order_by: $order_by) {
     e_name
     l_name
@@ -23,6 +23,9 @@ export const FILTERUNSOLDTICKETS = gql`
     u_original_email
     e_brand_name
     e_status
+    e_time_zone
+    e_date_time_zone
+    tp_is_support_vanderbilt_nil_fund
   }
   filterreturntickets_aggregate(args: {enddate:$enddate,leagueid:$leagueId,startdate:$startdate,ticketid:$ticketId,tpid:$ticketPlacementId,array_tpid:$array_tpid}, where: {tp_status:{_in:["Return"]},_or:[{e_name:{_ilike:$search_event}},{full_name:{_ilike:$search_event}},{u_email_id:{_ilike:$search_event}}]}, limit: $pageSize, offset: $pageOffset, order_by: $order_by) {
     aggregate {
@@ -44,7 +47,7 @@ export const FILTERUNSOLDTICKETS = gql`
       count
     }
   }
-  filterUnsoldTickets_aggreagate: filterreturntickets_aggregate(args: {enddate:$enddate,leagueid:$leagueId,startdate:$startdate,ticketid:$ticketId,tpid:$ticketPlacementId,array_tpid:$array_tpid}, where: {tp_status:{_in:["Unsold"]},_or:[{e_name:{_ilike:$search_event}},{full_name:{_ilike:$search_event}},{u_email_id:{_ilike:$search_event}}]}, limit: $pageSize, offset: $pageOffset, order_by: $order_by) {
+  filterUnsoldTickets_aggreagate: filterreturntickets_aggregate(args: {enddate:$enddate,leagueid:$leagueId,startdate:$startdate,ticketid:$ticketId,tpid:$ticketPlacementId,array_tpid:$array_tpid}, where: {tp_status:{_in:["Unsold"]},_or:[{e_name:{_ilike:$search_event}},{full_name:{_ilike:$search_event}},{u_email_id:{_ilike:$search_event}}]}) {
     aggregate {
       count
     }

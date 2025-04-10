@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-export const  GETUSERPROFILE = gql`
+export const GETUSERPROFILE = gql`
     query GetUserProfile {
   get_user_profile {
     u_id
@@ -30,6 +30,17 @@ export const  GETUSERPROFILE = gql`
     u_stripe_account_is_due
     u_stripe_err_msg
     u_delete_requested
+  }
+}
+`
+
+
+
+export const LEAGUESDROPDOWNFILTER = gql`
+  query LeaguesDropdownFilter {
+  leagues(where: {l_deleted_at:{_is_null:true}}, order_by: {l_name:asc}) {
+    l_id
+    l_name
   }
 }
 `

@@ -10,8 +10,9 @@
 }
 
 .tab {
-    font-family: 'Glegoo';
-    font-weight: 700;
+    font-family: 'Glegoo' !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
 }
 
 .filter-button {

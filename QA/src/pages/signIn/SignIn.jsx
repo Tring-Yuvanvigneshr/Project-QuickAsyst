@@ -17,7 +17,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm({
-    mode: "onChange"
+    mode: "onChange",
   });
 
   const onSubmit = async (data) => {
@@ -27,7 +27,7 @@ const SignIn = () => {
     try {
       const user = await signIn({
         username: email,
-        password
+        password,
       }
       );
       navigate('/dashboard');
