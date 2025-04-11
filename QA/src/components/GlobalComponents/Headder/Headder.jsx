@@ -8,6 +8,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { Avatar, CircularProgress } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -111,6 +113,7 @@ const Header = () => {
       await updatePassword({ oldPassword, newPassword });
       toast.success('Password changed successfully');
       handledialogClose();
+      handleSignOut();
     } catch (error) {
       toast.error(error.message || 'Failed to change password');
     }
@@ -221,14 +224,20 @@ const Header = () => {
         PaperProps={{
           sx: {
             width: '550px',
-            padding: '10px 20px 10px 20px',
+            borderRadius: '0px'
           },
         }}
       >
-        <DialogTitle>
-          <div className="Change_password_h3">Change Password</div>
-          <div className="Change_password_h5">Enter your new password</div>
+        <DialogTitle className='change-password-headder'>
+          <div>
+            <div className="Change_password_h3">Change Password</div>
+            <div className="Change_password_h5">Enter your new password</div>
+          </div>
+          <IconButton disableRipple onClick={handledialogClose} color="inherit">
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
+
         <DialogContent>
           <DialogContent className="dialog-content">
             Old password <br />
@@ -241,7 +250,7 @@ const Header = () => {
                 className={`input-field ${errors.oldPassword ? 'error' : ''}`}
               />
               <span onClick={toggleOldPasswordVisibility}>
-                {oldPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                {oldPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
               </span>
             </div>
             {errors.oldPassword && (
@@ -259,7 +268,7 @@ const Header = () => {
                 className={`input-field ${errors.newPassword ? 'error' : ''}`}
               />
               <span onClick={toggleNewPasswordVisibility}>
-                {newPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                {newPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
               </span>
             </div>
             {errors.passwordStrength && (
@@ -277,7 +286,7 @@ const Header = () => {
                 className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
               />
               <span onClick={toggleConfirmPasswordVisibility}>
-                {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                {confirmPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
               </span>
             </div>
             {errors.confirmPassword && (
@@ -287,7 +296,7 @@ const Header = () => {
         </DialogContent>
 
 
-        <DialogActions>
+        <DialogActions className='change-password-actions'>
           <Button
             disableRipple
             variant="outlined"

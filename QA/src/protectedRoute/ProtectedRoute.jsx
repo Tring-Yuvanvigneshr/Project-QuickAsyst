@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { fetchAuthSession  } from 'aws-amplify/auth';
+import { CircularProgress } from '@mui/material';
 
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -8,20 +9,21 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const user = await getCurrentUser();
-        
-        if (user) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
+        const session = await fetchAuthSession();
+        const isValid = session && session.tokens?.idToken?.toString();
+
+        setIsAuthenticated(!!isValid);
       } catch (err) {
         setIsAuthenticated(false);
       }
     };
-
     checkAuth();
   }, []);
+
+  if (isAuthenticated === null) {
+    return <CircularProgress />;
+  }
+
 
   return isAuthenticated ? children : <Navigate to="/login" />;
 };

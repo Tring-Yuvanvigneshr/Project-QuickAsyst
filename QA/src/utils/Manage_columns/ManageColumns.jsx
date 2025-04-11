@@ -93,6 +93,9 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
     minWidth: 130,
     renderCell: (params) => {
       const handleSelectChange = (e) => {
+
+        console.log(params);
+        
         const selectedValue = e.target.value;
         if (selectedValue === 'Return') {
           handleReturnChange(params.row.Publish_id);
@@ -184,6 +187,7 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
   },
   {
     field: 'action',
+    pinned: 'right',
     headerName: 'Action',
     flex: 1,
     minWidth: 120,

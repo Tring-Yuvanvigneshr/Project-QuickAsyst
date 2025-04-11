@@ -49,6 +49,13 @@
     font-weight: 600 !important;
 }
 
+.filter-section-span {
+    display: flex;
+    justify-content: space-between;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
 .date-option {
     display: flex;
     justify-content: space-between;
@@ -99,8 +106,21 @@
     font-size: 14px;
 }
 
+.css-2n9dey {
+    z-index: 0 !important;
+    height: 6px !important;
+}
+
+.css-16htz67-MuiPaper-root-MuiDialog-paper {
+    border-radius: 0px;
+}
+
 .Filter-select-event {
     color: #475569 !important;
+}
+
+.filter-box {
+    z-index: 1000 !important;
 }
 
 @media (max-width: 768px) {

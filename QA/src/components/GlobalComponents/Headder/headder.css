@@ -9,6 +9,7 @@
 .dialog-content {
   color: #9ca3af !important;
   padding: 0 0!important;
+  font-family: glegoo, sans-serif !important;
 }
 
 .header-toolbar {
@@ -106,43 +107,68 @@
   background: transparent;
 }
 
+.change-password-headder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.change-password-actions {
+  margin-right: 15px;
+  margin-top: -15px;
+  margin-bottom: 5px;
+}
 
 .old-password-container>input {
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
-  padding: 10px;
   border: 1px solid #cad2df;
+  border-radius: 0px;
+}
+
+.old-password-container>input::placeholder {
+  color: #B9BDC6 !important;
+  font-family: glegoo, sans-serif !important;
 }
 
 .new-password-container>input {
+  border-radius: 0px;
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
-  padding: 10px;
   border: 1px solid #cad2df;
+}
+
+.new-password-container>input::placeholder {
+  color: #B9BDC6 !important;
+  font-family: glegoo, sans-serif !important;
 }
 
 .confirm-password-container>input {
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
-  padding: 10px;
   border: 1px solid #cad2df;
+  border-radius: 0px;
+}
+
+.confirm-password-container>input::placeholder {
+  color: #B9BDC6 !important;
+  font-family: glegoo, sans-serif !important;
 }
 
 .Change_password_h3 {
-  color: #0F1753;
+  color: #0F1753 !important;
   font-weight: 700;
-  font-family: 'Glegoo', serif;
-  font-size: 18px; 
+  font-family: 'Glegoo', serif !important;
+  font-size: 24px !important; 
 }
 
 .Change_password_h5 {
-  color: #9ca3af;
-  font-family: 'Glegoo', serif;
+  color: #9ca3af !important;
+  font-family: 'Glegoo', serif !important;
   font-size: 14px;
-  margin-bottom: 12px;
+  
 }
 
 .password-change-actions {
@@ -162,22 +188,24 @@
   font-size: 16px !important;
   text-transform: none !important;
   border-radius: 0px !important;
-  color: black;
-  width: 95px;
+  color: #151A34 !important;
+  width: 117px;
   height: 44px;
   font-family: 'Glegoo', serif !important;
-  font-weight: 600 !important;
-  background-color: #f3f4f6 !important;
+  font-weight: 700 !important;
+  background-color: #F3F4F6 !important;
+  border: none !important;
 }
 
 .password-apply-btn {
   font-size: 16px !important;
   text-transform: none !important;
   border-radius: 0px !important;
-  width: 95px;
+  width: 117px;
   height: 44px;
   font-family: 'Glegoo', serif !important;
   border: none;
+  background-color: #5D75F8 !important;
 }
 
 

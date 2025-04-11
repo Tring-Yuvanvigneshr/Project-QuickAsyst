@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, MenuItem, Select, Radio, RadioGroup, FormControlLabel, Slider, Typography, IconButton, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { useLazyQuery } from '@apollo/client';
 import { LEAGUESDROPDOWNFILTER } from './../../../Graphql/User/userQuery';
 import { IoIosArrowDown } from 'react-icons/io';
+import dayjs from 'dayjs';
 import './Filter.css';
 
 const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => {
     const [filters, setFilters] = useState({
-        leagueId: filter.leagueId || "",
-        ticketStatus: filter.ticketStatus || "",
-        startdate: filter.startdate || "",
-        enddate: filter.enddate || "",
-        day: filter.enddate || 1,
+        leagueId: filter.leagueId || null,
+        ticketStatus: filter.ticketStatus || null,
+        startdate: filter.startdate || null,
+        enddate: filter.enddate || null,
+        day: filter.enddate || null,
+        paymentStatus: filter.paymentStatus || null,
+        payoutType: filter.payoutType || null,
+        validType: filter.validType || null
     });
 
     const [getEvents, { data, loading }] = useLazyQuery(LEAGUESDROPDOWNFILTER, {
         fetchPolicy: 'network-only'
     });
 
+    useEffect(() => {
+        getEvents();
+    }, [getEvents]);
+
     const handleReset = () => {
-        setFilters({ leagueId: null, ticketStatus: null, startdate: null, enddate: null, day: null });
+        setFilters({ leagueId: null, ticketStatus: null, startdate: null, enddate: null, day: null, paymentStatus: null, payoutType: null, validType: null });
         onApply({ leagueId: null, ticketStatus: null, startdate: null, enddate: null, day: null });
     };
 
@@ -35,13 +43,94 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
     };
 
     const handleLeagueChange = event => {
-        const selectedLeagueName = event.target.value;
-        const selectedLeague = data?.leagues?.find(league => league.l_name === selectedLeagueName);
-        setFilters({ ...filters, leagueId: selectedLeague ? selectedLeague.l_id : '' });
+        const selectedLeagueId = event.target.value;
+        setFilters({ ...filters, leagueId: selectedLeagueId });
     };
 
+    const getSelectedLeagueName = (leagueId) => {
+        if (!data?.leagues) return '';
+        const selectedLeague = data.leagues.find(league => league.l_id === leagueId);
+        return selectedLeague ? selectedLeague.l_name : '';
+    };
+
+
+    const handleTicketStatusChange = (event) => {
+        const selected = event.target.value;
+        let changed = selected;
+
+        switch (selected.toLowerCase()) {
+            case 'valid':
+                changed = 'Verified';
+                break;
+            case 'invalid':
+                changed = 'Delist';
+                break;
+            case 'delist requested':
+                changed = 'DelistInProgress';
+                break;
+            case 'sold':
+                changed = 'NotInitiated';
+                setFilters({ ...filters, paymentStatus: 'NotInitiated', payoutType: '"Unvoided_Payout"', validType: selected });
+                return;
+            case 'in progress':
+                changed = 'Inprogress';
+                setFilters({ ...filters, paymentStatus: 'Inprogress', payoutType: '"Unvoided_Payout"', validType: selected });
+                return;
+            case 'settled':
+                changed = 'Success';
+                setFilters({ ...filters, paymentStatus: 'Success', payoutType: '"Unvoided_Payout"', validType: selected });
+                return;
+            case 'failed':
+                changed = 'Failed';
+                setFilters({ ...filters, paymentStatus: 'Failed', payoutType: '"Unvoided_Payout"', validType: selected });
+                return;
+            case 'voided payout':
+                changed = null;
+                setFilters({ ...filters, paymentStatus: null, payoutType: "Unvoided_Payout", validType: selected });
+                return;
+            default:
+                break;
+        }
+
+        setFilters({ ...filters, ticketStatus: changed, validType: selected });
+    };
+
+
+
+    const getDateRangeFromOption = (option) => {
+        const today = dayjs();
+        let start = null;
+        let end = null;
+
+        switch (option) {
+            case 'Today':
+                start = today.format('YYYY-MM-DD');
+                break;
+            case 'Yesterday':
+                start = today.subtract(1, 'day').format('YYYY-MM-DD');
+                break;
+            case 'Last 30 Days':
+                start = today.subtract(30, 'day').format('YYYY-MM-DD');
+                end = today.format('YYYY-MM-DD');
+                break;
+            case 'This Month':
+                start = today.startOf('month').format('YYYY-MM-DD');
+                end = today.endOf('month').format('YYYY-MM-DD');
+                break;
+            case 'Last Month':
+                start = today.subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
+                end = today.subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
+                break;
+            default:
+                break;
+        }
+
+        return { startdate: start, enddate: end };
+    };
+
+
     return (
-        <Box className="filter-box">
+        <Box className="filter-box" PaperProps={{}}>
             <div className="filter-header">
                 <Typography variant="h6" className="filter-title">Filter</Typography>
                 <IconButton disableRipple onClick={onClose} className="close-icon">
@@ -70,11 +159,10 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                             },
                         }}
                         renderValue={selected => {
-                            if (!selected) {
-                                return <div style={{ color: '#B9BDC6'}}>-select-</div>;
+                            if (!selected || !data) {
+                                return <div style={{ color: '#B9BDC6' }}>-select-</div>;
                             }
-                            const selectedLeague = data?.leagues?.find(league => league.l_id === selected);
-                            return selectedLeague ? selectedLeague.l_name : selected;
+                            return getSelectedLeagueName(selected);
                         }}
                     >
                         {loading ? (
@@ -85,7 +173,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                             </MenuItem>
                         ) : (
                             data?.leagues?.map(event => (
-                                <MenuItem className='filter-menuitems' key={event.l_id} value={event.l_name}>
+                                <MenuItem className='filter-menuitems' key={event.l_id} value={event.l_id}>
                                     {event.l_name}
                                 </MenuItem>
                             ))
@@ -102,8 +190,8 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                 <>
                     <Typography className="filter-section-title">{Attributes.includes('Manage') ? 'Validate' : 'Status'}</Typography>
                     <RadioGroup
-                        value={filters.ticketStatus}
-                        onChange={e => setFilters({ ...filters, ticketStatus: e.target.value })}
+                        value={filters.validType}
+                        onChange={handleTicketStatusChange}
                         style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', color: '#475569' }}
                     >
                         {validationOptions.map((val) => (
@@ -125,11 +213,17 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         {['Today', 'Yesterday', 'Last 30 Days', 'This Month', 'Last Month'].map((option) => (
                             <Box
                                 key={option}
-                                onClick={() => setFilters({ ...filters, startdate: option })}
+                                onClick={() => {
+                                    const { startdate, enddate } = getDateRangeFromOption(option);
+                                    setFilters({ ...filters, startdate, enddate });
+                                }}
                                 className="date-option"
                             >
                                 <span>{option}</span>
-                                {filters.startdate === option && <CheckIcon style={{ color: '#5D75F8' }} />}
+                                {(filters.startdate === getDateRangeFromOption(option).startdate &&
+                                    filters.enddate === getDateRangeFromOption(option).enddate) && (
+                                        <CheckIcon style={{ color: '#5D75F8' }} />
+                                    )}
                             </Box>
                         ))}
                     </Box>
@@ -139,6 +233,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
             {Attributes.includes("Period left") && (
                 <>
                     <Typography className="filter-section-title">Period Left</Typography>
+                    <div className='filter-section-span'><span>1 day</span><span>7 days</span></div>
                     <Slider
                         value={filters.day}
                         min={1}
@@ -146,6 +241,8 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         step={1}
                         onChange={(e, newValue) => setFilters({ ...filters, day: newValue })}
                         valueLabelDisplay="auto"
+                        valueLabelFormat={(value) => value}
+                        valueLabelPlacement="top"
                         sx={{
                             "& .MuiSlider-thumb": {
                                 height: '18px',

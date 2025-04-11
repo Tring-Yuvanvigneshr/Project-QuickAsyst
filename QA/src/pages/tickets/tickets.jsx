@@ -9,10 +9,17 @@ import Returntickets from '../../components/Tabs/DelistAndReturn/Delistandreturn
 import Unsoldtickets from '../../components/Tabs/DelistAndUnsold/Delistandunsold.jsx';
 import './tickets.css';
 
-const attributes = [["Manage", "Event", "Validate", "Date", "Period left"], ["List", "Validate", "Event", "Date"], ["Sold", "Event", "Validate", "Date"], ["Event", "Date"],["Event", "Date"]];
+const attributes = [
+    ["Manage", "Event", "Validate", "Date", "Period left"],
+    ["List", "Validate", "Event", "Date"],
+    ["Sold", "Event", "Validate", "Date"],
+    ["Event", "Date"],
+    ["Event", "Date"]
+];
+
 const validationOptionsManage = ["Valid", "Invalid", "Delist Requested"];
 const validationOptionsList = ["Valid", "Delist Requested"];
-const validationOptionsSold = ["Sold", "In Prograss", "Settled", "Failded", "Voided Payout"];
+const validationOptionsSold = ["Sold", "In Progress", "Settled", "Failed", "Voided Payout"];
 
 const TabPanel = ({ children, value, index }) => (
     <div hidden={value !== index}>
@@ -23,7 +30,8 @@ const TabPanel = ({ children, value, index }) => (
 const Tickets = () => {
     const [tabValue, setTabValue] = useState(0);
     const [filterOpen, setFilterOpen] = useState(false);
-    const [filter, setFilters] = useState({
+    
+    const defaultFilter = {
         search_event: '%',
         leagueId: null,
         ticketStatus: null,
@@ -36,11 +44,39 @@ const Tickets = () => {
         ticketId: null,
         tpId: null,
         array_tpid: null,
-    });
+    };
+
+    const [manageFilter, setManageFilter] = useState(defaultFilter)
+    const [returnFilter, setReturnFilter] = useState(defaultFilter);
+    const [soldFilter, setSoldFilter] = useState(defaultFilter);
+    const [listFilter, setListFilter] = useState(defaultFilter);
+    const [unsoldFilter, setUnSoldFilter] = useState(defaultFilter);
 
     useEffect(() => {
         setFilterOpen(false);
     }, [tabValue]);
+
+    const handleApplyFilters = (newFilters) => {
+        switch (tabValue) {
+            case 0:
+                setManageFilter((prev) => ({ ...prev, ...newFilters }));
+                break;
+            case 1:
+                setListFilter((prev) => ({ ...prev, ...newFilters }));
+                break;
+            case 2:
+                setSoldFilter((prev) => ({ ...prev, ...newFilters }));
+                break;
+            case 3:
+                setReturnFilter((prev) => ({ ...prev, ...newFilters }));
+                break;
+            case 4:
+                setUnSoldFilter((prev) => ({ ...prev, ...newFilters }));
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <Box className="tickets-container">
@@ -66,20 +102,20 @@ const Tickets = () => {
             {filterOpen && (
                 <Box className="filter-panel">
                     <Filter
-                        onApply={(newFilters) => setFilters((prev) => ({ ...prev, ...newFilters }))}
+                        onApply={handleApplyFilters}
                         Attributes={attributes[tabValue]}
                         onClose={() => setFilterOpen(false)}
-                        validationOptions={tabValue === 0 ? validationOptionsManage : tabValue === 1 ? validationOptionsList : validationOptionsSold}
-                        filter={filter}
+                        validationOptions={ tabValue === 0 ? validationOptionsManage : tabValue === 1 ? validationOptionsList : validationOptionsSold}
+                        filter={ tabValue === 0 ? manageFilter : tabValue === 1 ? listFilter : tabValue === 2 ? soldFilter : tabValue === 3 ? returnFilter : unsoldFilter}
                     />
                 </Box>
             )}
 
-            <TabPanel value={tabValue} index={0}><Managetickets filter={filter} /></TabPanel>
-            <TabPanel value={tabValue} index={1}><Listtickets filter={filter} /></TabPanel>
-            <TabPanel value={tabValue} index={2}><Soldtickets filter={filter}/></TabPanel>
-            <TabPanel value={tabValue} index={3}><Returntickets filter={filter}/></TabPanel>
-            <TabPanel value={tabValue} index={4}><Unsoldtickets filter={filter}/></TabPanel>
+            <TabPanel value={tabValue} index={0}><Managetickets filter={manageFilter} /></TabPanel>
+            <TabPanel value={tabValue} index={1}><Listtickets filter={listFilter} /></TabPanel>
+            <TabPanel value={tabValue} index={2}><Soldtickets filter={soldFilter} /></TabPanel>
+            <TabPanel value={tabValue} index={3}><Returntickets filter={returnFilter} /></TabPanel>
+            <TabPanel value={tabValue} index={4}><Unsoldtickets filter={unsoldFilter} /></TabPanel>
         </Box>
     );
 };

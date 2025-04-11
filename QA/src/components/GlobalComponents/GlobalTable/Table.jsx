@@ -8,7 +8,6 @@ import './table.css';
 import '../../../utils/Manage_columns/manageColumns.css';
 import sortArrow from '../../../assets/icons/Vector.png';
 
-
 const SharedTable = ({ checkboxisdisabled, data, columns, totalCount , pageSize, onPageSizeChange, page, onOffSetChange }) => {
 
   const PagenoFive = 5;
@@ -63,6 +62,22 @@ const SharedTable = ({ checkboxisdisabled, data, columns, totalCount , pageSize,
         hideFooter
         columnHeaderHeight={40}
         rowHeight={80}
+        sx={{
+          '& .MuiDataGrid-cell:last-of-type': {
+            position: 'sticky',
+            right: 0,
+            backgroundColor: '#fff',
+            zIndex: 2,
+            boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
+          },
+          '& .MuiDataGrid-columnHeadersInner .MuiDataGrid-columnHeader:last-of-type': {
+            position: 'sticky',
+            right: 0,
+            backgroundColor: '#fff',
+            zIndex: 3,
+            boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
+          }
+        }}
       />
 
       <Box className="pagination-block" sx={{ flexDirection: isMobile ? 'column' : 'row' }}>
