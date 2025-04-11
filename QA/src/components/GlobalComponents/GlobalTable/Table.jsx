@@ -6,12 +6,16 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './table.css';
 import '../../../utils/Manage_columns/manageColumns.css';
-import sortArrow from '../../../assets/icons/Vector.png'
+import sortArrow from '../../../assets/icons/Vector.png';
 
 
 const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
 
-  const pageSizes = [5, 10, 20];
+  const PagenoFive = 5;
+  const PagenoTen = 10;
+  const PagenoTwenty = 20;
+
+  const pageSizes = [PagenoFive, PagenoTen, PagenoTwenty];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -25,17 +29,16 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
 
   const handlePageChange = (newPage) => {
     onOffSetChange(newPage);
-  }
+  };
 
   const CustomSortIcon = () => {
     const iconClass = 'sort-icon';
-  
     return <img src={sortArrow} alt="Sort" className={iconClass} />;
   };
-  
-  const columnsWithCustomSorting = columns.map((col) => ({
+
+  const columnsWithCustomSorting = columns.map(col => ({
     ...col,
-    renderHeader: (params) => (
+    renderHeader: params => (
       <Box className="column-header">
         {params.colDef.headerName}
         <CustomSortIcon />
@@ -58,18 +61,8 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
         disableColumnSorting
         scrollbarSize={5}
         hideFooter
-        columnHeaderHeight={isMobile ? 35 : 40}
-        rowHeight={isMobile ? 50 : 80}
-        sx={{
-          backgroundColor: '#f9f9fa',
-          '& .MuiDataGrid-columnHeader': {
-            backgroundColor: '#f9f9fa',
-            fontSize: isMobile ? '12px' : '14px',
-          },
-          '& .MuiDataGrid-cell': {
-            fontSize: isMobile ? '12px' : '14px',
-          },
-        }}
+        columnHeaderHeight={40}
+        rowHeight={80}
       />
 
       <Box className="pagination-block" sx={{ flexDirection: isMobile ? 'column' : 'row' }}>
@@ -92,7 +85,7 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
 
         <Box className='pagination'>
           <Stack spacing={2}>
-            <Pagination onChange={(e, value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
+            <Pagination onChange={value => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
           </Stack>
         </Box>
       </Box>

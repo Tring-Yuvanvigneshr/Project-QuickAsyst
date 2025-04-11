@@ -17,7 +17,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
     });
 
     const [getEvents, { data, loading }] = useLazyQuery(LEAGUESDROPDOWNFILTER, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only'
     });
 
     const handleReset = () => {
@@ -34,10 +34,10 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
         getEvents();
     };
 
-    const handleLeagueChange = (event) => {
+    const handleLeagueChange = event => {
         const selectedLeagueName = event.target.value;
         const selectedLeague = data?.leagues?.find(league => league.l_name === selectedLeagueName);
-        setFilters({ ...filters, leagueId: selectedLeague ? selectedLeague.l_id : "" });
+        setFilters({ ...filters, leagueId: selectedLeague ? selectedLeague.l_id : '' });
     };
 
     return (
@@ -56,7 +56,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         className="Filter-select-event"
                         fullWidth
                         size="small"
-                        value={filters.leagueId || ""}
+                        value={filters.leagueId || ''}
                         onChange={handleLeagueChange}
                         onOpen={handleSelectOpen}
                         displayEmpty
@@ -65,11 +65,11 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                             PaperProps: {
                                 style: {
                                     maxHeight: 200,
-                                    overflowY: 'auto',
+                                    overflowY: 'auto'
                                 },
                             },
                         }}
-                        renderValue={(selected) => {
+                        renderValue={selected => {
                             if (!selected) {
                                 return <div style={{ color: '#B9BDC6'}}>-select-</div>;
                             }
@@ -81,11 +81,10 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                             <MenuItem disabled>
                                 <Box display="flex" alignItems="center" gap={1}>
                                     <CircularProgress size={20} color="inherit" />
-                                    Loading...
                                 </Box>
                             </MenuItem>
                         ) : (
-                            data?.leagues?.map((event) => (
+                            data?.leagues?.map(event => (
                                 <MenuItem className='filter-menuitems' key={event.l_id} value={event.l_name}>
                                     {event.l_name}
                                 </MenuItem>
@@ -104,7 +103,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                     <Typography className="filter-section-title">{Attributes.includes('Manage') ? 'Validate' : 'Status'}</Typography>
                     <RadioGroup
                         value={filters.ticketStatus}
-                        onChange={(e) => setFilters({ ...filters, ticketStatus: e.target.value })}
+                        onChange={e => setFilters({ ...filters, ticketStatus: e.target.value })}
                         style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', color: '#475569' }}
                     >
                         {validationOptions.map((val) => (
@@ -123,7 +122,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                 <>
                     <Typography className="filter-section-title">Date</Typography>
                     <Box style={{ display: 'grid', gap: '0.7rem' }}>
-                        {["Today", "Yesterday", "Last 30 Days", "This Month", "Last Month"].map((option) => (
+                        {['Today', 'Yesterday', 'Last 30 Days', 'This Month', 'Last Month'].map((option) => (
                             <Box
                                 key={option}
                                 onClick={() => setFilters({ ...filters, startdate: option })}
@@ -149,12 +148,12 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         valueLabelDisplay="auto"
                         sx={{
                             "& .MuiSlider-thumb": {
-                                height: "18px",
-                                width: "25px",
-                                borderRadius: "0px",
-                                marginLeft: "12px",
-                                backgroundColor: "#5d75f8"
-                            },
+                                height: '18px',
+                                width: '25px',
+                                borderRadius: '0px',
+                                marginLeft: '12px',
+                                backgroundColor: '#5d75f8'
+                            }
                         }}
                     />
                 </>

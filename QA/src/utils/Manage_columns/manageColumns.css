@@ -12,7 +12,7 @@
 }
 
 .event-league {
-  font-family: glegoo !important;
+  font-family: Glegoo, serif !important;
   font-size: 12px;
   color: #b9bdc6;
   text-transform: capitalize;
@@ -136,7 +136,7 @@
 
 .publish-dialog {
   border-radius: 0px !important;
-  font-family: glegoo !important;
+  font-family: glegoo, serif !important;
 }
 
 .publish-dialog-content {
@@ -148,7 +148,7 @@
 .publish-event {
   font-weight: 600;
   color: #475569;
-  font-family: Playfair Display;
+  font-family: Playfair Display, serif;
 }
 
 .publish-dialog-row {
@@ -161,13 +161,13 @@
 .publish-content-title {
   color: #9ca3af;
   font-size: 14px !important;
-  font-family: glegoo;
+  font-family: glegoo, serif;
 }
 
 .publish-content-value {
   color: #475569;
   font-size: 14px !important;
-  font-family: glegoo;
+  font-family: glegoo, serif;
   font-weight: bolder;
 }
 
@@ -181,7 +181,7 @@
   justify-content: space-between;
   margin-bottom: 10px;
   color: #9ca3af;
-  font-family: Glegoo !important;
+  font-family: Glegoo, serif !important;
 }
 
 .publish-input-container-input{
@@ -212,7 +212,7 @@ input::-webkit-inner-spin-button {
   color: #0f172a !important;
   width: 130px;
   height: 44px;
-  font-family: 'Glegoo' !important;
+  font-family: 'Glegoo', serif !important;
   font-weight: 600 !important;
   background-color: #f3f4f6 !important;
   border: 1px solid #e3e5e8 !important;
@@ -229,7 +229,7 @@ input::-webkit-inner-spin-button {
   border-radius: 0px !important;
   width: 130px;
   height: 44px;
-  font-family: 'Glegoo' !important;
+  font-family: 'Glegoo', serif !important;
   background-color: #5d75f8 !important;
   padding: 15px 30px;
   border: none;

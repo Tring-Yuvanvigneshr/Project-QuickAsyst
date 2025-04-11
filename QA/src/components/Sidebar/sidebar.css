@@ -12,7 +12,7 @@
 
 
 .custom-sidebar-content {
-    font-family: Glegoo;
+    font-family: 'Glegoo', serif;
     display: flex;
     flex-direction: column;
     gap: 20px;

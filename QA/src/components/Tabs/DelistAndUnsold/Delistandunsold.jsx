@@ -10,12 +10,14 @@ import {
 
 const Delistandunsold = ({ filter }) => {
 
+    const pageChangeValue = 10;
+
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
-    const [pageChange, setPageChange] = useState(10);
+    const [pageChange, setPageChange] = useState(pageChangeValue);
     const [offSet, setOffSet] = useState(1);
 
-    const { loading, error, data, refetch } = useQuery(FILTERUNSOLDTICKETS, {
+    const { loading, data } = useQuery(FILTERUNSOLDTICKETS, {
         variables: {
             ...filter,
             ticketPlacementId: null,
@@ -30,21 +32,21 @@ const Delistandunsold = ({ filter }) => {
             const formattedData = data.filterUnsoldTickets.map((item, index) => ({
                 id: index + 1,
                 event: item.e_name,
-                date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
                 venue: item.e_address,
-                venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
                 section: item.tp_section.toUpperCase(),
                 row: item.tp_row.toUpperCase(),
                 seat: item.tp_seat_no,
                 status: item.tp_status,
                 userName: item.u_full_name,
                 email: item.u_email_id,
-                period: "1 Days",
+                period: '1 Days',
                 league_name: item.l_name,
                 closeStatus: item.e_status === 'closed' ? 'Closed' : ''
             }));
             setTableData(formattedData);
-            setTableSize(data.filterUnsoldTickets_aggreagate.aggregate.count)
+            setTableSize(data.filterUnsoldTickets_aggreagate.aggregate.count);
         }
     }, [data]);
 
@@ -73,4 +75,4 @@ const Delistandunsold = ({ filter }) => {
     )
 }
 
-export default Delistandunsold
+export default Delistandunsold;

@@ -7,8 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { Avatar, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Avatar, CircularProgress } from '@mui/material';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -21,8 +20,7 @@ import { signOut, updatePassword } from 'aws-amplify/auth';
 import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
 import { useQuery } from '@apollo/client';
 import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
@@ -31,7 +29,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import './headder.css';
 
-export default function Header() {
+const Header = () => {
+
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -46,7 +45,7 @@ export default function Header() {
   const [errors, setErrors] = useState({
     oldPassword: false,
     confirmPassword: false,
-    passwordStrength: false,
+    passwordStrength: false
   });
 
   const { loading, error, data } = useQuery(GETUSERPROFILE);
@@ -77,7 +76,7 @@ export default function Header() {
     setErrors({ oldPassword: false, newPassword: false, confirmPassword: false });
   };
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -97,7 +96,7 @@ export default function Header() {
     setErrors({ oldPassword: false, passwordStrength: false, confirmPassword: false });
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = password => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -113,7 +112,6 @@ export default function Header() {
       toast.success('Password changed successfully');
       handledialogClose();
     } catch (error) {
-      console.error('Password change error:', error);
       toast.error(error.message || 'Failed to change password');
     }
   };
@@ -130,22 +128,22 @@ export default function Header() {
   const handleChange = (field, value) => {
     if (field === 'oldPassword') {
       setOldPassword(value);
-      setErrors((prev) => ({ ...prev, oldPassword: value.trim() === '' }));
+      setErrors(prev => ({ ...prev, oldPassword: value.trim() === '' }));
     }
 
     if (field === 'confirmPassword') {
       setConfirmPassword(value);
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
-        confirmPassword: value.trim() === '',
+        confirmPassword: value.trim() === ''
       }));
     }
 
     if (field === 'newPassword') {
       setNewPassword(value);
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
-        passwordStrength: !validatePassword(value),
+        passwordStrength: !validatePassword(value)
       }));
     }
   };
@@ -209,15 +207,6 @@ export default function Header() {
                 disableRipple
                 onClick={handleSignOut}
                 className="header-menuItem"
-                sx={{
-                  color: '#475569',
-                  fontFamily: 'glegoo',
-                  fontSize: '14px',
-                  marginBottom: '20px',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
               >
                 <ListItemIcon>
                   <LogoutIcon className="header-menuIcon" />
@@ -254,7 +243,7 @@ export default function Header() {
                 type={oldPasswordVisible ? 'text' : 'password'}
                 placeholder="Enter old password"
                 value={oldPassword}
-                onChange={(e) => handleChange('oldPassword', e.target.value)}
+                onChange={e => handleChange('oldPassword', e.target.value)}
                 className={`input-field ${errors.oldPassword ? 'error' : ''}`}
               />
               <span onClick={toggleOldPasswordVisibility}>
@@ -272,7 +261,7 @@ export default function Header() {
                 name="newPassword"
                 placeholder="Enter new password"
                 value={newPassword}
-                onChange={(e) => handleChange('newPassword', e.target.value)}
+                onChange={e => handleChange('newPassword', e.target.value)}
                 className={`input-field ${errors.newPassword ? 'error' : ''}`}
               />
               <span onClick={toggleNewPasswordVisibility}>
@@ -290,7 +279,7 @@ export default function Header() {
                 name="confirmPassword"
                 placeholder="Confirm new password"
                 value={confirmPassword}
-                onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                onChange={e => handleChange('confirmPassword', e.target.value)}
                 className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
               />
               <span onClick={toggleConfirmPasswordVisibility}>
@@ -330,4 +319,5 @@ export default function Header() {
       </Dialog>
     </Box>
   );
-}
+};
+export default Header;

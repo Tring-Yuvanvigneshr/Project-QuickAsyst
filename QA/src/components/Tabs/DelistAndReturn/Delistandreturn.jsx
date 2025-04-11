@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { FILTERRETURNTICKETS } from './../../../Graphql/Return/returnQuery.js';
 
 
-const Delistandreturn = ({ filter }) => {
+const Delistandreturn = () => {
 
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
@@ -33,19 +33,19 @@ const Delistandreturn = ({ filter }) => {
             const formattedData = data.filtermanagetickets.map((item, index) => ({
                 id: index + 1,
                 event: item.e_name,
-                date: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
                 venue: item.e_address,
-                venueTime: new Date(item.e_date).toLocaleString("en-US", { timeZone: item.e_time_zone }),
+                venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
                 section: item.tp_section.toUpperCase(),
                 row: item.tp_row.toUpperCase(),
                 seat: item.tp_seat_no,
-                validate: item.tp_validity_status ? "Valid" : "Invalid",
+                validate: item.tp_validity_status ? 'Valid' : 'Invalid',
                 status: item.tp_status,
-                donationStatus: item.tp_is_support_vanderbilt_nil_fund ? "Donated" : '-',
-                returnEmail: item.tp_delist_requested_email || "-",
+                donationStatus: item.tp_is_support_vanderbilt_nil_fund ? 'Donated' : '-',
+                returnEmail: item.tp_delist_requested_email || '-',
                 userName: item.full_name,
                 email: item.u_email_id,
-                period: "1 Days",
+                period: '1 Days',
                 league_name: item.l_name,
                 validityStatus: item.tp_validity_status,
                 Publish_id: item.tp_id
@@ -71,4 +71,4 @@ const Delistandreturn = ({ filter }) => {
     )
 }
 
-export default Delistandreturn
+export default Delistandreturn;

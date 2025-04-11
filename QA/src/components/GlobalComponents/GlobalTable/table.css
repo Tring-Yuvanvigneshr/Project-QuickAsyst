@@ -2,12 +2,12 @@
   border: none !important;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
-  font-family: 'glegoo' !important;
+  font-family: 'glegoo', serif !important;
 }
 
 .MuiDataGrid-columnHeader {
   border-bottom: none !important;
-  background-color: '#f9f9fa' !important;
+  background-color: #f9f9fa !important;
 }
 
 .MuiDataGrid-columnHeaderTitle {
@@ -92,10 +92,11 @@
   display: flex;
   align-items: center;
   color: #9CA3AF;
+  font-weight: 700 !important;
 }
 
 .column-header:hover {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 .sort-icon {
@@ -104,11 +105,6 @@
   margin-left: 10px;
   transition: transform 0.3s ease;
 }
-
-.sort-icon.desc {
-  transform: rotate(180deg);
-}
-
 
 @media (max-width: 768px) {
   .pagination {

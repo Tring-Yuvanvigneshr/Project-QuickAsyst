@@ -29,7 +29,7 @@
 
 .filter-title {
     margin-bottom: 8px;
-    font-family: 'Playfair Display' !important;
+    font-family: 'Playfair Display', serif !important;
     font-weight: bold !important;
 }
 
@@ -45,7 +45,7 @@
     margin-top: 12px !important;
     margin-bottom: 4px !important;
     font-size: 12px !important;
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-weight: 600 !important;
 }
 
@@ -56,7 +56,7 @@
     padding-bottom: 8px;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Glegoo';
+    font-family: 'Glegoo', serif;
     font-size: 14px;
     color: #475569;
 }
@@ -76,10 +76,8 @@
     font-weight: 700 !important;
     width: 95px;
     height: 44px;
-    background-color: #f3f4f6;
     border: none;
-    font-family: 'Glegoo' !important;
-    font-weight: 600;
+    font-family: 'Glegoo', serif !important;
     background-color: #F3F4F6 !important;
 }
 
@@ -90,25 +88,14 @@
     width: 95px;
     height: 44px;
     border: none;
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-weight: 600;
     background-color: #5D75F8 !important;
 }
 
-.button-apply {
-    font-size: 16px;
-    text-transform: none;
-    border-radius: 0;
-    width: 95px;
-    height: 44px;
-    font-family: 'Glegoo';
-    border: none;
-}
-
-
 .filter-menuitems {
     color: #475569 !important;
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-size: 14px;
 }
 

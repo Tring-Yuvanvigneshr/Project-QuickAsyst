@@ -10,17 +10,17 @@
 }
 
 .tab {
-    font-family: 'Glegoo' !important;
+    font-family: 'Glegoo', serif !important;
     font-weight: 700 !important;
     text-transform: none !important;
 }
 
 .filter-button {
-    color: #5D75F8;
-    text-transform: none;
+    color: #5D75F8 !important;
+    text-transform: none !important;
     border: 1px solid #E3E5E8 !important;
-    border-radius: 0;
-    font-family: 'Glegoo';
+    border-radius: 0 !important;
+    font-family: 'Glegoo', serif !important;
     width: 98px !important;
     height: 44px;
     gap: 8px;
@@ -34,7 +34,7 @@
 }
 
 .filter-icon {
-    font-size: 20px;
+    font-size: 20px !important;
     color: #6c757d !important;
 }
 

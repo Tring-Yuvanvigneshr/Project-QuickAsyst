@@ -1,6 +1,6 @@
 import React from 'react';
 import SignIN from './pages/signIn/SignIn';
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Amplify } from 'aws-amplify';

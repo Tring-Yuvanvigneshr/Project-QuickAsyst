@@ -59,7 +59,7 @@ const Tickets = () => {
                     onClick={() => setFilterOpen(!filterOpen)}
                     className="filter-button"
                 >
-                    <FilterListIcon className="filter-icon" sx /> Filter
+                    <FilterListIcon className="filter-icon" /> Filter
                 </Button>
             </Box>
 

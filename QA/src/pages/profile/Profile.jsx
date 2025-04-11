@@ -16,7 +16,6 @@ const Profile = () => {
     const [profileImage, setProfileImage] = useState(defaultImage);
     const [nameChange, setNameChange] = useState('');
     const [phoneChange, setPhoneChange] = useState('');
-    const [] = useState();
 
     const [errors, setErrors] = useState({
         fullName: false,
@@ -72,17 +71,17 @@ const Profile = () => {
     
 
     return (
-        <div className='Profile_container'>
-            <div className='Profile_headder'>
+        <div className='profile_container'>
+            <div className='profile_headder'>
                 <h2>My Account</h2>
                 {!isEditing && (
-                    <button className='Profile-edit' onClick={() => setIsEditing(true)}>
+                    <button className='profile-edit' onClick={() => setIsEditing(true)}>
                         Edit Profile
                     </button>
                 )}
             </div>
 
-            <div className='Profile-body'>
+            <div className='profile-body'>
                 <div className='profile-top-img'>
                     <div className='profile-img-container'>
                         <label className='profile-img'>
@@ -105,26 +104,26 @@ const Profile = () => {
                 ) : (
                     <>
                         {!isEditing ? (
-                            <div className='Profile-content'>
-                                <div className='Profile-row'>
-                                    <div className='Profile-item'>Full Name</div>
-                                    <div className='Profile-item Profile-item-right'>{fullName}</div>
+                            <div className='profile-content'>
+                                <div className='profile-row'>
+                                    <div className='profile-item'>Full Name</div>
+                                    <div className='profile-item Profile-item-right'>{fullName}</div>
                                 </div>
 
-                                <div className='Profile-row'>
-                                    <div className='Profile-item'>Phone Number</div>
-                                    <div className='Profile-item Profile-item-right'>{phoneNumber}</div>
+                                <div className='profile-row'>
+                                    <div className='profile-item'>Phone Number</div>
+                                    <div className='profile-item Profile-item-right'>{phoneNumber}</div>
                                 </div>
 
-                                <div className='Profile-row'>
-                                    <div className='Profile-item'>Email</div>
-                                    <div className='Profile-item Profile-item-right'>{email}</div>
+                                <div className='profile-row'>
+                                    <div className='profile-item'>Email</div>
+                                    <div className='profile-item Profile-item-right'>{email}</div>
                                 </div>
                             </div>
                         ) : (
-                            <div className='Profile-content-edit'>
-                                <div className='Profile-edit-row'>
-                                    <div className='Profile-item'>Full Name</div>
+                            <div className='profile-content-edit'>
+                                <div className='profile-edit-row'>
+                                    <div className='profile-item'>Full Name</div>
                                     <div>
                                         <TextField
                                             fullWidth
@@ -135,8 +134,8 @@ const Profile = () => {
                                     </div>
                                 </div>
 
-                                <div className='Profile-edit-row'>
-                                    <div className='Profile-item'>Phone Number</div>
+                                <div className='profile-edit-row'>
+                                    <div className='profile-item'>Phone Number</div>
                                     <div>
                                         <TextField
                                             fullWidth
@@ -147,8 +146,8 @@ const Profile = () => {
                                     </div>
                                 </div>
 
-                                <div className='Profile-edit-row'>
-                                    <div className='Profile-item'>Email</div>
+                                <div className='profile-edit-row'>
+                                    <div className='profile-item'>Email</div>
                                     <div className='edit-email'>
                                         <TextField
                                             fullWidth
@@ -158,7 +157,7 @@ const Profile = () => {
                                     </div>
                                 </div>
 
-                                <div className='Profile-edit-buttons'>
+                                <div className='profile-edit-buttons'>
                                     <Button
                                         disableRipple
                                         onClick={handleCancelEdit}
