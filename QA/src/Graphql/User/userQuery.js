@@ -44,3 +44,41 @@ export const LEAGUESDROPDOWNFILTER = gql`
   }
 }
 `
+
+export const SEARCHUSERSANDTICKETSBYMARKETINGUSER = gql`
+  query searchUsersAndTicketsByMarketingUser ($pageSize: Int! = 10, $pageOffset: Int! = 0, $order_by: [user_order_by!] = {u_first_name:asc}, $searchText: String! = "%%", $searchEvent: String! = "") {
+  user: get_marketing_users(offset: $pageOffset, limit: $pageSize, order_by: $order_by, where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
+    u_active_tickets
+    u_country_code
+    u_created_at
+    u_email_id
+    u_first_name
+    u_is_active
+    u_last_name
+    u_last_online
+    u_phone_number
+    u_avatar_url
+    u_full_name
+  }
+  user_aggregate: get_marketing_users_aggregate(where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
+    aggregate {
+      count
+    }
+  }
+  affiliates(where: {a_deleted_at:{_is_null:true},user:{_or:[{u_full_name:{_ilike:$searchText}},{u_email_id:{_ilike:$searchText}}]}}) {
+    a_id
+    a_first_name
+    a_last_name
+    a_email_id
+    a_no_of_users
+    user {
+      u_full_name
+    }
+  }
+  affiliates_aggregate(where: {a_deleted_at:{_is_null:true},user:{_or:[{u_full_name:{_ilike:$searchText}},{u_email_id:{_ilike:$searchText}}]}}) {
+    aggregate {
+      count
+    }
+  }
+}
+`

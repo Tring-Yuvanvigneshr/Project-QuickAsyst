@@ -24,7 +24,6 @@
     width: 98px !important;
     height: 44px;
     gap: 8px;
-    padding: 15px 0;
     background-color: transparent;
     cursor: pointer;
 }
@@ -47,4 +46,14 @@
 
 .tab-panel {
     padding: 16px;
+}
+
+@media (max-width: 767px) {
+
+    .filter-button {
+        padding: 10px !important;
+        background-color: white !important;
+        font-size: 11px !important;
+        height: 35px;
+    }
 }

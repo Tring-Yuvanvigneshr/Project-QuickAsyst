@@ -4,7 +4,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import Filter from '../../components/GlobalComponents/GlobalFilter/Filter.jsx';
 import Managetickets from '../../components/Tabs/ManageTickets/Managetickets.jsx';
 import Listtickets from '../../components/Tabs/ListTickets/Listtickets.jsx';
-import Soldtickets from '../../components/Tabs/Soldtickets/Soldtickets.jsx';
+import Soldtickets from '../../components/Tabs/SoldTickets/Soldtickets.jsx';
 import Returntickets from '../../components/Tabs/DelistAndReturn/Delistandreturn.jsx';
 import Unsoldtickets from '../../components/Tabs/DelistAndUnsold/Delistandunsold.jsx';
 import './tickets.css';
@@ -81,7 +81,7 @@ const Tickets = () => {
     return (
         <Box className="tickets-container">
             <Box className="tabs-container">
-                <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} className="tabs">
+                <Tabs value={tabValue} variant="scrollable" scrollButtons="auto"  onChange={(e, newValue) => setTabValue(newValue)} className="tabs">
                     <Tab label="Manage Tickets" className="tab" />
                     <Tab label="List Tickets" className="tab" />
                     <Tab label="Sold Tickets" className="tab" />

@@ -15,11 +15,10 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { signOut, updatePassword } from 'aws-amplify/auth';
-import { GETUSERPROFILE } from './../../../Graphql/User/userQuery.js';
+import { GETUSERPROFILE } from '../../../graphql/User/userQuery.js';
 import { useQuery } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -29,10 +28,9 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
-import './headder.css';
+import './header.css';
 
 const Header = () => {
-
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -42,15 +40,16 @@ const Header = () => {
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const username = 'Quickasyst Admin';
-
   const [errors, setErrors] = useState({
     oldPassword: false,
     confirmPassword: false,
     passwordStrength: false
   });
+  const username = 'Quickasyst Admin';
 
-  const { loading, error, data } = useQuery(GETUSERPROFILE);
+  const { loading, error, data, refetch } = useQuery(GETUSERPROFILE, {
+    fetchPolicy: 'network-only'
+  });
 
   useEffect(() => {
     if (error) {
@@ -58,8 +57,8 @@ const Header = () => {
     }
   }, [error]);
 
-  const fullName = data ? `${data.get_user_profile[0].u_first_name} ${data.get_user_profile[0].u_last_name}` : username;
-  const avatarUrl = data ? data.get_user_profile[0].u_avatar_url : '';
+  const fullName =`${data?.get_user_profile[0].u_first_name} ${data?.get_user_profile[0].u_last_name}`
+  const avatarUrl = data ? data?.get_user_profile[0].u_avatar_url : '';
 
   const toggleOldPasswordVisibility = () => setOldPasswordVisible(!oldPasswordVisible);
   const toggleNewPasswordVisibility = () => setNewPasswordVisible(!newPasswordVisible);
@@ -78,7 +77,7 @@ const Header = () => {
     setErrors({ oldPassword: false, newPassword: false, confirmPassword: false });
   };
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -92,13 +91,17 @@ const Header = () => {
   };
 
   const handleResetPassword = () => {
-    setConfirmPassword('');
-    setNewPassword('');
     setOldPassword('');
-    setErrors({ oldPassword: false, passwordStrength: false, confirmPassword: false });
+    setNewPassword('');
+    setConfirmPassword('');
+    setErrors({
+      oldPassword: false,
+      passwordStrength: false,
+      confirmPassword: false
+    });
   };
 
-  const validatePassword = password => {
+  const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -131,12 +134,12 @@ const Header = () => {
   const handleChange = (field, value) => {
     if (field === 'oldPassword') {
       setOldPassword(value);
-      setErrors(prev => ({ ...prev, oldPassword: value.trim() === '' }));
+      setErrors((prev) => ({ ...prev, oldPassword: value.trim() === '' }));
     }
 
     if (field === 'confirmPassword') {
       setConfirmPassword(value);
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         confirmPassword: value.trim() === ''
       }));
@@ -144,7 +147,7 @@ const Header = () => {
 
     if (field === 'newPassword') {
       setNewPassword(value);
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         passwordStrength: !validatePassword(value)
       }));
@@ -173,9 +176,12 @@ const Header = () => {
                   onClick={handleMenu}
                   className="header-avatar"
                 />
-                <Typography onClick={handleMenu} className="header-username">{fullName}</Typography>
+                <Typography onClick={handleMenu} className="header-username">
+                  {fullName}
+                </Typography>
               </div>
             )}
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -183,7 +189,7 @@ const Header = () => {
               onClose={handleClose}
               className="header-menu"
               PaperProps={{
-                className: 'header-menuPaper',
+                className: 'header-menuPaper'
               }}
             >
               <MenuItem disableRipple onClick={handleProfile} className="header-menuItem">
@@ -200,11 +206,7 @@ const Header = () => {
                 Change Password
               </MenuItem>
 
-              <MenuItem
-                disableRipple
-                onClick={handleSignOut}
-                className="header-menuItem"
-              >
+              <MenuItem disableRipple onClick={handleSignOut} className="header-menuItem">
                 <ListItemIcon>
                   <LogoutIcon className="header-menuIcon" />
                 </ListItemIcon>
@@ -225,10 +227,10 @@ const Header = () => {
           sx: {
             width: '550px',
             borderRadius: '0px'
-          },
+          }
         }}
       >
-        <DialogTitle className='change-password-headder'>
+        <DialogTitle className="change-password-headder">
           <div>
             <div className="Change_password_h3">Change Password</div>
             <div className="Change_password_h5">Enter your new password</div>
@@ -246,11 +248,11 @@ const Header = () => {
                 type={oldPasswordVisible ? 'text' : 'password'}
                 placeholder="Enter old password"
                 value={oldPassword}
-                onChange={e => handleChange('oldPassword', e.target.value)}
+                onChange={(e) => handleChange('oldPassword', e.target.value)}
                 className={`input-field ${errors.oldPassword ? 'error' : ''}`}
               />
               <span onClick={toggleOldPasswordVisibility}>
-                {oldPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
+                {oldPasswordVisible ? <FaEyeSlash color="#cad2df" /> : <FaEye color="#cad2df" />}
               </span>
             </div>
             {errors.oldPassword && (
@@ -264,29 +266,29 @@ const Header = () => {
                 name="newPassword"
                 placeholder="Enter new password"
                 value={newPassword}
-                onChange={e => handleChange('newPassword', e.target.value)}
-                className={`input-field ${errors.newPassword ? 'error' : ''}`}
+                onChange={(e) => handleChange('newPassword', e.target.value)}
+                className={`input-field ${(errors.newPassword || errors.passwordStrength) ? 'error' : ''}`}
               />
               <span onClick={toggleNewPasswordVisibility}>
-                {newPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
+                {newPasswordVisible ? <FaEyeSlash color="#cad2df" /> : <FaEye color="#cad2df" />}
               </span>
             </div>
             {errors.passwordStrength && (
               <div className="error-message">Your password is weak</div>
             )}
 
-            Confirm password <br />
+            Retype password <br />
             <div className="confirm-password-container">
               <input
                 type={confirmPasswordVisible ? 'text' : 'password'}
                 name="confirmPassword"
-                placeholder="Confirm new password"
+                placeholder="Enter retype password"
                 value={confirmPassword}
-                onChange={e => handleChange('confirmPassword', e.target.value)}
+                onChange={(e) => handleChange('confirmPassword', e.target.value)}
                 className={`input-field ${errors.confirmPassword ? 'error' : ''}`}
               />
               <span onClick={toggleConfirmPasswordVisibility}>
-                {confirmPasswordVisible ? <FaEyeSlash color='#cad2df'/> : <FaEye color='#cad2df'/>}
+                {confirmPasswordVisible ? <FaEyeSlash color="#cad2df" /> : <FaEye color="#cad2df" />}
               </span>
             </div>
             {errors.confirmPassword && (
@@ -295,8 +297,7 @@ const Header = () => {
           </DialogContent>
         </DialogContent>
 
-
-        <DialogActions className='change-password-actions'>
+        <DialogActions className="change-password-actions">
           <Button
             disableRipple
             variant="outlined"
@@ -312,9 +313,7 @@ const Header = () => {
             size="small"
             className="password-apply-btn"
             onClick={handleChangePassword}
-            disabled={
-              errors.oldPassword || errors.passwordStrength || errors.confirmPassword
-            }
+            disabled={errors.oldPassword || errors.passwordStrength || errors.confirmPassword}
           >
             Apply
           </Button>
@@ -323,4 +322,5 @@ const Header = () => {
     </Box>
   );
 };
+
 export default Header;

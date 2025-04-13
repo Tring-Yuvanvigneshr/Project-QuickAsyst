@@ -3,10 +3,10 @@ import { Box, Button, MenuItem, Select, Radio, RadioGroup, FormControlLabel, Sli
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { useLazyQuery } from '@apollo/client';
-import { LEAGUESDROPDOWNFILTER } from './../../../Graphql/User/userQuery';
+import { LEAGUESDROPDOWNFILTER } from '../../../graphql/User/userQuery';
 import { IoIosArrowDown } from 'react-icons/io';
 import dayjs from 'dayjs';
-import './Filter.css';
+import './filter.css';
 
 const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => {
     const [filters, setFilters] = useState({
@@ -14,7 +14,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
         ticketStatus: filter.ticketStatus || null,
         startdate: filter.startdate || null,
         enddate: filter.enddate || null,
-        day: filter.enddate || null,
+        day: filter.day || null,
         paymentStatus: filter.paymentStatus || null,
         payoutType: filter.payoutType || null,
         validType: filter.validType || null
@@ -70,23 +70,23 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                 break;
             case 'sold':
                 changed = 'NotInitiated';
-                setFilters({ ...filters, paymentStatus: 'NotInitiated', payoutType: '"Unvoided_Payout"', validType: selected });
+                setFilters({ ...filters, paymentStatus: 'NotInitiated', payoutType: 'Unvoided_Payout', validType: selected });
                 return;
             case 'in progress':
                 changed = 'Inprogress';
-                setFilters({ ...filters, paymentStatus: 'Inprogress', payoutType: '"Unvoided_Payout"', validType: selected });
+                setFilters({ ...filters, paymentStatus: 'Inprogress', payoutType: 'Unvoided_Payout', validType: selected });
                 return;
             case 'settled':
                 changed = 'Success';
-                setFilters({ ...filters, paymentStatus: 'Success', payoutType: '"Unvoided_Payout"', validType: selected });
+                setFilters({ ...filters, paymentStatus: 'Success', payoutType: 'Unvoided_Payout', validType: selected });
                 return;
             case 'failed':
                 changed = 'Failed';
-                setFilters({ ...filters, paymentStatus: 'Failed', payoutType: '"Unvoided_Payout"', validType: selected });
+                setFilters({ ...filters, paymentStatus: 'Failed', payoutType: 'Unvoided_Payout', validType: selected });
                 return;
             case 'voided payout':
                 changed = null;
-                setFilters({ ...filters, paymentStatus: null, payoutType: "Unvoided_Payout", validType: selected });
+                setFilters({ ...filters, paymentStatus: null, payoutType: 'Unvoided_Payout', validType: selected });
                 return;
             default:
                 break;
@@ -192,7 +192,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                     <RadioGroup
                         value={filters.validType}
                         onChange={handleTicketStatusChange}
-                        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', color: '#475569' }}
+                        className='filter-radiogroup'
                     >
                         {validationOptions.map((val) => (
                             <FormControlLabel
@@ -200,6 +200,8 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                                 value={val}
                                 control={<Radio size="small" />}
                                 label={val.charAt(0).toUpperCase() + val.slice(1)}
+                                className='small-radio-label'
+                                classes={{ label: 'small-radio-label' }}
                             />
                         ))}
                     </RadioGroup>
@@ -242,7 +244,6 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                         onChange={(e, newValue) => setFilters({ ...filters, day: newValue })}
                         valueLabelDisplay="auto"
                         valueLabelFormat={(value) => value}
-                        valueLabelPlacement="top"
                         sx={{
                             "& .MuiSlider-thumb": {
                                 height: '18px',

@@ -21,7 +21,6 @@
   border-right: none !important;
   border-bottom: none !important;
   border-top: none !important;
-  cursor: default !important;
   color: #475569;
   font-weight: 700 !important;
 }
@@ -106,6 +105,26 @@
   transition: transform 0.3s ease;
 }
 
+.MuiDataGrid-cell:focus-within {
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.MuiDataGrid-virtualScrollerContent.css-aymtem-MuiDataGrid-virtualScrollerContent {
+  flex-basis: 0 !important;
+}
+
+.No-data-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-size: 19px;
+  font-family: glegoo, sans-serif;
+  font-weight: 300;
+}
+
+
 @media (max-width: 768px) {
   .pagination {
     overflow: hidden;
@@ -113,5 +132,10 @@
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  .pagination-block {
+    align-items: flex-end !important;
+    gap: 10px;
   }
 }

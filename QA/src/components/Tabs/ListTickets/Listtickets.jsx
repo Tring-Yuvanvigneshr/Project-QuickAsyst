@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { FILTERLISTTICKETS } from '../../../Graphql/ListTickets/listQuery';
+import { FILTERLISTTICKETS } from '../../../graphql/ListTickets/listQuery';
 
 const Listtickets = ({ filter }) => {
     const { loading, error, data, refetch } = useQuery(FILTERLISTTICKETS, {

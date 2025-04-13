@@ -80,7 +80,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         )
     },
     {
-        field: 'status',
+        field: 'soldStatus',
         headerName: 'Status',
         flex: 1,
         minWidth: 220,
@@ -123,17 +123,20 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
                     ${params.row.Quickasyst_Cut?.toLocaleString()}
                 </div>
 
-                <div className='sold-price-divider'/>
+                <div className='sold-price-divider' />
 
-                {params.row.status === 'Success' && (
+                {(params.row.status === 'Success' || params.row.status === 'Inprogress') && (
                     <IconButton
                         disableRipple
                         onClick={() => {
+                            let selectedPopup = params.row.status === 'Inprogress' ? 'Inprogress' : 'invoice'
                             setSelectedTicket(params.row);
-                            openPopup('invoice');
+                            openPopup(selectedPopup);
                         }}
                     >
-                        <img src={invoice} alt="Invoice" />
+                        <img
+                            className={params.row.status === 'Inprogress' ? 'invoice-icon inprogress' : 'invoice-icon'}
+                            src={invoice} alt="Invoice" />
                     </IconButton>
                 )}
 

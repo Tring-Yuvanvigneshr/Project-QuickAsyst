@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { FILTERUNSOLDTICKETS } from './../../../Graphql/UnsoldTickets/unsoldQuery.js';
+import { FILTERUNSOLDTICKETS } from '../../../graphql/UnsoldTickets/unsoldQuery.js';
 import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
-import { DelistandunsoldColumns } from './../../../utils/DelistandSoldcolumns/DelistandSoldcolumns.jsx';
+import { DelistandunsoldColumns } from '../../../utils/DelistandSoldColumns/DelistandSoldcolumns.jsx';
 import {
-  CircularProgress,
-  Box
+    CircularProgress,
+    Box
 } from '@mui/material';
 
 const Delistandunsold = ({ filter }) => {
@@ -17,12 +17,16 @@ const Delistandunsold = ({ filter }) => {
     const [pageChange, setPageChange] = useState(pageChangeValue);
     const [offSet, setOffSet] = useState(1);
 
+    const [orderBy, setOrderBy] = useState({ tp_updated_at: "desc" }, { tp_id: "asc" });
+    const [sortOption, setSortOption] = useState('desc');
+
     const { loading, data } = useQuery(FILTERUNSOLDTICKETS, {
         variables: {
             ...filter,
             ticketPlacementId: null,
             pageSize: pageChange,
             pageOffset: pageChange * (offSet - 1),
+            order_by: orderBy
         },
         fetchPolicy: 'network-only'
     });
@@ -65,11 +69,16 @@ const Delistandunsold = ({ filter }) => {
                 checkboxisdisabled={false}
                 data={tableData}
                 columns={DelistandunsoldColumns()}
+
                 totalCount={tableSize}
                 pageSize={pageChange}
                 onPageSizeChange={setPageChange}
                 page={offSet}
                 onOffSetChange={setOffSet}
+
+                setOrderBy={setOrderBy}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
             />
         </>
     )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { FILTERMANAGETICKETS } from '../../../Graphql/ManageTickets/manageQuery.js';
-import { PUBLISHTICKETS, UPDATETICKETSTATUS, UPDATERETURNTICKETS } from '../../../Graphql/ManageTickets/manageMutation.js';
+import { FILTERMANAGETICKETS } from '../../../graphql/ManageTickets/manageQuery.js';
+import { PUBLISHTICKETS, UPDATETICKETSTATUS, UPDATERETURNTICKETS } from '../../../graphql/ManageTickets/manageMutation.js';
 import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
 import {
   CircularProgress,
@@ -13,7 +13,7 @@ import {
   Avatar,
   Typography
 } from '@mui/material';
-import { managecolumns } from './../../../utils/Manage_columns/ManageColumns.jsx';
+import { managecolumns } from '../../../utils/ManageColumns/ManageColumns.jsx';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
 import ReturnIcon from "../../../assets/icons/ReturnPopupIcon.svg";
@@ -22,11 +22,9 @@ import IconButton from '@mui/material/IconButton';
 const Managetickets = ({ filter }) => {
 
   const [publishTicket] = useMutation(PUBLISHTICKETS);
-  const [updateTicketStatus] = useMutation(UPDATETICKETSTATUS);
-  const [updateReturnTickets] = useMutation(UPDATERETURNTICKETS);
   const [tableData, setTableData] = useState([]);
   const [tableSize, setTableSize] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);  
+  const [openDialog, setOpenDialog] = useState(false);
   const [openReturnDialog, setOpenReturnDialog] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [selectedReturnTicket, setSelectedReturnTicket] = useState(null);
@@ -34,8 +32,27 @@ const Managetickets = ({ filter }) => {
   const [errorPrice, setErrorPrice] = useState(false);
   const [pageChange, setPageChange] = useState(10);
   const [offSet, setOffSet] = useState(1);
+  
+  const [orderBy, setOrderBy] = useState({tp_updated_at: "desc"}, {tp_id: "asc"});
+  const [sortOption, setSortOption] = useState('desc');
 
   const [render, setrender] = useState(0);
+  const [updateTicketStatus] = useMutation(UPDATETICKETSTATUS, {
+    onCompleted: (data) => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to update ticket status');
+    }
+  });
+  const [updateReturnTickets] = useMutation(UPDATERETURNTICKETS, {
+    onCompleted: (data) => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to return ticket status');
+    }
+  });
 
 
   const { loading, error, data, refetch } = useQuery(FILTERMANAGETICKETS, {
@@ -43,7 +60,8 @@ const Managetickets = ({ filter }) => {
       ...filter,
       pageSize: pageChange,
       pageOffset: pageChange * (offSet - 1),
-      render: render
+      render: render,
+      order_by: orderBy
     },
     fetchPolicy: 'network-only'
   });
@@ -102,9 +120,9 @@ const Managetickets = ({ filter }) => {
           isValid: status,
         },
       });
-
+      await refetch();
       toast.success(data.updateTicketStatus.message);
-      setrender(prev => prev+1)
+      setrender(prev => prev + 2)
     } catch (error) {
       toast.error(error.message || 'Failed to update ticket status');
     }
@@ -134,53 +152,53 @@ const Managetickets = ({ filter }) => {
   };
 
   const handleReturnCancel = async () => {
-    setrender(prev => prev+1)
+    setrender(prev => prev + 1)
     setOpenReturnDialog(false);
   };
 
   useEffect(() => {
     if (data && data.filtermanagetickets) {
-    const formattedData = data.filtermanagetickets.map((item, index) => {
-      const eventDate = new Date(item.e_date);
-      const currentDate = new Date();
+      const formattedData = data.filtermanagetickets.map((item, index) => {
+        const eventDate = new Date(item.e_date);
+        const currentDate = new Date();
 
-      const timeDifference = eventDate - currentDate;
+        const timeDifference = eventDate - currentDate;
 
-      const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-      let period;
-      if (daysLeft > 0) {
-        period = `${daysLeft} Days`;
-      } else if (hoursLeft > 0) {
-        period = `${hoursLeft} Hours`;
-      } else {
-        period = '0 Days';
-      }
+        let period;
+        if (daysLeft > 0) {
+          period = `${daysLeft} Days`;
+        } else if (hoursLeft > 0) {
+          period = `${hoursLeft} Hours`;
+        } else {
+          period = '0 Days';
+        }
 
-      return {
-        id: index + 1,
-        event: item.e_name,
-        date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
-        venue: item.e_address,
-        venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
-        section: item.tp_section.toUpperCase(),
-        row: item.tp_row.toUpperCase(),
-        seat: item.tp_seat_no,
-        validate: item.tp_validity_status ? 'Valid' : 'Invalid',
-        status: item.tp_status,
-        donationStatus: item.tp_is_support_vanderbilt_nil_fund ? 'Donated' : '-',
-        returnEmail: item.tp_delist_requested_email || '-',
-        userName: item.full_name,
-        email: item.u_email_id,
-        period: period,
-        league_name: item.l_name,
-        validityStatus: item.tp_validity_status,
-        Publish_id: item.tp_id,
-      };
-    });
+        return {
+          id: index + 1,
+          event: item.e_name,
+          date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
+          venue: item.e_address,
+          venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
+          section: item.tp_section.toUpperCase(),
+          row: item.tp_row.toUpperCase(),
+          seat: item.tp_seat_no,
+          validate: item.tp_validity_status ? 'Valid' : 'Invalid',
+          status: item.tp_status,
+          donationStatus: item.tp_is_support_vanderbilt_nil_fund ? 'Donated' : '-',
+          returnEmail: item.tp_delist_requested_email || '-',
+          userName: item.full_name,
+          email: item.u_email_id,
+          period: period,
+          league_name: item.l_name,
+          validityStatus: item.tp_validity_status,
+          Publish_id: item.tp_id,
+        };
+      });
 
-    setTableData(formattedData);
+      setTableData(formattedData);
       setTableSize(data.filtermanagetickets_aggregate.aggregate.count);
     }
   }, [data]);
@@ -200,11 +218,16 @@ const Managetickets = ({ filter }) => {
         checkboxisdisabled={true}
         data={tableData}
         columns={managecolumns(handleButtonClick, handleValidationChange, handleReturnDialogOpen)}
+
         totalCount={tableSize}
         pageSize={pageChange}
         onPageSizeChange={setPageChange}
         page={offSet}
         onOffSetChange={setOffSet}
+
+        setOrderBy={setOrderBy}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
       />
 
       <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} maxWidth="sm" fullWidth>

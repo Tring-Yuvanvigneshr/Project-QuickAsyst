@@ -1,7 +1,6 @@
 .event-block {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-top: 6px;
   line-height: 1.4;
 }
@@ -20,7 +19,7 @@
 
 .date-block {
   line-height: 1.5;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .venue-block {
@@ -62,36 +61,40 @@
   background-color: #fff5ec;
 } 
 
-.action-block {
-  margin-top: 15px;
+.center-style {
   display: flex;
-  align-items: center;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100%;
+  width: 100%;
   gap: 10px;
   cursor: pointer;
 }
 
 .enabled-btn {
-  color: white;
+  color: rgb(93, 117, 248) !important;
+  outline: 0;
   border: 1px solid #5d75f8 !important;
   border-radius: 0px !important;
   padding: 5px 20px 5px 20px !important;
   text-transform: none !important;
   font-size: 12px !important;
-  font-weight: 700;
+  font-weight: 700 !important;
+  font-family: glegoo, sans-serif !important;
+  border: 1px solid #e3e5e8 !important;
 }
 
 .disabled-btn {
   color: #5d75f8;
+  cursor: default !important;
   border: 1px solid #e3e5e8 !important;
   border-radius: 0px !important;
   padding: 5px 20px 5px 20px !important;
   text-transform: none !important;
   font-size: 12px !important;
   font-weight: 700;
-}
-
-.action-block>button:hover {
-  background-color: transparent;
+  font-weight: 700 !important;
+  font-family: glegoo, sans-serif !important;
 }
 
 .pagination-block {

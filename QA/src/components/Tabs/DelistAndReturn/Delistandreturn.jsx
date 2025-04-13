@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { FILTERRETURNTICKETS } from './../../../Graphql/Return/returnQuery.js';
-import { delistandreturn } from './../../../utils/DelistandReturn_columns/DelistandReturn.jsx';
+import { FILTERRETURNTICKETS } from '../../../graphql/Return/returnQuery.js';
+import { delistandreturn } from '../../../utils/DelistandReturnColumns/DelistandReturnColumns.jsx';
 import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
 import {
     CircularProgress,
     Box,
-  } from '@mui/material';
+} from '@mui/material';
 
 const Delistandreturn = ({ filter }) => {
 
@@ -17,11 +17,18 @@ const Delistandreturn = ({ filter }) => {
     const [pageChange, setPageChange] = useState(pageChangeNumber);
     const [offSet, setOffSet] = useState(1);
 
+
+    const [orderBy, setOrderBy] = useState({ tp_updated_at: "desc" }, { tp_id: "asc" });
+    const [sortOption, setSortOption] = useState('desc');
+
+
     const { loading, error, data } = useQuery(FILTERRETURNTICKETS, {
         variables: {
             ...filter,
+            ticketPlacementId: null,
             pageSize: pageChange,
-            pageOffset: pageChange * (offSet - 1)
+            pageOffset: pageChange * (offSet - 1),
+            order_by: orderBy
         },
         fetchPolicy: 'network-only'
     });
@@ -63,11 +70,16 @@ const Delistandreturn = ({ filter }) => {
                 checkboxisdisabled={false}
                 data={tableData}
                 columns={delistandreturn()}
+
                 totalCount={tableSize}
                 pageSize={pageChange}
                 onPageSizeChange={setPageChange}
                 page={offSet}
                 onOffSetChange={setOffSet}
+
+                setOrderBy={setOrderBy}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
             />
         </>
     )

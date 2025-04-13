@@ -11,7 +11,7 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
     field: 'event',
     headerName: 'Events',
     flex: 1,
-    minWidth: 200,
+    minWidth: 280,
     renderCell: (params) => (
       <div className="event-block">
         <span className="event-name">{params.value}</span>
@@ -187,13 +187,12 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
   },
   {
     field: 'action',
-    pinned: 'right',
     headerName: 'Action',
     flex: 1,
     minWidth: 120,
+    headerAlign: 'center',
     renderCell: (params) => (
-
-      <div className="action-block">
+      <div className="center-style">
         <Button
           className={`${params.row.status !== 'Verified' ? 'disabled-btn' : 'enabled-btn'}`}
           onClick={() => onPublish(params.row)}
