@@ -398,7 +398,6 @@ const Soldtickets = ({ filter }) => {
                     </Box>
                 </DialogContent>
             </Dialog>
-
         </>
     )
 }
