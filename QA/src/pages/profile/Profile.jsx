@@ -3,19 +3,20 @@ import './profile.css';
 import defaultImage from './../../assets/images/Defaultprofile.png';
 import { Button, IconButton, CircularProgress } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
-import { GETUSERPROFILE } from '../../Graphql/User/userQuery';
+import { GETUSERPROFILE } from '../../graphql/User/userQuery';
 import { UPDATEUSERPROFILE } from '../../Graphql/User/userMutation';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import { toast } from 'react-toastify';
-import { GETUPLOADSIGNEDURL } from '../../Graphql/S3/getUploadSignedUrl';
+import { GETUPLOADSIGNEDURL } from '../../graphql/S3/getUploadSignedUrl';
 import axios from 'axios';
 
 const Profile = () => {
+    const dev = import.meta.env.VITE_DEV;
     const [isEditing, setIsEditing] = useState(false);
-    const [firstName, setFirstName] = useState('Quickasyst');
-    const [lastName, setLastName] = useState('Admin');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState(null);
-    const [email, setEmail] = useState('quickasyst@mailinator.com');
+    const [email, setEmail] = useState('');
     const [profileImage, setProfileImage] = useState();
     const [imageFile, setImageFile] = useState(null);
     let imageSrc;
@@ -130,7 +131,7 @@ const Profile = () => {
         if (profileImage.startsWith('blob:')) {
             imageSrc = profileImage;
         } else {
-            imageSrc = `https://dev-admin.quickasyst.com/${profileImage}`;
+            imageSrc = `${dev}${profileImage}`;
         }
     } else {
         imageSrc = defaultImage;

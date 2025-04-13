@@ -23,9 +23,8 @@ import {
 
 const Soldtickets = ({ filter }) => {
 
-
+    const dev = import.meta.env.VITE_DEV;
     const pageChangeNumber = 10;
-
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
     const [pageChange, setPageChange] = useState(pageChangeNumber);
@@ -312,7 +311,7 @@ const Soldtickets = ({ filter }) => {
 
                 <DialogActions className='invoice-dialog-actions'>
                     <a
-                        href={`https://dev-admin.quickasyst.com/${InvoiceData?.ticket_placement_by_pk.payment_transaction[0]?.stripe_transfers?.st_invoice}`}
+                        href={`${dev}${InvoiceData?.ticket_placement_by_pk.payment_transaction[0]?.stripe_transfers?.st_invoice}`}
                         download
                         style={{ textDecoration: 'none' }}
                         target="_blank"

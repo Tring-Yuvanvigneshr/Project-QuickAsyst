@@ -31,6 +31,7 @@ import { useNavigate } from 'react-router-dom';
 import './header.css';
 
 const Header = () => {
+  const dev = import.meta.env.VITE_DEV;
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -172,7 +173,7 @@ const Header = () => {
               <div className="header-iconButton">
                 <img
                   alt={fullName}
-                  src={`https://dev-admin.quickasyst.com/${avatarUrl}`}
+                  src={`${dev}${avatarUrl}`}
                   onClick={handleMenu}
                   className="header-avatar"
                 />

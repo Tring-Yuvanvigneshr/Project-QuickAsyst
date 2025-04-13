@@ -17,6 +17,8 @@
     "@mui/material": "^7.0.0",
     "@mui/x-data-grid": "^7.28.3",
     "@mui/x-data-grid-pro": "^7.28.3",
+    "@mui/x-date-pickers": "^7.28.3",
+    "@mui/x-date-pickers-pro": "^7.28.3",
     "aws-amplify": "^6.14.1",
     "dayjs": "^1.11.13",
     "graphql-tag": "^2.12.6",

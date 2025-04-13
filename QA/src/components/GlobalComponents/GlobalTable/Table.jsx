@@ -6,7 +6,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './table.css';
 import '../../../utils/ManageColumns/manageColumns.css';
-import sortArrow from '../../../assets/icons/Vector.png';
+import { FaSort } from 'react-icons/fa'; // shows up/down sort arrows
+
 
 const SharedTable = ({
   checkboxisdisabled,
@@ -57,11 +58,6 @@ const SharedTable = ({
     Status: 'tp_payment_status',
   }
 
-  const CustomSortIcon = () => {
-    const iconClass = 'sort-icon';
-    return <img src={sortArrow} alt="Sort" className={iconClass} />;
-  };
-
   const handleSortClick = (field) => {
     const newSortOption = sortOption === 'asc' ? 'desc' : 'asc';
     setSortOption(newSortOption);
@@ -77,15 +73,13 @@ const SharedTable = ({
       sortable: !isExcluded,
       renderHeader: params => (
         <Box
-          className="column-header"
+          className={!excludeSortIcon.includes(col.headerName) ? "column-header" : "column-header-non-sorting"}
           onClick={() => {
-            console.log(col.headerName);
-            
             if (!excludeSortIcon.includes(col.headerName)) handleSortClick(col.field);
           }}
         >
           {params.colDef.headerName}
-          {!excludeSortIcon.includes(col.headerName) && <CustomSortIcon />}
+          {!excludeSortIcon.includes(col.headerName) && <FaSort className="sort-icon"/>}
         </Box>
       ),
     };
