@@ -11,11 +11,7 @@ import sortArrow from '../../../assets/icons/Vector.png';
 
 const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
 
-  const PagenoFive = 5;
-  const PagenoTen = 10;
-  const PagenoTwenty = 20;
-
-  const pageSizes = [PagenoFive, PagenoTen, PagenoTwenty];
+  const pageSizes = [5, 10, 20];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

@@ -18,8 +18,6 @@ import IconButton from '@mui/material/IconButton';
 
 const Managetickets = ({ filter }) => {
 
-  const pageChangeNumber = 10;
-
   const [publishTicket] = useMutation(PUBLISHTICKETS);
   const [tableData, setTableData] = useState([]);
   const [tableSize, setTableSize] = useState([]);
@@ -27,7 +25,7 @@ const Managetickets = ({ filter }) => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [price, setPrice] = useState('');
   const [errorPrice, setErrorPrice] = useState(false);
-  const [pageChange, setPageChange] = useState(pageChangeNumber);
+  const [pageChange, setPageChange] = useState(10);
   const [offSet, setOffSet] = useState(1);
 
 
