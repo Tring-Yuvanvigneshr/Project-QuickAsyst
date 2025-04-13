@@ -110,7 +110,7 @@
   background-color: transparent !important;
 }
 
-.MuiDataGrid-virtualScrollerContent.css-aymtem-MuiDataGrid-virtualScrollerContent {
+.custom-grid-wrapper.empty-data .MuiDataGrid-virtualScrollerContent {
   flex-basis: 0 !important;
 }
 

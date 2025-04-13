@@ -94,7 +94,7 @@ const SharedTable = ({
 
   return (
     <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
-      <div className="custom-grid-wrapper">
+      <div className={`custom-grid-wrapper ${data.length === 0 ? 'empty-data' : ''}`}>
         <DataGrid
           rows={data}
           columns={columnsWithCustomSorting}
