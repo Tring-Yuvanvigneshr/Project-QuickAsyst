@@ -5,7 +5,7 @@ export const delistandreturn = () => [
         field: 'event',
         headerName: 'Events',
         flex: 1,
-        minWidth: 200,
+        minWidth: 280,
         renderCell: (params) => (
             <div className="event-block">
                 <span className="event-name">{params.value}</span>

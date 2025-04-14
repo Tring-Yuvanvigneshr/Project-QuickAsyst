@@ -38,7 +38,7 @@ export const DelistandunsoldColumns = () => [
     field: 'venue',
     headerName: 'Venue',
     flex: 1,
-    minWidth: 200,
+    minWidth: 240,
     renderCell: (params) => {
       const vp = params.value.split(', ');
       return (

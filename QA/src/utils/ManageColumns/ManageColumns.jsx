@@ -95,7 +95,7 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
       const handleSelectChange = (e) => {
 
         console.log(params);
-        
+
         const selectedValue = e.target.value;
         if (selectedValue === 'Return') {
           handleReturnChange(params.row.Publish_id);
@@ -105,12 +105,14 @@ export const managecolumns = (onPublish, handleValidationChange, handleReturnCha
       }
       return (
         <Select
+          key={params.row.Publish_id}
           defaultValue={params.row.status === 'Delist' ? 'Invalid' : params.row.status === 'Verified' ? 'Valid' : '-Select-'}
           variant="standard"
           IconComponent={IoIosArrowDown}
           disableUnderline
           className="validate-select-block"
           onChange={handleSelectChange}
+
         >
           <MenuItem disableRipple value="-Select-" disabled>
             -Select-

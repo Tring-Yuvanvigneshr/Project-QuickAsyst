@@ -301,6 +301,10 @@
         height: 100px;
     }
 
+    .profile-edit-row {
+        width: 100%;
+    }
+
     .profile-edit-input {
         padding: 14px 12px;
         font-size: 14px;

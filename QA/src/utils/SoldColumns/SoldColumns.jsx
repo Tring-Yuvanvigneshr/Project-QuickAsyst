@@ -12,7 +12,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         field: 'event',
         headerName: 'Events',
         flex: 1,
-        minWidth: 200,
+        minWidth: 280,
         renderCell: (params) => (
             <div className="event-block">
                 <span className="event-name">{params.value}</span>
@@ -39,7 +39,7 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         field: 'venue',
         headerName: 'Venue',
         flex: 1,
-        minWidth: 200,
+        minWidth: 240,
         renderCell: (params) => {
             const vp = params.value.split(', ');
             return (

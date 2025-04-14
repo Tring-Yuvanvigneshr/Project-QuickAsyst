@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Box, Tabs, Tab, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Filter from '../../components/GlobalComponents/GlobalFilter/Filter.jsx';
@@ -21,8 +21,13 @@ const validationOptionsManage = ["Valid", "Invalid", "Delist Requested"];
 const validationOptionsList = ["Valid", "Delist Requested"];
 const validationOptionsSold = ["Sold", "In Progress", "Settled", "Failed", "Voided Payout"];
 
-const TabPanel = ({ children, value, index }) => (
-    <div hidden={value !== index}>
+const TabPanel = ({ children, value, index, id }) => (
+    <div
+        role="tabpanel"
+        aria-labelledby={`tab-${index}`}
+        hidden={value !== index}
+        id={id}
+    >
         {value === index && <Box className="tab-panel">{children}</Box>}
     </div>
 );
@@ -30,7 +35,7 @@ const TabPanel = ({ children, value, index }) => (
 const Tickets = () => {
     const [tabValue, setTabValue] = useState(0);
     const [filterOpen, setFilterOpen] = useState(false);
-    
+
     const defaultFilter = {
         search_event: '%',
         leagueId: null,
@@ -46,15 +51,26 @@ const Tickets = () => {
         array_tpid: null,
     };
 
-    const [manageFilter, setManageFilter] = useState(defaultFilter)
+    const [manageFilter, setManageFilter] = useState(defaultFilter);
     const [returnFilter, setReturnFilter] = useState(defaultFilter);
     const [soldFilter, setSoldFilter] = useState(defaultFilter);
     const [listFilter, setListFilter] = useState(defaultFilter);
     const [unsoldFilter, setUnSoldFilter] = useState(defaultFilter);
 
+    const filterPanelRef = useRef(null);
+    const filterButtonRef = useRef(null);
+
     useEffect(() => {
         setFilterOpen(false);
     }, [tabValue]);
+
+    useEffect(() => {
+        if (filterOpen) {
+            filterPanelRef.current?.focus();
+        } else {
+            filterButtonRef.current?.focus();
+        }
+    }, [filterOpen]);
 
     const handleApplyFilters = (newFilters) => {
         switch (tabValue) {
@@ -81,41 +97,64 @@ const Tickets = () => {
     return (
         <Box className="tickets-container">
             <Box className="tabs-container">
-                <Tabs value={tabValue} variant="scrollable" scrollButtons="auto"  onChange={(e, newValue) => setTabValue(newValue)} className="tabs">
-                    <Tab label="Manage Tickets" className="tab" />
-                    <Tab label="List Tickets" className="tab" />
-                    <Tab label="Sold Tickets" className="tab" />
-                    <Tab label="Delist And Return" className="tab" />
-                    <Tab label="Delist And UnSold" className="tab" />
+                <Tabs
+                    value={tabValue}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    onChange={(e, newValue) => setTabValue(newValue)}
+                    aria-label="Tickets Tab Navigation"
+                    className="tabs"
+                >
+                    <Tab label="Manage Tickets" className="tab" id="tab-0" aria-controls="tabpanel-0" />
+                    <Tab label="List Tickets" className="tab" id="tab-1" aria-controls="tabpanel-1" />
+                    <Tab label="Sold Tickets" className="tab" id="tab-2" aria-controls="tabpanel-2" />
+                    <Tab label="Delist And Return" className="tab" id="tab-3" aria-controls="tabpanel-3" />
+                    <Tab label="Delist And UnSold" className="tab" id="tab-4" aria-controls="tabpanel-4" />
                 </Tabs>
 
                 <Button
-                    variant='outlined'
+                    ref={filterButtonRef}
+                    variant="outlined"
                     disableRipple
                     onClick={() => setFilterOpen(!filterOpen)}
                     className="filter-button"
+                    aria-label={filterOpen ? 'Close filter panel' : 'Open filter panel'}
                 >
                     <FilterListIcon className="filter-icon" /> Filter
                 </Button>
             </Box>
 
             {filterOpen && (
-                <Box className="filter-panel">
+                <Box
+                    ref={filterPanelRef}
+                    className="filter-panel"
+                    tabIndex={-1} // Make the filter panel focusable
+                >
                     <Filter
                         onApply={handleApplyFilters}
                         Attributes={attributes[tabValue]}
                         onClose={() => setFilterOpen(false)}
-                        validationOptions={ tabValue === 0 ? validationOptionsManage : tabValue === 1 ? validationOptionsList : validationOptionsSold}
-                        filter={ tabValue === 0 ? manageFilter : tabValue === 1 ? listFilter : tabValue === 2 ? soldFilter : tabValue === 3 ? returnFilter : unsoldFilter}
+                        validationOptions={tabValue === 0 ? validationOptionsManage : tabValue === 1 ? validationOptionsList : validationOptionsSold}
+                        filter={tabValue === 0 ? manageFilter : tabValue === 1 ? listFilter : tabValue === 2 ? soldFilter : tabValue === 3 ? returnFilter : unsoldFilter}
                     />
                 </Box>
             )}
 
-            <TabPanel value={tabValue} index={0}><Managetickets filter={manageFilter} /></TabPanel>
-            <TabPanel value={tabValue} index={1}><Listtickets filter={listFilter} /></TabPanel>
-            <TabPanel value={tabValue} index={2}><Soldtickets filter={soldFilter} /></TabPanel>
-            <TabPanel value={tabValue} index={3}><Returntickets filter={returnFilter} /></TabPanel>
-            <TabPanel value={tabValue} index={4}><Unsoldtickets filter={unsoldFilter} /></TabPanel>
+            <TabPanel value={tabValue} index={0} id="tabpanel-0">
+                <Managetickets filter={manageFilter} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={1} id="tabpanel-1">
+                <Listtickets filter={listFilter} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={2} id="tabpanel-2">
+                <Soldtickets filter={soldFilter} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={3} id="tabpanel-3">
+                <Returntickets filter={returnFilter} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={4} id="tabpanel-4">
+                <Unsoldtickets filter={unsoldFilter} />
+            </TabPanel>
         </Box>
     );
 };

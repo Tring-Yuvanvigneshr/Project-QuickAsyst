@@ -21,17 +21,16 @@ Amplify.configure(awsConfig);
 const App = () => {
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
       <ApolloProvider client={client}>
-        <ToastContainer position="top-center" autoClose={3000} />
         <BrowserRouter>
+          <ToastContainer position="top-center" autoClose={3000} />
           <Routes>
             <Route path='login' element={<SignIN />} />
             <Route path="/" element={<MainLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="tickets" element={<Tickets />} />
               <Route path="users" element={<Users />} />
-              <Route path='profile' element={<Profile />}/>
+              <Route path='profile' element={<Profile />} />
 
               {/* <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="tickets" element={<ProtectedRoute><Tickets /></ProtectedRoute>} />

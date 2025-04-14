@@ -130,7 +130,6 @@ const SharedTable = ({
           </Select>
         </Box>
 
-            {console.log(data)}
             
         <Box className='pagination'>
           <Stack spacing={2}>
