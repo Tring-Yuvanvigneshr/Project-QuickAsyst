@@ -41,10 +41,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     }
   }
 
-  // if (networkError && networkError.message === 'Failed to fetch') {
-  //   shouldLogout = true;
-  // }
-
   if (networkError && 'statusCode' in networkError && networkError.statusCode === 401) {
     shouldLogout = true;
   }
