@@ -27,15 +27,10 @@ const App = () => {
           <Routes>
             <Route path='login' element={<SignIN />} />
             <Route path="/" element={<MainLayout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="tickets" element={<Tickets />} />
-              <Route path="users" element={<Users />} />
-              <Route path='profile' element={<Profile />} />
-
-              {/* <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="tickets" element={<ProtectedRoute><Tickets /></ProtectedRoute>} />
               <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
-              <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} /> */}
+              <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             </Route>
           </Routes>
         </BrowserRouter>
