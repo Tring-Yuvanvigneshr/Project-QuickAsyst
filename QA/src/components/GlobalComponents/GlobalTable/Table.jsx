@@ -6,7 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './table.css';
 import '../../../utils/ManageColumns/manageColumns.css';
-import { FaSort } from 'react-icons/fa'; // shows up/down sort arrows
+import { FaSort } from 'react-icons/fa';
 
 
 const SharedTable = ({
