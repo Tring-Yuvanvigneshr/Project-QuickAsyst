@@ -91,8 +91,6 @@ const Profile = () => {
 
                 const { preSignedUrl } = signedData.getUploadSignedUrl;
 
-                console.log(preSignedUrl);
-
                 await axios.put(preSignedUrl, imageFile);
 
                 updatedProfileImage = key;
@@ -204,7 +202,7 @@ const Profile = () => {
                                     <div className='profile-item'>First Name</div>
                                     <div className='change-password-input'>
                                         <input
-                                            fullWidth
+                                            fullwidth
                                             value={firstName}
                                             onChange={(e) => handleChange('firstName', e.target.value)}
                                             className='profile-edit-input'
@@ -217,7 +215,7 @@ const Profile = () => {
                                     <div className='profile-item'>Last Name</div>
                                     <div className='change-password-input'>
                                         <input
-                                            fullWidth
+                                            fullwidth
                                             value={lastName}
                                             onChange={(e) => handleChange('lastName', e.target.value)}
                                             className='profile-edit-input'
@@ -243,7 +241,7 @@ const Profile = () => {
                                     <div className='profile-item'>Email</div>
                                     <div className='edit-email change-password-input'>
                                         <input
-                                            fullWidth
+                                            fullwidth
                                             value={email}
                                             disabled
                                             className='profile-edit-input'

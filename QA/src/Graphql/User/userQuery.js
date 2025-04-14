@@ -46,8 +46,8 @@ export const LEAGUESDROPDOWNFILTER = gql`
 `
 
 export const SEARCHUSERSANDTICKETSBYMARKETINGUSER = gql`
-  query searchUsersAndTicketsByMarketingUser ($pageSize: Int! = 10, $pageOffset: Int! = 0, $order_by: [user_order_by!] = {u_first_name:asc}, $searchText: String! = "%%", $searchEvent: String! = "") {
-  user: get_marketing_users(offset: $pageOffset, limit: $pageSize, order_by: $order_by, where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
+  query searchUsersAndTickets ($pageSize: Int! = 10, $pageOffset: Int! = 0, $order_by: [user_order_by!] = {u_first_name:asc}, $searchText: String! = "%%", $searchEvent: String! = "") {
+  user(offset: $pageOffset, limit: $pageSize, order_by: $order_by, where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
     u_active_tickets
     u_country_code
     u_created_at
@@ -60,7 +60,53 @@ export const SEARCHUSERSANDTICKETSBYMARKETINGUSER = gql`
     u_avatar_url
     u_full_name
   }
-  user_aggregate: get_marketing_users_aggregate(where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
+  user_aggregate(where: {_or:[{u_email_id:{_ilike:$searchText}},{u_full_name:{_ilike:$searchText}}],_and:{u_role:{_eq:"user"}},u_deleted_at:{_is_null:true}}) {
+    aggregate {
+      count
+    }
+  }
+  events(where: {e_name:{_ilike:$searchEvent},e_deleted_at:{_is_null:true},tickets:{e_id:{_is_null:false},ticket_placements:{tp_deleted_at:{_is_null:true},t_id:{_is_null:false}}}}) {
+    tickets {
+      t_created_at
+      t_deleted_at
+      t_id
+    }
+    e_name
+    e_image_url
+    e_id
+    e_updated_at
+    e_date
+    e_address
+    e_brand_name
+    e_status
+    event_categories {
+      lc_id
+      league_category {
+        l_id
+        lc_brand_name
+        lc_market_name
+        league {
+          l_avatar_url
+          l_name
+        }
+      }
+    }
+  }
+  events_aggregate(where: {e_name:{_ilike:$searchEvent},e_deleted_at:{_is_null:true},tickets:{e_id:{_is_null:false}}}) {
+    aggregate {
+      count
+    }
+  }
+  league_categories(where: {lc_name:{_ilike:$searchText},lc_deleted_at:{_is_null:true}}) {
+    lc_id
+    lc_name
+    lc_avatar_url
+    lc_colour_code
+    lc_abbrev
+    lc_brand_name
+    lc_market_name
+  }
+  league_categories_aggregate(where: {lc_name:{_ilike:$searchText},lc_deleted_at:{_is_null:true}}) {
     aggregate {
       count
     }

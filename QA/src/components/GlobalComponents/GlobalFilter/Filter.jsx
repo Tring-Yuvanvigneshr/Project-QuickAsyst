@@ -53,7 +53,6 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
         return selectedLeague ? selectedLeague.l_name : '';
     };
 
-
     const handleTicketStatusChange = (event) => {
         const selected = event.target.value;
         let changed = selected;
@@ -86,7 +85,7 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
                 return;
             case 'voided payout':
                 changed = null;
-                setFilters({ ...filters, paymentStatus: null, payoutType: 'Unvoided_Payout', validType: selected });
+                setFilters({ ...filters, paymentStatus: null, payoutType: 'Voided_Payout', validType: selected });
                 return;
             default:
                 break;
@@ -94,8 +93,6 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
 
         setFilters({ ...filters, ticketStatus: changed, validType: selected });
     };
-
-
 
     const getDateRangeFromOption = (option) => {
         const today = dayjs();
@@ -128,9 +125,8 @@ const Filter = ({ onApply, Attributes, onClose, validationOptions, filter }) => 
         return { startdate: start, enddate: end };
     };
 
-
     return (
-        <Box className="filter-box" PaperProps={{}}>
+        <Box className="filter-box">
             <div className="filter-header">
                 <Typography variant="h6" className="filter-title">Filter</Typography>
                 <IconButton disableRipple onClick={onClose} className="close-icon">

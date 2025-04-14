@@ -67,17 +67,25 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         },
     },
     {
-        field: 'Ticket placements',
-        headerName: 'Ticket placements',
+        field: 'section',
+        headerName: 'Section',
         flex: 1,
-        minWidth: 240,
-        renderCell: (params) => (
-            <div className="ticket-placement-block">
-                <div>{params.row.section}</div>
-                <div>{params.row.row}</div>
-                <div>{params.row.seat}</div>
-            </div>
-        )
+        minWidth: 120,
+        cellClassName: 'left-align',
+    },
+    {
+        field: 'row',
+        headerName: 'Row',
+        flex: 1,
+        minWidth: 120,
+        cellClassName: 'left-align',
+    },
+    {
+        field: 'seat',
+        headerName: 'Seat',
+        flex: 1,
+        minWidth: 120,
+        cellClassName: 'left-align',
     },
     {
         field: 'soldStatus',
@@ -85,8 +93,8 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
         flex: 1,
         minWidth: 220,
         renderCell: (params) => (
-            <span className={`paymont-status-block ${params.value === 'Inprogress' ? 'Inprogress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : 'Settled'}`}>
-                {params.value === 'Inprogress' ? 'Settlement In Progress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : 'Sold'}
+            <span className={`paymont-status-block ${(params.value === 'Inprogress') || ((params.value === null) && (params.row.voided_status === 'Voided_Payout')) ? 'Inprogress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : 'Settled'}`}>
+                {params.value === 'Inprogress' ? 'Settlement In Progress' : params.value === 'Success' ? 'Settled' : params.value === 'Failed' ? 'Failed' : (params.value === null) && (params.row.voided_status !== 'Voided_Payout') ? 'Sold' : 'Voided Payout'}
             </span>
         ),
     },
@@ -107,8 +115,9 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
     {
         field: 'sold price',
         headerName: 'Sold Price',
+        headerAlign: 'center',
         flex: 1,
-        minWidth: 250,
+        minWidth: 280,
         renderCell: params => (
             <div
                 className="sold-price-container"
@@ -116,31 +125,33 @@ export const soldColumns = (openPopup, setSelectedTicket) => [
                 <div className='sold-price-list' >
                     ${params.row.sold_price?.toLocaleString()}
                 </div>
+                <div className='sold-price-divider' />
                 <div className='sold-price-list'>
                     ${params.row.logitix_amount?.toLocaleString()}
                 </div>
+                <div className='sold-price-divider' />
                 <div className='sold-price-list'>
                     ${params.row.Quickasyst_Cut?.toLocaleString()}
                 </div>
 
                 <div className='sold-price-divider' />
 
-                {(params.row.status === 'Success' || params.row.status === 'Inprogress') && (
+                {(params.row.soldStatus === 'Success' || params.row.soldStatus === 'Inprogress') && (
                     <IconButton
                         disableRipple
                         onClick={() => {
-                            let selectedPopup = params.row.status === 'Inprogress' ? 'Inprogress' : 'invoice'
+                            let selectedPopup = (params.row.soldStatus === 'Inprogress') || (params.row.soldStatus === null) ? 'Inprogress' : 'invoice'
                             setSelectedTicket(params.row);
                             openPopup(selectedPopup);
                         }}
                     >
                         <img
-                            className={params.row.status === 'Inprogress' ? 'invoice-icon inprogress' : 'invoice-icon'}
+                            className={(params.row.soldStatus === 'Inprogress') || (params.row.soldStatus === null) ? 'invoice-icon inprogress' : 'invoice-icon'}
                             src={invoice} alt="Invoice" />
                     </IconButton>
                 )}
 
-                {(params.row.status === 'Failed' || params.row.status == null) && (
+                {(((params.row.soldStatus === null) && (params.row.voided_status !== 'Voided_Payout')) || (params.row.soldStatus === 'Failed') || (((params.row.soldStatus === null) && (params.row.voided_status === 'Voided_Payout')))) && (
                     <IconButton
                         disableRipple
                         onClick={() => {

@@ -97,49 +97,17 @@
   font-family: glegoo, sans-serif !important;
 }
 
-.pagination-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
-.show-text {
-  font-size: 16px;
-  margin-right: 4px;
-}
-
-.page-size-select {
-  width: 70px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.pagination-number {
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #000;
-  margin: 0 4px;
-}
-
-.pagination-number.active-page {
-  background-color: #5b73f2;
-  color: #fff;
-}
-
-
-
-
 .publish-dialog {
   border-radius: 0px !important;
   font-family: glegoo, serif !important;
+}
+
+.publish-dialog-title {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-weight: bolder !important;
+  font-size: 24px !important;
 }
 
 .publish-dialog-content {
@@ -177,11 +145,12 @@
 .publish-list-price {
   background-color: #f3f4f6;
   font-size: 14px;
-  height: 70px;
+  height: 60px;
   padding: 0px 10px 0px 10px;
   display: flex;
   align-items: center !important;
   justify-content: space-between;
+  margin-top: 10px;
   margin-bottom: 10px;
   color: #9ca3af;
   font-family: Glegoo, serif !important;
@@ -190,7 +159,7 @@
 .publish-input-container-input{
   background-color: white !important;
   width: 140px;
-  height: 40px;
+  height: 30px;
   outline: none;
   border: none;
   padding: 10px;
@@ -298,7 +267,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-@media screen and (max-width: 600px) {
+@media (max-width: 767px) {
 
   .publish-dialog-title {
     font-size: 16px;
@@ -311,5 +280,9 @@ input::-webkit-inner-spin-button {
   .publish-dialog-row{
     flex-direction: column !important;
     align-items: flex-start;
+  }
+
+  .publish-content-value {
+    font-size: 12px !important;
   }
 }

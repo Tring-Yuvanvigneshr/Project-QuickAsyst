@@ -99,7 +99,7 @@
 
 .header-searchInput {
   color: black;
-  width: 100%;
+  width: 90%;
   font-family: 'glegoo', serif !important;
   font-size: 14px !important;
   padding: 8px;
@@ -109,104 +109,91 @@
   background: transparent;
 }
 
-.change-password-headder {
-  display: flex;
-  justify-content: space-between;
-}
-
-.change-password-actions {
-  margin-right: 15px;
-  margin-top: -15px;
-  margin-bottom: 5px;
-}
-
-.old-password-container {
-  margin-bottom: 15px;
-}
-
-.old-password-container>input {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #cad2df;
-  border-radius: 0px;
-}
-
-.old-password-container>input::placeholder {
-  color: #B9BDC6 !important;
-  font-family: glegoo, sans-serif !important;
-}
-
-.new-password-container {
-  margin-bottom: 15px;
-}
-
-.new-password-container>input {
-  border-radius: 0px;
-  width: 100%;
-  height: 50px;
-  border: 1px solid #cad2df;
-}
-
-.new-password-container>input::placeholder {
-  color: #B9BDC6 !important;
-  font-family: glegoo, sans-serif !important;
-}
-
-.confirm-password-container>input {
-  width: 100%;
-  height: 50px;
-  margin-bottom: 10px;
-  border: 1px solid #cad2df;
-  border-radius: 0px;
-}
-
-.confirm-password-container>input::placeholder {
-  color: #B9BDC6 !important;
-  font-family: glegoo, sans-serif !important;
-}
-
-.Change_password_h3 {
-  color: #0f172a !important;
-  font-weight: 700 !important;
-  font-family: Playfair Display, serif !important;
-  font-size: 24px !important;
-
-}
-
-.Change_password_h5 {
-  color: #9ca3af !important;
-  font-family: 'Glegoo', serif !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
-}
-
 .error-message {
   color: red;
-  font-size: 12px;
+  font-size: 11px;
   margin-top: -5px;
 }
 
-.password-reset-btn {
-  font-size: 16px !important;
-  text-transform: none !important;
-  border-radius: 0px !important;
-  color: #151A34 !important;
-  width: 117px;
-  height: 44px;
-  font-family: 'Glegoo', serif !important;
-  font-weight: 700 !important;
-  background-color: #F3F4F6 !important;
-  border: none !important;
+.header-avatar {
+  padding: 2px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #B9BDC6;
+  border-radius: 50%;
+  cursor: pointer
 }
 
-.password-apply-btn {
-  font-size: 16px !important;
-  text-transform: none !important;
-  border-radius: 0px !important;
-  width: 117px;
-  height: 44px;
-  font-family: 'Glegoo', serif !important;
-  background-color: #5D75F8 !important;
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.header-searchIconWrapper {
+  padding: 0 10px;
+}
+
+.header-searchIcon {
+  color: #888;
+}
+
+.search-close-icon {
+  position: absolute;
+  right: 10px;
+  top: 30%;
+  cursor: pointer;
+  color: #888;
+}
+
+.custom-dropdown {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 488px;
+  max-height: 300px;
+  color: black;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1300;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0px;
+  padding: 24px 20px;
+}
+
+.custom-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  font-family: 'Glegoo', sans-serif;
+  color: #0f172a;
+  font-weight: 700;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 10px;
+}
+
+.search-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.custom-dropdown-item:first-child {
+  background-color: #f5f5f5;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.no-result {
+  color: #999;
+  justify-content: center;
 }
 
 
@@ -240,103 +227,26 @@
     font-size: 40px !important;
   }
 
-  .password-dialog {
-    padding: 10px;
-  }
-
-  .old-password-container input,
-  .new-password-container input,
-  .confirm-password-container input {
-    width: 100%;
-    height: 45px;
-    padding: 8px;
-    margin-bottom: 8px;
-    font-size: 12px;
-  }
-
-  .error-message {
-    font-size: 10px;
-    margin-top: -4px;
-  }
-
-  .Change_password_h3 {
-    font-size: large !important;
-  }
-
-  .Change_password_h5 {
-    font-size: x-small !important;
-  }
-
-  .change-password-actions {
-    display: flex !important;
-    align-items: flex-end;
-    gap: 5px;
-  }
-
-  .password-reset-btn,
-  .password-apply-btn {
-    width: 33% !important;
-    font-size: 12px !important;
-  }
-
   .dialog-content {
     font-size: 12px !important;
-  }
-
-  .header-avatar {
-    padding: 2px;
-    width: 20px;
-    height: 20px;
   }
 
   .header-username {
     display: none;
   }
-}
 
-
-.new-password-container,
-.old-password-container,
-.confirm-password-container {
-  position: relative;
-}
-
-.input-field {
-  width: 100%;
-  padding: 10px 35px 10px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.input-field.error {
-  border-color: red;
-  border: 1px solid red;
-}
-
-.new-password-container span,
-.old-password-container span,
-.confirm-password-container span {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 16px;
-  color: #aaa;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #9CA3AF;
-  border: 1px solid rgb(156, 150, 150);
-}
-
-.header-avatar {
-  padding: 2px;
-  width: 50px;
-  height: 50px;
-  border: 1px solid #B9BDC6;
-  border-radius: 50%;
-  cursor: pointer
+  .custom-dropdown {
+    width: 130%;
+    max-height: 300px;
+    color: black;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 1300;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 0px;
+    padding: 14px 10px;
+    font-size: 12px;
+  }
 }

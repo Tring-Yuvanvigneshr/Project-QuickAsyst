@@ -25,11 +25,7 @@ const SharedTable = ({
   setSortOption
 }) => {
 
-  const PagenoFive = 5;
-  const PagenoTen = 10;
-  const PagenoTwenty = 20;
-
-  const pageSizes = [PagenoFive, PagenoTen, PagenoTwenty];
+  const pageSizes = [5, 10, 20];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -55,10 +51,12 @@ const SharedTable = ({
     userName: 'full_name',
     email: 'u_email_id',
     period: 'e_date',
-    Status: 'tp_payment_status',
+    soldStatus: 'tp_payment_status',
   }
 
   const handleSortClick = (field) => {
+    console.log(field);
+    
     const newSortOption = sortOption === 'asc' ? 'desc' : 'asc';
     setSortOption(newSortOption);
     setOrderBy([{ [sortOptionHeadders[field]]: newSortOption }, { tp_id: 'asc' }]);
@@ -87,7 +85,7 @@ const SharedTable = ({
 
 
   return (
-    <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
+    <Box className='dataGrid-container'>
       <div className={`custom-grid-wrapper ${data.length === 0 ? 'empty-data' : ''}`}>
         <DataGrid
           rows={data}

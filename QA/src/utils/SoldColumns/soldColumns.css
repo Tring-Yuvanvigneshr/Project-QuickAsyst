@@ -17,29 +17,29 @@
 }
 
 
-.Payout-Ticket-Datails-container {
+.payout-Ticket-Datails-container {
     position: relative;
 }
 
-.Payout-Ticket-Datails {
+.payout-Ticket-Datails {
     display: flex;
     justify-content: space-between;
 }
 
-.Payout-Ticket-Datails-input {
+.payout-Ticket-Datails-input {
     width: 159px;
     height: 35px;
     padding: 10px;
     outline: none;
 }
 
-.Payout-Ticket-Datails-input:focus {
+.payout-Ticket-Datails-input:focus {
     border: black;
     outline: none;
 }
 
 
-.Payout-container {
+.payout-container {
     width: 550px;
 }
 
@@ -48,7 +48,7 @@
     margin-top: -30px;
 }
 
-.Payout-Ticket-Datails-Button {
+.payout-Ticket-Datails-Button {
     text-transform: none !important;
     color: #fff !important;
     border-radius: 0px !important;
@@ -83,15 +83,15 @@
 .sold-price-container {
     display: flex;
     align-items: center;
-    font-weight: 500;
+    justify-content: center;
     font-size: 14px;
     color: #374151,
 }
 
 .sold-price-list {
     min-width: 60px;
-    text-align: right;
-    padding-right: 16px;
+    text-align: center;
+    padding-right: 20px;
 }
 
 .sold-price-divider {

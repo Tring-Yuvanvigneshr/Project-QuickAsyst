@@ -34,6 +34,11 @@
   background: none !important;
 }
 
+.dataGrid-container {
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+
 .validate-custom-select {
   border: none !important;
   outline: none !important;
@@ -56,13 +61,13 @@
   background-color: #ffffff;
 }
 
-.pagination-block{
+.pagination-block {
   background-color: #ffffff;
 }
 
 
 .MuiPaginationItem-root {
-  color: rgba(0, 0, 0, 0.87) !important; 
+  color: rgba(0, 0, 0, 0.87) !important;
   border-radius: 0px !important;
   border: 1px solid #e3e5e8 !important;
   background-color: #fff !important;
@@ -79,6 +84,25 @@
 
 .MuiPaginationItem-root:hover {
   background-color: #d6e2ff !important;
+}
+
+.pagination-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.show-text {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+.page-size-select {
+  width: 70px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 .column-header {

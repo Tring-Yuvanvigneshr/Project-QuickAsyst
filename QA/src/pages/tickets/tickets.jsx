@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Box, Tabs, Tab, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Filter from '../../components/GlobalComponents/GlobalFilter/Filter.jsx';
@@ -7,6 +7,7 @@ import Listtickets from '../../components/Tabs/ListTickets/Listtickets.jsx';
 import Soldtickets from '../../components/Tabs/SoldTickets/Soldtickets.jsx';
 import Returntickets from '../../components/Tabs/DelistAndReturn/Delistandreturn.jsx';
 import Unsoldtickets from '../../components/Tabs/DelistAndUnsold/Delistandunsold.jsx';
+import { LeagueContext } from '../../context/Leaguecontext.jsx';
 import './tickets.css';
 
 const attributes = [
@@ -35,6 +36,7 @@ const TabPanel = ({ children, value, index, id }) => (
 const Tickets = () => {
     const [tabValue, setTabValue] = useState(0);
     const [filterOpen, setFilterOpen] = useState(false);
+    const { leagueName } = useContext(LeagueContext);
 
     const defaultFilter = {
         search_event: '%',
@@ -71,6 +73,17 @@ const Tickets = () => {
             filterButtonRef.current?.focus();
         }
     }, [filterOpen]);
+
+    useEffect(() => {
+        if (leagueName) {
+          setManageFilter((prev) => ({ ...prev, search_event: `${leagueName}%` }));
+          setListFilter((prev) => ({ ...prev, search_event: `${leagueName}%` }));
+          setSoldFilter((prev) => ({ ...prev, search_event: `${leagueName}%` }));
+          setReturnFilter((prev) => ({ ...prev, search_event: `${leagueName}%` }));
+          setUnSoldFilter((prev) => ({ ...prev, search_event: `${leagueName}%` }));
+        }
+      }, [leagueName]);
+      
 
     const handleApplyFilters = (newFilters) => {
         switch (tabValue) {

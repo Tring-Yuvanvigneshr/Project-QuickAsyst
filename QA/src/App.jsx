@@ -7,7 +7,7 @@ import { Amplify } from 'aws-amplify';
 import { awsConfig } from './aws/aws-exports.js';
 import ProtectedRoute from './protectedRoute/ProtectedRoute.jsx';
 import MainLayout from "./components/MainLayout/Mainlayout.jsx";
-import Dashboard from "./pages/dashboard/dashboard.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Tickets from './pages/tickets/tickets.jsx';
 import Users from "./pages/users/users.jsx";
 

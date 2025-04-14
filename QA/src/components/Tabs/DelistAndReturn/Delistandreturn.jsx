@@ -10,15 +10,14 @@ import {
 
 const Delistandreturn = ({ filter }) => {
 
-    const pageChangeNumber = 10;
 
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
-    const [pageChange, setPageChange] = useState(pageChangeNumber);
+    const [pageChange, setPageChange] = useState(10);
     const [offSet, setOffSet] = useState(1);
 
 
-    const [orderBy, setOrderBy] = useState({ tp_updated_at: "desc" }, { tp_id: "asc" });
+    const [orderBy, setOrderBy] = useState([{ tp_updated_at: "desc" }, { tp_id: "asc" }]);
     const [sortOption, setSortOption] = useState('desc');
 
 
