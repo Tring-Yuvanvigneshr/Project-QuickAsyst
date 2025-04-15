@@ -6,12 +6,12 @@ import {
 } from '@mui/material';
 import { IoIosArrowDown } from 'react-icons/io';
 
-export const managecolumns = (onPublish) => [
+export const managecolumns = (onPublish, handleValidationChange, handleReturnChange) => [
   {
     field: 'event',
     headerName: 'Events',
     flex: 1,
-    minWidth: 200,
+    minWidth: 280,
     renderCell: (params) => (
       <div className="event-block">
         <span className="event-name">{params.value}</span>
@@ -92,15 +92,27 @@ export const managecolumns = (onPublish) => [
     flex: 1,
     minWidth: 130,
     renderCell: (params) => {
-      const validityStatus = params.row.validityStatus;
+      const handleSelectChange = (e) => {
 
+        console.log(params);
+
+        const selectedValue = e.target.value;
+        if (selectedValue === 'Return') {
+          handleReturnChange(params.row.Publish_id);
+        } else {
+          handleValidationChange(params.row.Publish_id, selectedValue === 'Valid');
+        }
+      }
       return (
         <Select
-          defaultValue={validityStatus === true ? 'Valid' : '-Select-'}
+          key={params.row.Publish_id}
+          defaultValue={params.row.status === 'Delist' ? 'Invalid' : params.row.status === 'Verified' ? 'Valid' : '-Select-'}
           variant="standard"
           IconComponent={IoIosArrowDown}
           disableUnderline
           className="validate-select-block"
+          onChange={handleSelectChange}
+
         >
           <MenuItem disableRipple value="-Select-" disabled>
             -Select-
@@ -108,9 +120,14 @@ export const managecolumns = (onPublish) => [
           <MenuItem disableRipple value="Valid">
             Valid
           </MenuItem>
-          <MenuItem disableRipple value="Invalid">
+          <MenuItem disableRipple value="Invalid" selected={params.row.status === 'Delist'}>
             Invalid
           </MenuItem>
+          {params.row.status === 'Delist' &&
+            <MenuItem disableRipple value="Return">
+              Return
+            </MenuItem>
+          }
         </Select>
       );
     },
@@ -175,9 +192,9 @@ export const managecolumns = (onPublish) => [
     headerName: 'Action',
     flex: 1,
     minWidth: 120,
+    headerAlign: 'center',
     renderCell: (params) => (
-
-      <div className="action-block">
+      <div className="center-style">
         <Button
           className={`${params.row.status !== 'Verified' ? 'disabled-btn' : 'enabled-btn'}`}
           onClick={() => onPublish(params.row)}

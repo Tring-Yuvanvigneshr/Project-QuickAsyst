@@ -5,13 +5,27 @@ import { IoIosArrowDown } from 'react-icons/io';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './table.css';
-import '../../../utils/Manage_columns/manageColumns.css';
-import sortArrow from '../../../assets/icons/Vector.png';
+import '../../../utils/ManageColumns/manageColumns.css';
+import { FaSort } from 'react-icons/fa';
 
 
-const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, onPageSizeChange, page, onOffSetChange }) => {
+const SharedTable = ({
+  checkboxisdisabled,
+  data,
+  columns,
 
-  const pageSizes = [5, 10, 20 ];
+  totalCount,
+  pageSize,
+  onPageSizeChange,
+  page,
+  onOffSetChange,
+
+  setOrderBy,
+  sortOption,
+  setSortOption
+}) => {
+
+  const pageSizes = [5, 10, 20];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -27,41 +41,76 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
     onOffSetChange(newPage);
   };
 
-  const CustomSortIcon = () => {
-    const iconClass = 'sort-icon';
-    return <img src={sortArrow} alt="Sort" className={iconClass} />;
+  const sortOptionHeadders = {
+    event: 'e_name',
+    date: 'e_date',
+    venue: 'e_address',
+    venueTime: "e_date",
+    status: 'tp_status',
+    returnEmail: 'tp_delist_requested_email',
+    userName: 'full_name',
+    email: 'u_email_id',
+    period: 'e_date',
+    soldStatus: 'tp_payment_status',
+  }
+
+  const handleSortClick = (field) => {
+    console.log(field);
+    
+    const newSortOption = sortOption === 'asc' ? 'desc' : 'asc';
+    setSortOption(newSortOption);
+    setOrderBy([{ [sortOptionHeadders[field]]: newSortOption }, { tp_id: 'asc' }]);
   };
 
-  const columnsWithCustomSorting = columns.map(col => ({
-    ...col,
-    renderHeader: params => (
-      <Box className="column-header">
-        {params.colDef.headerName}
-        <CustomSortIcon />
-      </Box>
-    ),
-  }));
+  const columnsWithCustomSorting = columns.map(col => {
+    const excludeSortIcon = ['Row', 'Section', 'Seat', 'DonationStatus','Validate', 'Ticket placements', 'Sold Price', 'Action'];
+    const isExcluded = excludeSortIcon.includes(col.headerName);
+
+    return {
+      ...col,
+      sortable: !isExcluded,
+      renderHeader: params => (
+        <Box
+          className={!excludeSortIcon.includes(col.headerName) ? "column-header" : "column-header-non-sorting"}
+          onClick={() => {
+            if (!excludeSortIcon.includes(col.headerName)) handleSortClick(col.field);
+          }}
+        >
+          {params.colDef.headerName}
+          {!excludeSortIcon.includes(col.headerName) && <FaSort className="sort-icon"/>}
+        </Box>
+      ),
+    };
+  });
 
 
   return (
-    <Box className='dataGrid-container' sx={{ width: '100%', overflowX: 'auto' }}>
-      <DataGrid
-        rows={data}
-        columns={columnsWithCustomSorting}
-        pageSize={pageSize}
-        checkboxSelection={checkboxisdisabled}
-        disableRowSelectionOnClick
-        disableColumnMenu
-        disableColumnSelector
-        disableColumnResize
-        disableColumnSorting
-        scrollbarSize={5}
-        hideFooter
-        columnHeaderHeight={40}
-        rowHeight={80}
-      />
+    <Box className='dataGrid-container'>
+      <div className={`custom-grid-wrapper ${data.length === 0 ? 'empty-data' : ''}`}>
+        <DataGrid
+          rows={data}
+          columns={columnsWithCustomSorting}
+          pageSize={pageSize}
+          checkboxSelection={checkboxisdisabled}
+          disableRowSelectionOnClick
+          disableColumnMenu
+          disableColumnSelector
+          disableColumnResize
+          disableColumnSorting
+          hideFooter
+          columnHeaderHeight={40}
+          rowHeight={80}
+          slots={{
+            noRowsOverlay: () => {
+              null
+            },
+          }}
+        />
+      </div>
 
-      <Box className="pagination-block" sx={{ flexDirection: isMobile ? 'column' : 'row' }}>
+      {data.length === 0 &&<h3 className='No-data-overlay'>No Data Found</h3>}
+
+      <Box className="pagination-block" display={data.length === 0 && 'none'} sx={{ flexDirection: isMobile ? 'column' : 'row' }}>
         <Box display="flex" alignItems="center" gap={1}>
           <span className="show-text">Show</span>
           <Select
@@ -79,9 +128,10 @@ const SharedTable = ({ checkboxisdisabled, data, totalCount, columns, pageSize, 
           </Select>
         </Box>
 
+            
         <Box className='pagination'>
           <Stack spacing={2}>
-            <Pagination onChange={value => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
+            <Pagination className='pagination-item' onChange={(e, value) => handlePageChange(value)} page={page} count={totalPages} variant="outlined" shape="rounded" />
           </Stack>
         </Box>
       </Box>

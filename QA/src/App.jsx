@@ -5,9 +5,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Amplify } from 'aws-amplify';
 import { awsConfig } from './aws/aws-exports.js';
-
+import ProtectedRoute from './protectedRoute/ProtectedRoute.jsx';
 import MainLayout from "./components/MainLayout/Mainlayout.jsx";
-import Dashboard from "./pages/dashboard/dashboard.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Tickets from './pages/tickets/tickets.jsx';
 import Users from "./pages/users/users.jsx";
 
@@ -21,17 +21,16 @@ Amplify.configure(awsConfig);
 const App = () => {
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
       <ApolloProvider client={client}>
-        <ToastContainer position="top-center" autoClose={3000} />
         <BrowserRouter>
+          <ToastContainer position="top-center" autoClose={3000} />
           <Routes>
             <Route path='login' element={<SignIN />} />
             <Route path="/" element={<MainLayout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="tickets" element={<Tickets />} />
-              <Route path="users" element={<Users />} />
-              <Route path='profile' element={<Profile />}/>
+              <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="tickets" element={<ProtectedRoute><Tickets /></ProtectedRoute>} />
+              <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+              <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             </Route>
           </Routes>
         </BrowserRouter>

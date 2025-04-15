@@ -1,4 +1,4 @@
-.profile_container{
+.profile_container {
     padding: 1% 3% 1% 3%;
     background-color: #f9f9fa;
     height: 86vh;
@@ -10,8 +10,14 @@
     justify-content: space-between;
 }
 
+.profile_headder > h2 {
+    color: #0f172a;
+    font-weight: bolder;
+    font-family: Playfair Display, glegoo;
+}
+
 .profile-edit {
-    padding: 15px;
+    padding: 12px;
     width: 110px;
     background-color: #5d75f8;
     border: none;
@@ -19,6 +25,7 @@
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
+    font-family: glegoo, sans-serif;
 }
 
 .profile-body {
@@ -27,36 +34,39 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .profile-content {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     padding: 40px;
     background-color: #fff;
-    color: #9ca3af;
     gap: 32px;
     width: 702px;
 }
 
 .profile-row {
-    display: flex;  
+    display: flex;
     gap: 16px;
     width: 470px;
 }
 
-.profile-item{
+.profile-item {
     flex: 1;
+    color: #9ca3af;
+    font-family: Glegoo, serif;
+    font-weight: 700;
 }
 
 .profile-item-right {
-    color: #475569;
-    font-family: Glegoo, serif;
+    color: #475569 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.profile-top-img{
+.profile-top-img {
     background: url('../../assets/images/person-doodle.svg');
     background-color: #0f172a;
     width: 700px;
@@ -64,21 +74,47 @@
     position: relative;
 }
 
-.profile-img{
+.profile-img {
     position: absolute;
     top: -85px;
     left: 37%;
     width: 162px;
 }
 
-.profile-pic{
-    width: 162px;
-    height: 162px;
+.profile-pic-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border: 4px solid white;
     border-radius: 50%;
-    background-size: cover;
+    overflow: hidden;
 }
 
-::-webkit-scrollbar{
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+.overlay {
+    background-color: rgba(153, 144, 144, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
     width: 4px;
 }
 
@@ -89,7 +125,7 @@
 
 
 
-.profile-content-edit{
+.profile-content-edit {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -101,8 +137,27 @@
     grid-column: span 2;
 }
 
+.profile-edit-input {
+    font-family: Glegoo, serif !important;
+    outline: none !important;
+    width: 100%;
+    padding: 16px 14px;
+    border: 1px solid rgba(118, 118, 118, 0.3);
+}
+
+.change-password-input {
+    height: 60px;
+}
+
+.change-password-error-message {
+    font-size: 12px;
+    color: red;
+    min-height: 18px;
+    display: block;
+    margin-top: 4px;
+}
+
 .edit-email {
-    width: 210%;
     grid-column: span 2;
 }
 
@@ -119,15 +174,16 @@
     top: 5px;
     right: 5px;
     background: #fff !important;
+    z-index: 2;
 }
 
 .profile-cancel-button {
     font-size: 16px !important;
     text-transform: none !important;
     border-radius: 0px !important;
-    color: black;
-    width: 95px;
+    color: rgb(21, 26, 52) !important;
     height: 44px;
+    width: 138px;
     font-family: 'Glegoo', serif !important;
     font-weight: 600 !important;
     background-color: #f3f4f6 !important;
@@ -137,10 +193,10 @@
     font-size: 16px !important;
     text-transform: none !important;
     border-radius: 0px !important;
-    width: 95px;
-    height: 44px;
     font-family: 'Glegoo', serif !important;
     border: none;
+    color: #9ca3af;
+    font-weight: 600 !important;
 }
 
 
@@ -166,6 +222,8 @@
 
     .profile-item-right {
         text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .profile-img {
@@ -187,37 +245,104 @@
 }
 
 @media (max-width: 768px) {
-
-    .profile-body {
-        
-        margin-top: 30%;
-        font-size: 14px;
+    .profile_container {
+        padding: 2% 5%;
     }
 
-    .profile-pic {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .profile_headder h2 {
-        font-size: 20px;
+    .profile_headder > h2 {
+        font-size: 18px;
+        text-align: center;
     }
 
     .profile-edit {
-        padding: 10px;
+        padding: 8px;
         font-size: 10px;
-        width: 80px;
+        width: 100px;
+    }
+
+    .profile-top-img {
+        width: 100%;
+    }
+
+    .profile-body {
+        margin-top: 30%;
     }
 
     .profile-content {
-        padding: 20px;
+        padding: 16px;
+        width: 100%;
     }
 
+    .profile-row {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .profile-item {
+        font-size: 14px;
+    }
+
+    .profile-item-right {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .profile-top-img {
+        height: 120px;
+    }
 
     .profile-img {
-        left: 50%;
+        left: 45%;
         transform: translateX(-50%);
-        top: -60px;
-        width: 120px;
+        top: -65px;
+        width: 100px;
+        height: 100px;
     }
-}
+
+    .profile-edit-row {
+        width: 100%;
+    }
+
+    .profile-edit-input {
+        padding: 14px 12px;
+        font-size: 14px;
+    }
+
+    .profile-edit-buttons {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .profile-cancel-button,
+    .profile-submit-button {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .profile-content-edit {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .profile-content-edit {
+        width: 100%;
+    }
+
+    .profile-edit-input  {
+        width: 100%;
+    }
+
+    .profile-pic-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .image_remove_icon {
+        top: -15px;
+    }
+}   

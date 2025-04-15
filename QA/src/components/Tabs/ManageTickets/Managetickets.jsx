@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { FILTERMANAGETICKETS } from '../../../Graphql/ManageTickets/manageQuery.js';
-import { PUBLISHTICKETS } from '../../../Graphql/ManageTickets/manageMutation.js';
+import { FILTERMANAGETICKETS } from '../../../graphql/ManageTickets/manageQuery.js';
+import { PUBLISHTICKETS, UPDATETICKETSTATUS, UPDATERETURNTICKETS } from '../../../graphql/ManageTickets/manageMutation.js';
 import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
 import {
   CircularProgress,
@@ -9,11 +9,14 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Avatar,
+  Typography
 } from '@mui/material';
-import { managecolumns } from './../../../utils/Manage_columns/ManageColumns.jsx';
+import { managecolumns } from '../../../utils/ManageColumns/ManageColumns.jsx';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
+import ReturnIcon from "../../../assets/icons/ReturnPopupIcon.svg";
 import IconButton from '@mui/material/IconButton';
 
 const Managetickets = ({ filter }) => {
@@ -22,21 +25,48 @@ const Managetickets = ({ filter }) => {
   const [tableData, setTableData] = useState([]);
   const [tableSize, setTableSize] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openReturnDialog, setOpenReturnDialog] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [selectedReturnTicket, setSelectedReturnTicket] = useState(null);
   const [price, setPrice] = useState('');
   const [errorPrice, setErrorPrice] = useState(false);
   const [pageChange, setPageChange] = useState(10);
   const [offSet, setOffSet] = useState(1);
+  const [render, setrender] = useState(0);
 
+  const [orderBy, setOrderBy] = useState([{ tp_updated_at: "desc" }, { tp_id: "asc" }]);
+  const [sortOption, setSortOption] = useState('desc');
 
   const { loading, error, data, refetch } = useQuery(FILTERMANAGETICKETS, {
     variables: {
       ...filter,
       pageSize: pageChange,
-      pageOffset: pageChange * (offSet - 1)
+      pageOffset: pageChange * (offSet - 1),
+      render: render,
+      order_by: orderBy
     },
     fetchPolicy: 'network-only'
   });
+
+  const [updateTicketStatus] = useMutation(UPDATETICKETSTATUS, {
+    onCompleted: (data) => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to update ticket status');
+    }
+  });
+
+  const [updateReturnTickets] = useMutation(UPDATERETURNTICKETS, {
+    onCompleted: (data) => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to return ticket status');
+    }
+  });
+
+
 
   const handleButtonClick = (ticket) => {
     setSelectedTicket(ticket);
@@ -77,12 +107,56 @@ const Managetickets = ({ filter }) => {
     setErrorPrice(false);
   };
 
-  const handlePriceChange = value => {
+  const handlePriceChange = (value) => {
     setPrice(value);
     if (price === '') {
       setErrorPrice(true);
     }
   }
+
+  const handleValidationChange = async (ticketPlacementId, status) => {
+    try {
+      const { data } = await updateTicketStatus({
+        variables: {
+          ticketPlacementId: [ticketPlacementId],
+          isValid: status,
+        },
+      });
+      toast.success(data.updateTicketStatus.message);
+      await refetch();
+    } catch (error) {
+      toast.error(error.message || 'Failed to update ticket status');
+    }
+  };
+
+  const handleReturnDialogOpen = (ticket) => {
+    setSelectedReturnTicket(ticket);
+    setOpenReturnDialog(true);
+  };
+
+  const handleReturnConfirm = async () => {
+    console.log(selectedReturnTicket)
+    try {
+      await updateReturnTickets({
+        variables: {
+          ticketPlacementId: selectedReturnTicket,
+        },
+      });
+      toast.success('Ticket return successfully updated!');
+      setOpenReturnDialog(false);
+      await refetch();
+    } catch (err) {
+      setOpenReturnDialog(false);
+      refetch();
+      toast.error(`Error: ${err.message}`);
+    }
+  };
+
+  const handleReturnCancel = async () => {
+    await refetch();
+    setrender(prev => prev + 1)
+    setOpenReturnDialog(false);
+  };
 
   useEffect(() => {
     if (data && data.filtermanagetickets) {
@@ -95,7 +169,14 @@ const Managetickets = ({ filter }) => {
         const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         const hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        let period = daysLeft > 0 ? `${daysLeft} Days` : `${hoursLeft} Hours`;
+        let period;
+        if (daysLeft > 0) {
+          period = `${daysLeft} Days`;
+        } else if (hoursLeft > 0) {
+          period = `${hoursLeft} Hours`;
+        } else {
+          period = '0 Days';
+        }
 
         return {
           id: index + 1,
@@ -138,18 +219,22 @@ const Managetickets = ({ filter }) => {
       <SharedTable
         checkboxisdisabled={true}
         data={tableData}
-        columns={managecolumns(handleButtonClick)}
+        columns={managecolumns(handleButtonClick, handleValidationChange, handleReturnDialogOpen)}
+
         totalCount={tableSize}
         pageSize={pageChange}
         onPageSizeChange={setPageChange}
         page={offSet}
         onOffSetChange={setOffSet}
+
+        setOrderBy={setOrderBy}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
       />
 
-      <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} fullWidth>
+      <Dialog className='publish-dialog' open={openDialog} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle
           className='publish-dialog-title'
-          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px' }}
           color='#0f172a'
           fontFamily={'Playfair Display'}
           fontWeight={800}
@@ -167,7 +252,7 @@ const Managetickets = ({ filter }) => {
                 Event Details
               </div>
 
-              <Box pl={1} mb={2}>
+              <Box mb={2}>
                 <div className='publish-dialog-row'>
                   <div className='publish-content-title'>Event</div>
                   <div className='publish-content-value'>{selectedTicket.event}</div>
@@ -220,6 +305,40 @@ const Managetickets = ({ filter }) => {
           </Box>
         </DialogContent>
       </Dialog>
+
+
+      <Dialog open={openReturnDialog} onClose={handleReturnCancel} fullWidth maxWidth="xs" PaperProps={{ className: "delist-dialog" }}>
+        <DialogContent className="delist-dialog-content">
+          <Avatar
+            src={ReturnIcon}
+            alt="Return Icon"
+            className="delist-avatar"
+          />
+          <Typography variant="h6" fontWeight="bold" gutterBottom className="delist-typography-header">
+            Return?
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={4} className="delist-typography-body">
+            Kindly confirm – Once you returned the ticket to the sender
+          </Typography>
+          <Box display="flex" justifyContent="center" gap={2}>
+            <Button
+              onClick={handleReturnCancel}
+              variant="outlined"
+              className="delist-btn delist-cancel-btn"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleReturnConfirm}
+              variant="contained"
+              className="delist-btn delist-confirm-btn"
+            >
+              Confirm
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+
     </>
   );
 };

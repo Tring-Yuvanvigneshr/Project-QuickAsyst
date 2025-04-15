@@ -15,4 +15,5 @@
 
 .outlet-container {
   overflow-y: auto;
+  overflow-x: hidden;
 }

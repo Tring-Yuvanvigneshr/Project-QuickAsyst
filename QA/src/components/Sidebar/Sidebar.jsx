@@ -8,7 +8,7 @@ import collapse_icon from '../../assets/icons/QuickAsystLogosidebar.svg';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import "./sidebar.css";
 
-const Sidebarcomponent = () => {
+const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const location = useLocation();
 
@@ -55,4 +55,4 @@ const Sidebarcomponent = () => {
   );
 };
 
-export default Sidebarcomponent;
+export default Sidebar;

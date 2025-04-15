@@ -1,11 +1,11 @@
 import React from 'react';
 
-const users = () => {
+const Users = () => {
     return (
         <div>
-            <div>users</div>
+            <div className='dashboard-container'>Coming soon</div>
         </div>
     )
 }
 
-export default users
+export default Users

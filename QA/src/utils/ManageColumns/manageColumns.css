@@ -1,7 +1,6 @@
 .event-block {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-top: 6px;
   line-height: 1.4;
 }
@@ -20,7 +19,7 @@
 
 .date-block {
   line-height: 1.5;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .venue-block {
@@ -62,81 +61,53 @@
   background-color: #fff5ec;
 } 
 
-.action-block {
-  margin-top: 15px;
+.center-style {
   display: flex;
-  align-items: center;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100%;
+  width: 100%;
   gap: 10px;
   cursor: pointer;
 }
 
 .enabled-btn {
-  color: white;
+  color: rgb(93, 117, 248) !important;
+  outline: 0;
   border: 1px solid #5d75f8 !important;
   border-radius: 0px !important;
   padding: 5px 20px 5px 20px !important;
   text-transform: none !important;
   font-size: 12px !important;
-  font-weight: 700;
+  font-weight: 700 !important;
+  font-family: glegoo, sans-serif !important;
+  border: 1px solid #e3e5e8 !important;
 }
 
 .disabled-btn {
   color: #5d75f8;
+  cursor: default !important;
   border: 1px solid #e3e5e8 !important;
   border-radius: 0px !important;
   padding: 5px 20px 5px 20px !important;
   text-transform: none !important;
   font-size: 12px !important;
   font-weight: 700;
+  font-weight: 700 !important;
+  font-family: glegoo, sans-serif !important;
 }
-
-.action-block>button:hover {
-  background-color: transparent;
-}
-
-.pagination-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
-.show-text {
-  font-size: 16px;
-  margin-right: 4px;
-}
-
-.page-size-select {
-  width: 70px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.pagination-number {
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #000;
-  margin: 0 4px;
-}
-
-.pagination-number.active-page {
-  background-color: #5b73f2;
-  color: #fff;
-}
-
-
-
 
 .publish-dialog {
   border-radius: 0px !important;
   font-family: glegoo, serif !important;
+}
+
+.publish-dialog-title {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-weight: bolder !important;
+  font-size: 24px !important;
 }
 
 .publish-dialog-content {
@@ -174,11 +145,12 @@
 .publish-list-price {
   background-color: #f3f4f6;
   font-size: 14px;
-  height: 70px;
+  height: 60px;
   padding: 0px 10px 0px 10px;
   display: flex;
   align-items: center !important;
   justify-content: space-between;
+  margin-top: 10px;
   margin-bottom: 10px;
   color: #9ca3af;
   font-family: Glegoo, serif !important;
@@ -187,7 +159,7 @@
 .publish-input-container-input{
   background-color: white !important;
   width: 140px;
-  height: 40px;
+  height: 30px;
   outline: none;
   border: none;
   padding: 10px;
@@ -233,4 +205,84 @@ input::-webkit-inner-spin-button {
   background-color: #5d75f8 !important;
   padding: 15px 30px;
   border: none;
+}
+
+
+.delist-dialog {
+  border-radius: 0;
+  padding: 30px 55px;
+}
+
+.delist-dialog-content {
+  text-align: center;
+}
+
+.delist-avatar {
+  width: 70px !important;
+  height: 70px !important;
+  margin: 0 auto !important;
+  margin-bottom: 16px !important;
+}
+
+.delist-typography-header {
+  margin-bottom: 20px !important;
+  color: #0f172a !important;
+  font-family: Playfair Display, sans-serif !important;
+}
+
+.delist-typography-body {
+  color: #a1a5b7 !important;
+  margin-bottom: 26px !important;
+  font-family: Glegoo, sans-serif !important;
+  font-size: 14px !important;
+}
+
+.delist-btn {
+  min-width: 120px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.delist-cancel-btn {
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  font-family: Glegoo, sans-serif !important;
+  color: rgb(21, 26, 52) !important;
+  background-color: rgb(243, 244, 246) !important;
+  border: 1px solid rgb(227, 229, 232) !important;
+}
+
+.delist-confirm-btn {
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  font-family: Glegoo, sans-serif !important;
+  color: #fff !important;
+  background-color: #5d75f8 !important;
+}
+
+.delist-btn:hover {
+  box-shadow: none !important;
+}
+
+
+@media (max-width: 767px) {
+
+  .publish-dialog-title {
+    font-size: 16px;
+  }
+
+  .publish-list-price {
+    margin-top: 15px;
+  }
+
+  .publish-dialog-row{
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+
+  .publish-content-value {
+    font-size: 12px !important;
+  }
 }

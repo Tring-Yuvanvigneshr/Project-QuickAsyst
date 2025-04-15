@@ -7,3 +7,19 @@ export const PUBLISHTICKETS = gql`
   }
 }
 `
+
+export const UPDATERETURNTICKETS = gql`
+  mutation UpdateReturnTickets ($ticketPlacementId: [String!]!) {
+  returnTickets(ticketPlacementId: $ticketPlacementId) {
+    message
+  }
+}
+`
+
+export const UPDATETICKETSTATUS = gql`
+    mutation UpdateTicketStatus ($isValid: Boolean, $ticketPlacementId: [uuid!]!, $isUndoRequest: Boolean) {
+    updateTicketStatus(ticketPlacementId: $ticketPlacementId, isValid: $isValid, isUndoRequest: $isUndoRequest) {
+      message
+    }
+  }
+`

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import './DelistandSoldcolumns.css';
+import './delistandSoldcolumns.css';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -38,7 +38,7 @@ export const DelistandunsoldColumns = () => [
     field: 'venue',
     headerName: 'Venue',
     flex: 1,
-    minWidth: 200,
+    minWidth: 240,
     renderCell: (params) => {
       const vp = params.value.split(', ');
       return (

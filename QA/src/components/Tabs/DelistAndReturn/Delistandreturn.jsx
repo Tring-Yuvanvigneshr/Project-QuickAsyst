@@ -1,73 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { FILTERRETURNTICKETS } from './../../../Graphql/Return/returnQuery.js';
+import { FILTERRETURNTICKETS } from '../../../graphql/Return/returnQuery.js';
+import { delistandreturn } from '../../../utils/DelistandReturnColumns/DelistandReturnColumns.jsx';
+import SharedTable from './../../GlobalComponents/GlobalTable/Table.jsx';
+import {
+    CircularProgress,
+    Box,
+} from '@mui/material';
 
+const Delistandreturn = ({ filter }) => {
 
-const Delistandreturn = () => {
 
     const [tableData, setTableData] = useState([]);
     const [tableSize, setTableSize] = useState([]);
+    const [pageChange, setPageChange] = useState(10);
+    const [offSet, setOffSet] = useState(1);
 
-    const { loading, error, data, refetch } = useQuery(FILTERRETURNTICKETS, {
+
+    const [orderBy, setOrderBy] = useState([{ tp_updated_at: "desc" }, { tp_id: "asc" }]);
+    const [sortOption, setSortOption] = useState('desc');
+
+
+    const { loading, error, data } = useQuery(FILTERRETURNTICKETS, {
         variables: {
-            array_tpid: null,
-            enddate: null,
-            leagueId: null,
-            order_by: [
-                { tp_updated_at: 'desc' },
-                { tp_id: 'asc' }
-            ],
-            pageOffset: 0,
-            pageSize: 10,
-            search_event: '%',
-            startdate: null,
-            ticketId: null,
+            ...filter,
             ticketPlacementId: null,
-            ticketStatus: null
+            pageSize: pageChange,
+            pageOffset: pageChange * (offSet - 1),
+            order_by: orderBy
         },
+        fetchPolicy: 'network-only'
     });
 
 
     useEffect(() => {
-        if (data && data.filtermanagetickets) {
-            const formattedData = data.filtermanagetickets.map((item, index) => ({
+        if (data && data.filterreturntickets) {
+            const formattedData = data.filterreturntickets.map((item, index) => ({
                 id: index + 1,
                 event: item.e_name,
-                date: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
+                date: new Date(item.e_date).toLocaleString('en-US'),
                 venue: item.e_address,
-                venueTime: new Date(item.e_date).toLocaleString('en-US', { timeZone: item.e_time_zone }),
+                venueTime: new Date(item.e_date).toLocaleString('en-US'),
                 section: item.tp_section.toUpperCase(),
                 row: item.tp_row.toUpperCase(),
                 seat: item.tp_seat_no,
-                validate: item.tp_validity_status ? 'Valid' : 'Invalid',
-                status: item.tp_status,
-                donationStatus: item.tp_is_support_vanderbilt_nil_fund ? 'Donated' : '-',
                 returnEmail: item.tp_delist_requested_email || '-',
-                userName: item.full_name,
+                userName: item.u_full_name,
                 email: item.u_email_id,
-                period: '1 Days',
                 league_name: item.l_name,
-                validityStatus: item.tp_validity_status,
-                Publish_id: item.tp_id
             }));
             setTableData(formattedData);
-            setTableSize(data.filtermanagetickets_aggregate.aggregate.count);
+            setTableSize(data.filterreturntickets_aggregate.aggregate.count);
         }
     }, [data]);
 
 
-
-    useEffect(() => {
-        refetch();
-    }, [refetch]);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     return (
-        <div>
-            <h2>Delist and Return</h2>
-        </div>
+        <>
+            <SharedTable
+                checkboxisdisabled={false}
+                data={tableData}
+                columns={delistandreturn()}
+
+                totalCount={tableSize}
+                pageSize={pageChange}
+                onPageSizeChange={setPageChange}
+                page={offSet}
+                onOffSetChange={setOffSet}
+
+                setOrderBy={setOrderBy}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+            />
+        </>
     )
 }
 
