@@ -17,7 +17,6 @@ const Listtickets = ({ filter }) => {
     return (
         <div>
             <h2>List Tickets</h2>
-
         </div>
     );
 };

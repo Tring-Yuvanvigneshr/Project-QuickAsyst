@@ -5,9 +5,7 @@ import Dashboard_icon from './../../assets/images/Sidebar/Vector.png';
 import Ticket_icon from './../../assets/images/Sidebar/Ticket.png';
 import user_icon from './../../assets/images/Sidebar/Users.png';
 import collapse_icon from '../../assets/icons/QuickAsystLogosidebar.svg';
-
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import "./sidebar.css";
 
 const Sidebarcomponent = () => {
